@@ -1,0 +1,9 @@
+.git
+**/node_modules
+**/bin
+**/obj
+**/.env
+**/.env.*
+**/*.db
+**/*.db-shm
+**/*.db-wal

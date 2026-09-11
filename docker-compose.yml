@@ -1,0 +1,20 @@
+services:
+  omnom:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: omnom-app
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - DATA_DIR=/data
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
+      - APP_PASSCODE=${APP_PASSCODE:-}
+      - USDA_API_KEY=${USDA_API_KEY:-DEMO_KEY}
+    volumes:
+      - omnom_data:/data
+
+volumes:
+  omnom_data:

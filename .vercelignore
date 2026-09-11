@@ -1,0 +1,12 @@
+.env
+.env.*
+.git
+.agents
+.codex
+**/node_modules
+**/bin
+**/obj
+**/*.db
+**/*.db-shm
+**/*.db-wal
+tests

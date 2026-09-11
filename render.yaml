@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: omnom
+    env: docker
+    plan: free
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: APP_PASSCODE
+        sync: false
+      - key: USDA_API_KEY
+        value: DEMO_KEY

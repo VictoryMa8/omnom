@@ -1,0 +1,6 @@
+@Omnom.Api_HostAddress = http://localhost:5027
+
+GET {{Omnom.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

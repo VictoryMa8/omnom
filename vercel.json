@@ -1,0 +1,17 @@
+{
+  "services": {
+    "omnom": {
+      "root": ".",
+      "entrypoint": "Dockerfile.vercel"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": {
+        "type": "service",
+        "service": "omnom"
+      }
+    }
+  ]
+}
