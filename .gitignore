@@ -5,6 +5,10 @@ obj/
 *.suo
 *.userosscache
 *.sln.docstates
+appsettings.Production.json
+appsettings.*.local.json
+secrets.json
+*.pfx
 
 # Database
 *.db
@@ -25,6 +29,7 @@ pnpm-debug.log*
 .DS_Store
 .idea/
 .vscode/
+.cursor/
 *.swp
 
 # Server credentials
@@ -34,5 +39,4 @@ pnpm-debug.log*
 
 .vercel/
 .vercel
-.env*
 .agents/
