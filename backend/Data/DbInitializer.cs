@@ -334,6 +334,21 @@ public static class DbInitializer
                 IsStaple = true
             },
             new() {
+                // USDA Agriculture Handbook 8-1, item 01-009 (per 100 g):
+                // https://www.govinfo.gov/content/pkg/GOVPUB-A-PURL-gpo17007/pdf/GOVPUB-A-PURL-gpo17007.pdf
+                Name = "Cheddar Cheese",
+                Category = "Dairy",
+                NormalizedQuery = "cheddar cheese",
+                DefaultServingGrams = 28,
+                DefaultServingUnit = "oz",
+                CaloriesPer100g = 403,
+                ProteinPer100g = 24.9,
+                CarbsPer100g = 1.28,
+                FatPer100g = 33.14,
+                FiberPer100g = 0,
+                IsStaple = true
+            },
+            new() {
                 Name = "Cottage Cheese (Lowfat 2%)",
                 Category = "Dairy",
                 NormalizedQuery = "cottage cheese 2% lowfat",

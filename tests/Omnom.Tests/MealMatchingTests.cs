@@ -163,6 +163,93 @@ public class MealMatchingTests
         Assert.Contains(db.FoodReferences, f => f.Name == "Cheetos" && f.IsStaple);
     }
 
+    [Theory]
+    [InlineData("cheese", "Cheddar Cheese")]
+    [InlineData("cheddar cheese", "Cheddar Cheese")]
+    [InlineData("cottage cheese", "Cottage Cheese (Lowfat 2%)")]
+    [InlineData("feta cheese", "Feta Cheese (Crumbled)")]
+    [InlineData("cheese pizza", "Cheese Pizza")]
+    public async Task UsdaFoodService_DistinguishesCheeseVarieties(string query, string expectedName)
+    {
+        using var db = CreateDb();
+        var service = new UsdaFoodService(new HttpClient(), db, new ConfigurationBuilder().Build(), NullLogger<UsdaFoodService>.Instance);
+
+        var match = await service.FindBestMatchAsync(query, allowRemote: false);
+
+        Assert.NotNull(match);
+        Assert.Equal(expectedName, match.Name);
+    }
+
+    [Theory]
+    [InlineData("150g raw chicken thigh", "Chicken Thigh (Raw, skinless)")]
+    [InlineData("150g chicken thigh cooked", "Chicken Thigh (Cooked, skinless)")]
+    [InlineData("150g raw chicken breast", "Chicken Breast (Raw, boneless skinless)")]
+    [InlineData("150g brown rice", "Brown Rice (Cooked)")]
+    [InlineData("150g white rice dry raw", "White Rice (Dry / Raw)")]
+    public async Task Parser_PreservesExplicitFoodAndPreparation(string prompt, string expectedName)
+    {
+        using var db = CreateDb();
+        var service = new UsdaFoodService(new HttpClient(), db, new ConfigurationBuilder().Build(), NullLogger<UsdaFoodService>.Instance);
+        var parser = new MealParserService(new FailingOpenRouter(), service, NullLogger<MealParserService>.Instance);
+
+        var result = await parser.ParseMealAsync(prompt);
+
+        var item = Assert.Single(result.Items);
+        Assert.Equal(expectedName, item.FoodName);
+        Assert.Equal(150, item.Grams);
+    }
+
+    [Fact]
+    public async Task UsdaFoodService_IgnoresSearchWordsInLegacyCache()
+    {
+        using var db = CreateDb();
+        db.FoodReferences.Add(new FoodReference
+        {
+            Name = "Unrelated food",
+            NormalizedQuery = "unrelated food dragonfruit",
+            IsStaple = false
+        });
+        await db.SaveChangesAsync();
+        var service = new UsdaFoodService(new HttpClient(), db, new ConfigurationBuilder().Build(), NullLogger<UsdaFoodService>.Instance);
+
+        Assert.Null(await service.FindBestMatchAsync("dragonfruit", allowRemote: false));
+        Assert.Empty(await service.SearchFoodsAsync("dragonfruit"));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task UsdaFoodService_ScoresRemoteDescriptionsWithoutSearchWords(bool includeMatch)
+    {
+        using var db = CreateDb();
+        var foods = new List<object> { new { fdcId = 1, description = "Pear", foodNutrients = new object[0] } };
+        if (includeMatch)
+            foods.Add(new { fdcId = 2, description = "Dragonfruit, raw", foodNutrients = new object[0] });
+        var json = System.Text.Json.JsonSerializer.Serialize(new { foods });
+        using var client = new HttpClient(new UsdaResponseHandler(json));
+        var service = new UsdaFoodService(client, db, new ConfigurationBuilder().Build(), NullLogger<UsdaFoodService>.Instance);
+
+        var match = await service.FindBestMatchAsync("dragonfruit");
+
+        if (includeMatch)
+        {
+            Assert.NotNull(match);
+            Assert.Equal(2, match.FdcId);
+            Assert.Equal("dragonfruit raw", match.NormalizedQuery);
+        }
+        else
+        {
+            Assert.Null(match);
+            Assert.DoesNotContain(db.FoodReferences, f => f.FdcId == 1);
+        }
+    }
+
+    private sealed class UsdaResponseHandler(string json) : HttpMessageHandler
+    {
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+            => Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK) { Content = new StringContent(json) });
+    }
+
     private sealed class CompletingOpenRouter : IOpenRouterService
     {
         private readonly string _json;

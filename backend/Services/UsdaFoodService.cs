@@ -184,16 +184,21 @@ public class UsdaFoodService : IUsdaFoodService
     private static string[] ExtractCleanTokens(string query)
     {
         var normalized = Normalize(query);
-        return normalized.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+        var tokens = normalized.Split(' ', StringSplitOptions.RemoveEmptyEntries)
             .Where(t => !StopWords.Contains(t) && t.Length > 1)
             .ToArray();
+        // Use a visible, conventional default only when no cheese variety was specified.
+        return tokens.SequenceEqual(new[] { "cheese" }) ? ["cheddar", "cheese"] : tokens;
     }
 
     private static double CalculateMatchScore(string[] cleanTokens, string targetNormalized, bool isStaple, string? displayName = null)
     {
         if (cleanTokens.Length == 0) return 0.0;
 
-        var targetTokens = targetNormalized.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        // Older cached rows include the original search query. Those words are not
+        // evidence that the USDA food actually matches a subsequent search.
+        var targetTokens = Normalize(!isStaple && displayName != null ? displayName : targetNormalized)
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries);
         int matched = 0;
 
         foreach (var token in cleanTokens)
@@ -204,8 +209,8 @@ public class UsdaFoodService : IUsdaFoodService
                 matched += 2;
             }
             else if (targetTokens.Any(t => variants.Any(v =>
-                         t.Contains(v, StringComparison.OrdinalIgnoreCase) ||
-                         v.Contains(t, StringComparison.OrdinalIgnoreCase))))
+                         t.Equals(v + "s", StringComparison.OrdinalIgnoreCase) ||
+                         v.Equals(t + "s", StringComparison.OrdinalIgnoreCase))))
             {
                 matched += 1;
             }
@@ -224,7 +229,8 @@ public class UsdaFoodService : IUsdaFoodService
             score -= 0.7;
         }
 
-        return Math.Clamp(score, 0, 1.0);
+        // Preserve the distinction between complete and partial staple matches.
+        return Math.Max(score, 0);
     }
 
     private static string[] GetTokenVariants(string token)
@@ -334,7 +340,7 @@ public class UsdaFoodService : IUsdaFoodService
             FdcId = fdcId > 0 ? fdcId : null,
             Name = description,
             Category = "USDA Cached",
-            NormalizedQuery = Normalize(description + " " + originalQuery),
+            NormalizedQuery = Normalize(description),
             DefaultServingGrams = 100,
             DefaultServingUnit = "g",
             CaloriesPer100g = Math.Round(calories, 1),

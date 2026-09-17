@@ -606,12 +606,12 @@ CRITICAL RULES:
         if (lower.Contains("boule")) return "boule bread";
         if (lower.Contains("latte")) return "latte";
         if (lower.Contains("lamb")) return "ground lamb";
-        if (lower.Contains("chicken")) return "chicken breast cooked";
+        if (Regex.IsMatch(lower.Trim(), @"^chicken( breast)?$")) return "chicken breast cooked";
         if (lower.Contains("feta")) return "feta cheese";
         if (lower.Contains("hummus")) return "hummus";
         if (lower.Contains("jam")) return "jam";
         if (lower.Contains("grape")) return "green grapes";
-        if (lower.Contains("rice")) return "jasmine rice cooked";
+        if (lower.Trim() == "rice") return "jasmine rice cooked";
         if (lower.Contains("dessert") && lower.Contains("pizza")) return "dessert pizza";
         if (lower.Contains("pizza")) return "cheese pizza";
         if (lower.Contains("coke") || lower.Contains("cola") || Regex.IsMatch(lower, @"\bsoda\b")) return "cola";
