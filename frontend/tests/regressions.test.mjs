@@ -21,7 +21,9 @@ function editor() {
   const source = read('../src/components/MealConfirmCard.vue').match(/<script setup lang="ts">([\s\S]*?)<\/script>/)[1];
   const item = { foodName: 'Beef', grams: 100, quantity: 1, unit: 'serving', calories: 200,
     protein: 20, carbs: 4, fat: 10, fiber: 2 };
-  return load(source + '\nexport { editableItems, activeChips, removeItem, updateItemGrams, selectChipOption };', {}, {
+  return load(source + '\nexport { editableItems, activeChips, removeItem, updateItemGrams, selectChipOption };', {
+    '../utils/nutritionReview': load(read('../src/utils/nutritionReview.ts')),
+  }, {
     defineProps: () => ({ parsedResult: { items: [{ ...item, foodName: 'Rice' }, item],
       clarificationChips: [{ id: 'beef', targetItemIndex: 1, options: [] }] } }),
     defineEmits: () => () => {},
@@ -129,4 +131,82 @@ test('storage failures reject saving and corrupt storage is never silently clear
   const broken = createLocalDiary({ getItem: () => 'broken', setItem: () => writes++ });
   await assert.rejects(broken.createMeal(meal), /could not be read/);
   assert.equal(writes, 0);
+});
+
+test('undo deletion preserves original date, position, and later meals', async () => {
+  const { createLocalDiary } = load(read('../src/services/localDiary.ts'));
+  const diary = createLocalDiary(memoryStorage());
+  const first = await diary.createMeal(meal);
+  const second = await diary.createMeal({ ...meal, name: 'Second' });
+  const deletion = await diary.deleteMeal(first.id);
+  const third = await diary.createMeal({ ...meal, name: 'Third' });
+  await diary.createMeal({ ...meal, date: '2026-09-11', name: 'Tomorrow' });
+  await deletion.undo();
+  const timeline = await diary.getTimeline(meal.date);
+  assert.deepEqual(timeline.meals.map(m => m.id), [first.id, second.id, third.id]);
+  assert.equal(timeline.consumedCalories, 390);
+  assert.equal(timeline.meals[2].runningCalories, 390);
+  assert.equal((await diary.getTimeline('2026-09-11')).meals[0].name, 'Tomorrow');
+  await assert.rejects(deletion.undo(), /already in use/);
+});
+
+test('undo save removes only that entry and IDs are not reused after deleting', async () => {
+  const { createLocalDiary } = load(read('../src/services/localDiary.ts'));
+  const diary = createLocalDiary(memoryStorage());
+  const first = await diary.createMeal(meal);
+  const deleted = await diary.deleteMeal(first.id);
+  const newer = await diary.createMeal({ ...meal, name: 'Newer' });
+  assert.ok(newer.id > first.id);
+  await assert.rejects(first.undo(), /changed/);
+  await deleted.undo();
+  await newer.undo();
+  assert.deepEqual((await diary.getTimeline(meal.date)).meals.map(m => m.id), [first.id]);
+});
+
+test('undo refuses to delete a meal that has since been edited', async () => {
+  const { createLocalDiary } = load(read('../src/services/localDiary.ts'));
+  const diary = createLocalDiary(memoryStorage());
+  const change = await diary.createMeal(meal);
+  await diary.updateMeal(change.id, { ...meal, name: 'Edited' });
+  await assert.rejects(change.undo(), /changed/);
+  assert.equal((await diary.getTimeline(meal.date)).meals[0].name, 'Edited');
+});
+
+test('nutrition review flags implausible entries and accepts normal rounding, fiber, and water', () => {
+  const { nutritionWarnings } = load(read('../src/utils/nutritionReview.ts'));
+  assert.deepEqual(nutritionWarnings(meal.items[0]), []);
+  assert.ok(nutritionWarnings({ ...meal.items[0], grams: 2000 }).some(w => w.includes('large portion')));
+  assert.ok(nutritionWarnings({ ...meal.items[0], grams: 300, calories: 0 }).some(w => w.includes('few calories')));
+  assert.ok(nutritionWarnings({ ...meal.items[0], calories: 500 }).some(w => w.includes('Calories and macros')));
+  assert.ok(nutritionWarnings({ ...meal.items[0], grams: 5 }).some(w => w.includes('too high')));
+  assert.ok(nutritionWarnings({ ...meal.items[0], grams: NaN }).length);
+  assert.deepEqual(nutritionWarnings({ ...meal.items[0], foodName: 'Water', grams: 500, calories: 0, protein: 0, carbs: 0, fat: 0, fiber: 0 }), []);
+  assert.deepEqual(nutritionWarnings({ ...meal.items[0], calories: 200, protein: 20, carbs: 50, fiber: 40, fat: 0 }), []);
+});
+
+test('undo toast executes only once, reports failures, and pauses its expiry', async () => {
+  setActivePinia(createPinia());
+  const timers = new Map(); let next = 0;
+  const { useToastStore } = load(read('../src/stores/toastStore.ts'), {}, {
+    setTimeout: callback => { timers.set(++next, callback); return next; },
+    clearTimeout: id => timers.delete(id),
+  });
+  const toast = useToastStore();
+  let resolve, calls = 0;
+  toast.success('Saved', () => { calls++; return new Promise(r => { resolve = r; }); });
+  const id = toast.toasts[0].id;
+  toast.pause(id); assert.equal(timers.size, 0);
+  toast.resume(id); assert.equal(timers.size, 1);
+  const first = toast.runAction(id);
+  await toast.runAction(id);
+  assert.equal(calls, 1);
+  resolve(); await first;
+  assert.equal(toast.toasts[0].message, 'Change undone.');
+  toast.success('Removed', async () => { throw new Error('Storage unavailable'); });
+  const failing = toast.toasts.find(t => t.action);
+  await toast.runAction(failing.id);
+  assert.equal(failing.pending, false);
+  assert.ok(toast.toasts.some(t => t.message === 'Storage unavailable'));
+  toast.clearActions();
+  assert.ok(toast.toasts.every(t => !t.action));
 });

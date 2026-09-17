@@ -250,6 +250,34 @@ public class MealMatchingTests
             => Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.OK) { Content = new StringContent(json) });
     }
 
+    [Theory]
+    [InlineData("cheese", true, true)]
+    [InlineData("100g cheese", false, true)]
+    [InlineData("100g cottage cheese", false, false)]
+    public async Task Parser_ExplainsPortionAndCheeseAssumptions(string prompt, bool portion, bool cheese)
+    {
+        using var db = CreateDb();
+        var service = new UsdaFoodService(new HttpClient(), db, new ConfigurationBuilder().Build(), NullLogger<UsdaFoodService>.Instance);
+        var parser = new MealParserService(new FailingOpenRouter(), service, NullLogger<MealParserService>.Instance);
+        var result = await parser.ParseMealAsync(prompt);
+        var item = Assert.Single(result.Items);
+        Assert.Equal(portion, item.Assumptions.Contains("Estimated portion"));
+        Assert.Equal(cheese, item.Assumptions.Contains("Cheddar assumed"));
+    }
+
+    [Theory]
+    [InlineData("100g chicken breast", true)]
+    [InlineData("100g cooked chicken breast", false)]
+    [InlineData("100g raw chicken breast", false)]
+    public async Task Parser_OnlyLabelsUnspecifiedPreparationAsAssumed(string prompt, bool ambiguous)
+    {
+        using var db = CreateDb();
+        var service = new UsdaFoodService(new HttpClient(), db, new ConfigurationBuilder().Build(), NullLogger<UsdaFoodService>.Instance);
+        var parser = new MealParserService(new FailingOpenRouter(), service, NullLogger<MealParserService>.Instance);
+        var result = await parser.ParseMealAsync(prompt);
+        Assert.Equal(ambiguous, result.ClarificationChips.Any(c => c.Id.StartsWith("chip-prep-")));
+    }
+
     private sealed class CompletingOpenRouter : IOpenRouterService
     {
         private readonly string _json;

@@ -30,6 +30,7 @@ public class AiParsedItem
 
     public int? UsdaFdcId { get; set; }
     public string UsdaMatchStatus { get; set; } = "Estimated"; // "VerifiedStaple", "UsdaApiMatch", "Estimated"
+    public List<string> Assumptions { get; set; } = new();
 }
 
 public class AiClarificationChip

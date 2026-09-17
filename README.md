@@ -1,7 +1,7 @@
-# Omnom 🏋️‍♂️🥑
+# omnom AI
 
 > **AI-assisted food and macro tracker geared toward weightlifters.**
-> Describe what you ate in plain English. Omnom parses your portions, references USDA bodybuilding staples, presents an interactive quick-confirm card with 1-tap clarification chips, and tracks your daily macros in a chronological timeline.
+> Describe what you ate in plain English. omnom AI helps review portions, shows assumptions, and tracks your daily nutrition in a calm, light interface.
 
 Built with **C# (.NET 8 Web API)**, **Vue 3**, **Tailwind CSS**, **Pinia**, **SQLite (EF Core)**, and **OpenRouter Free LLMs**.
 
@@ -10,6 +10,10 @@ Built with **C# (.NET 8 Web API)**, **Vue 3**, **Tailwind CSS**, **Pinia**, **SQ
 ---
 
 ## ✨ Features
+
+- **Review assumptions**: Tap estimated portions, nutrition estimates, or default food choices to edit details before saving. Food names and all nutrition values are editable.
+- **Nutrition review prompts**: Unusual portions, energy density, and calorie/macro mismatches are highlighted without blocking valid entries.
+- **Undo meal changes**: Saving or deleting offers Undo for 12 seconds. Hover or focus the notification to keep it available. Restored meals keep their original date and position.
 
 - **⚡ Natural Language Meal Parsing**: Type or speak (e.g. *"8oz chicken breast, 1.5 cups jasmine rice, and 2 eggs"*) and Omnom extracts individual items, quantities, and weights.
 - **🍗 Interactive Clarification Chips**: Non-blocking chips right on the preview card (e.g. `[Cooked / Raw]`, `[+1 tbsp Olive Oil]`, `[93/7 vs 80/20 Beef]`) with smart defaults. Tap once to adjust or confirm right away.

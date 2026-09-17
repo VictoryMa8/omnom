@@ -1,7 +1,7 @@
 import type { DailyTarget, DayTimeline, MealEntry, MealItem } from './api';
 
 const KEY = 'omnom_diary_v1';
-interface DiaryData { version: 1; meals: MealEntry[]; targets: DailyTarget[] }
+interface DiaryData { version: 1; meals: MealEntry[]; targets: DailyTarget[]; nextMealId?: number }
 type NewMeal = Pick<MealEntry, 'date' | 'name' | 'time' | 'rawDescription' | 'notes' | 'items'>;
 type NewTarget = Omit<DailyTarget, 'id' | 'effectiveDate'> & { effectiveDate?: string };
 const today = () => {
@@ -18,10 +18,12 @@ const validDate = (value: unknown) => typeof value === 'string' && /^\d{4}-\d{2}
 
 function validate(data: DiaryData): DiaryData {
   if (data?.version !== 1 || !Array.isArray(data.meals) || !Array.isArray(data.targets)) throw new Error('Invalid diary backup.');
+  if (data.nextMealId != null && (!Number.isSafeInteger(data.nextMealId) || data.nextMealId < 1)) throw new Error('Invalid diary sequence.');
   for (const meal of data.meals) {
     if (!meal || !validDate(meal.date) || !Number.isSafeInteger(meal.id) || typeof meal.name !== 'string'
       || !Array.isArray(meal.items) || meal.items.some((item: MealItem) => !item || typeof item.foodName !== 'string'
-        || typeof item.unit !== 'string' || fields.some(field => !validNumber(item[field])))) throw new Error('Invalid meal in diary backup.');
+        || typeof item.unit !== 'string' || fields.some(field => !validNumber(item[field]))
+        || (item.assumptions != null && (!Array.isArray(item.assumptions) || item.assumptions.some(a => typeof a !== 'string'))))) throw new Error('Invalid meal in diary backup.');
   }
   for (const target of data.targets) {
     if (!target || !validDate(target.effectiveDate) || !Number.isSafeInteger(target.id) || typeof target.name !== 'string'
@@ -72,13 +74,34 @@ export function createLocalDiary(storage: Pick<Storage, 'getItem' | 'setItem'>) 
     },
     async createMeal(meal: NewMeal) {
       const data = read();
-      const id = Math.max(0, ...data.meals.map(m => m.id)) + 1;
-      data.meals.push({ ...meal, id, ...totals(meal.items), runningCalories: 0, runningProtein: 0, runningCarbs: 0, runningFat: 0 });
+      const id = Math.max(data.nextMealId || 1, Math.max(0, ...data.meals.map(m => m.id)) + 1);
+      data.nextMealId = id + 1;
+      const entry = { ...meal, id, ...totals(meal.items), runningCalories: 0, runningProtein: 0, runningCarbs: 0, runningFat: 0 };
+      data.meals.push(entry);
+      const snapshot = JSON.stringify(entry);
       save(data);
-      return { id };
+      return { id, undo: async () => {
+        const current = read();
+        const index = current.meals.findIndex(m => m.id === id);
+        if (index < 0 || JSON.stringify(current.meals[index]) !== snapshot) throw new Error('This meal has changed. Undo is no longer available.');
+        current.meals.splice(index, 1);
+        save(current);
+      } };
     },
     async deleteMeal(id: number) {
-      const data = read(); data.meals = data.meals.filter(m => m.id !== id); save(data);
+      const data = read();
+      const meal = data.meals.find(m => m.id === id);
+      if (!meal) throw new Error('Meal not found.');
+      data.nextMealId = Math.max(data.nextMealId || 1, Math.max(0, ...data.meals.map(m => m.id)) + 1);
+      data.meals = data.meals.filter(m => m.id !== id);
+      save(data);
+      return { undo: async () => {
+        const current = read();
+        if (current.meals.some(m => m.id === id)) throw new Error('This meal ID is already in use. Undo is no longer available.');
+        current.meals.push(meal);
+        current.nextMealId = Math.max(current.nextMealId || 1, id + 1);
+        save(current);
+      } };
     },
     async updateMeal(id: number, meal: Omit<NewMeal, 'date'>) {
       const data = read(); const index = data.meals.findIndex(m => m.id === id);

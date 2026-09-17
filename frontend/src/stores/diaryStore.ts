@@ -53,6 +53,7 @@ export const useDiaryStore = defineStore('diary', () => {
   };
 
   const addMeal = async (mealData: {
+    date?: string;
     name: string;
     rawDescription?: string;
     items: MealItem[];
@@ -60,14 +61,15 @@ export const useDiaryStore = defineStore('diary', () => {
   }) => {
     loading.value = true;
     try {
-      await DiaryApi.createMeal({
-        date: selectedDate.value,
+      const change = await DiaryApi.createMeal({
+        date: mealData.date || selectedDate.value,
         name: mealData.name,
         rawDescription: mealData.rawDescription,
         items: mealData.items,
         time: mealData.time,
       });
       await fetchTimeline(selectedDate.value);
+      return async () => { await change.undo(); await fetchTimeline(selectedDate.value); };
     } finally {
       loading.value = false;
     }
@@ -76,8 +78,9 @@ export const useDiaryStore = defineStore('diary', () => {
   const deleteMeal = async (mealId: number) => {
     loading.value = true;
     try {
-      await DiaryApi.deleteMeal(mealId);
+      const change = await DiaryApi.deleteMeal(mealId);
       await fetchTimeline(selectedDate.value);
+      return async () => { await change.undo(); await fetchTimeline(selectedDate.value); };
     } finally {
       loading.value = false;
     }

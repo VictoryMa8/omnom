@@ -115,9 +115,19 @@ public class MealParserService : IMealParserService
                 };
             }
 
+            if (!Regex.IsMatch(item.Unit ?? "", @"^(g|grams?|kg|kilograms?|oz|ounces?|lb|lbs|pounds?)$", RegexOptions.IgnoreCase))
+                parsedItem.Assumptions.Add("Estimated portion");
+            if (parsedItem.UsdaMatchStatus == "Estimated")
+                parsedItem.Assumptions.Add("Estimated nutrition");
+            if (lookupQuery.Trim().Equals("cheese", StringComparison.OrdinalIgnoreCase)
+                && parsedItem.FoodName.Contains("Cheddar", StringComparison.OrdinalIgnoreCase))
+                parsedItem.Assumptions.Add("Cheddar assumed");
             result.Items.Add(parsedItem);
 
             // Generate lifter clarification chips for this item
+            // A normalized match may say "cooked" even when the user never chose a state.
+            // Conversely, an explicit raw/cooked description must not be called an assumption.
+            item.MeatStateAmbiguous = !Regex.IsMatch(item.FoodName, @"\b(raw|cooked|grilled|roasted|baked|fried|boiled|steamed)\b", RegexOptions.IgnoreCase);
             GenerateClarificationChipsForItem(result, parsedItem, i, item);
         }
 
@@ -356,7 +366,7 @@ public class MealParserService : IMealParserService
     private static string BuildSystemPrompt(string? mealTypeHint)
     {
         return $$"""
-You are an expert sports nutritionist and food extractor for the macro tracking app 'omnom'.
+You are an expert sports nutritionist and food extractor for the macro tracking app 'omnom AI'.
 Your job is to parse the user's natural language meal description into a structured JSON list of food items and realistic portion estimates.
 
 CRITICAL RULES:

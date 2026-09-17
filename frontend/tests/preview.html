@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>omnom AI · UI test fixture</title></head>
+<body><div id="app"></div>
+<script type="module">
+// Local Vite-only fixture: isolated in-memory diary and deterministic AI response.
+// Visit /tests/preview.html to exercise review, warnings, save, delete, and undo.
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import App from '/src/App.vue';
+import { AiApi, DiaryApi } from '/src/services/api';
+import { createLocalDiary } from '/src/services/localDiary';
+import '/src/style.css';
+const values = new Map();
+Object.assign(DiaryApi, createLocalDiary({ getItem: key => values.get(key) ?? null, setItem: (key, value) => values.set(key, value) }));
+AiApi.parseMeal = async () => ({
+  suggestedMealName: 'Eggs on toast',
+  items: [
+    { foodName: 'Cheddar Cheese', grams: 28, quantity: 1, unit: 'slice', calories: 113, protein: 7, carbs: 0.4, fat: 9.3, fiber: 0, usdaMatchStatus: 'VerifiedStaple', assumptions: ['Estimated portion', 'Cheddar assumed'] },
+    { foodName: 'Eggs on sourdough', grams: 250, quantity: 1, unit: 'serving', calories: 5, protein: 20, carbs: 40, fat: 10, fiber: 2, usdaMatchStatus: 'Estimated', assumptions: ['Estimated portion', 'Estimated nutrition'] },
+  ],
+  clarificationChips: [],
+});
+createApp(App).use(createPinia()).mount('#app');
+</script>
+</body></html>

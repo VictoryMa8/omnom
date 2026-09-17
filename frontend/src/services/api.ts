@@ -15,6 +15,7 @@ export interface MealItem {
   usdaFdcId?: number;
   selectedClarification?: string;
   usdaMatchStatus?: string;
+  assumptions?: string[];
 }
 
 export interface MealEntry {
