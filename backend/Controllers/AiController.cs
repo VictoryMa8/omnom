@@ -31,7 +31,7 @@ public class AiController : ControllerBase
         timeout.CancelAfter(ParseLimits.RequestWait);
         try
         {
-            var result = await _mealParserService.ParseMealAsync(request.Prompt, request.MealTypeHint, timeout.Token);
+            var result = await _mealParserService.ParseMealAsync(request.Prompt, request.MealTypeHint, timeout.Token, request.Mode);
             return Ok(result);
         }
         catch (OperationCanceledException)

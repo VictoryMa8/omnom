@@ -4,7 +4,8 @@ namespace Omnom.Api.Models;
 
 public record AiParseMealRequest(
     string Prompt,
-    string? MealTypeHint // e.g. "Breakfast", "Lunch", "Dinner", "Snack", or auto
+    string? MealTypeHint, // e.g. "Breakfast", "Lunch", "Dinner", "Snack", or auto
+    string? Mode = null // "ai" (default) or "exact"
 );
 
 public class AiParsedMealResult

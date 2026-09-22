@@ -42,7 +42,7 @@ const save = async () => {
 <template>
   <div v-if="show" class="modal-backdrop" @click.self="close">
     <section ref="dialog" class="modal" role="dialog" aria-modal="true" aria-labelledby="target-title">
-      <div class="section-heading"><h2 id="target-title">Your daily goals</h2><button class="icon-button" aria-label="Close daily goals" :disabled="saving" @click="close"><X class="icon" /></button></div>
+      <div class="section-heading"><h2 id="target-title">Daily goals</h2><button class="icon-button" aria-label="Close daily goals" :disabled="saving" @click="close"><X class="icon" /></button></div>
       <p class="muted">Choose a starting point, then adjust it to suit you. Applies from {{ date }}.</p>
       <fieldset :disabled="saving" class="review-fieldset">
         <div class="target-grid"><button v-for="preset in presets" :key="preset.name" class="preset-button" :class="{ selected: form.name === preset.name }" @click="form = { ...preset }">{{ preset.name }}<small>{{ preset.targetCalories.toLocaleString() }} kcal</small></button></div>

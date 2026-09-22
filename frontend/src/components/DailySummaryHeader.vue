@@ -32,7 +32,7 @@ const macros = computed(() => [
         <div class="progress-track" role="progressbar" :aria-label="macro.name" :aria-valuenow="Math.round(macro.amount)" :aria-valuemax="Math.max(macro.goal, Math.round(macro.amount))" aria-valuemin="0"><div :style="{ width: Math.min(100, macro.amount / (macro.goal || 1) * 100) + '%', background: macro.color }"></div></div>
       </div>
     </div>
-    <button class="summary-target" @click="showTargetModal = true">Make these goals yours <ArrowUpRight class="icon" /></button>
+    <button class="summary-target" @click="showTargetModal = true">Edit goals <ArrowUpRight class="icon" /></button>
   </section>
   <QuickTargetModal :show="showTargetModal" @close="showTargetModal = false" />
 </template>

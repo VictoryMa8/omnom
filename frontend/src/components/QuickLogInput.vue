@@ -3,9 +3,14 @@ import { ref, onUnmounted } from 'vue';
 import { Mic, MicOff, ArrowUpRight, Loader2, Plus } from 'lucide-vue-next';
 import { useToastStore } from '../stores/toastStore';
 const props = defineProps<{ loading: boolean }>();
-const emit = defineEmits<{ (e: 'submit', prompt: string): void }>();
+const emit = defineEmits<{ (e: 'submit', prompt: string, mode: 'ai' | 'exact'): void }>();
 const toast = useToastStore();
 const inputPrompt = ref('');
+const mode = ref<'ai' | 'exact'>(localStorage.getItem('omnom_log_mode') === 'exact' ? 'exact' : 'ai');
+const setMode = (next: 'ai' | 'exact') => {
+  mode.value = next;
+  localStorage.setItem('omnom_log_mode', next);
+};
 const isListening = ref(false);
 const shortcuts = [
   { label: 'Eggs', text: '2 large whole eggs' }, { label: 'Chicken', text: '150g cooked chicken breast' },
@@ -30,7 +35,7 @@ const toggleVoice = () => {
 };
 const submit = () => {
   if (!inputPrompt.value.trim() || props.loading) return;
-  recognition?.stop(); emit('submit', inputPrompt.value.trim());
+  recognition?.stop(); emit('submit', inputPrompt.value.trim(), mode.value);
 };
 const keydown = (event: KeyboardEvent) => {
   if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) { event.preventDefault(); submit(); }
@@ -38,10 +43,17 @@ const keydown = (event: KeyboardEvent) => {
 </script>
 <template>
   <section class="composer card">
-    <div class="section-heading"><div><p class="eyebrow">A moment for your meal</p><h2>What’s on your plate?</h2></div><span class="ai-badge">AI assisted</span></div>
-    <p class="muted composer-intro">Just describe it. We’ll help with the numbers.</p>
+    <div class="section-heading"><h2>Log a meal</h2>
+      <div class="composer-tools">
+        <div class="mode-toggle" role="group" aria-label="Logging mode">
+          <button type="button" :class="{ active: mode === 'ai' }" :aria-pressed="mode === 'ai'" :disabled="loading" @click="setMode('ai')">AI</button>
+          <button type="button" :class="{ active: mode === 'exact' }" :aria-pressed="mode === 'exact'" :disabled="loading" @click="setMode('exact')">Exact</button>
+        </div>
+        <span class="ai-badge">{{ mode === 'exact' ? 'Exact' : 'AI assisted' }}</span>
+      </div>
+    </div>
     <label class="sr-only" for="meal-description">Describe your meal</label>
-    <textarea id="meal-description" v-model="inputPrompt" :disabled="loading" maxlength="4000" rows="3" @keydown="keydown" placeholder="Two eggs on sourdough, a little butter, and a coffee…"></textarea>
+    <textarea id="meal-description" v-model="inputPrompt" :disabled="loading" maxlength="4000" rows="3" @keydown="keydown" :placeholder="mode === 'exact' ? 'cooked chicken breast 100g, jasmine rice 150g' : 'Two eggs on sourdough, a little butter, and a coffee…'"></textarea>
     <div class="composer-actions"><button class="secondary-button" :disabled="loading" @click="toggleVoice"><component :is="isListening ? MicOff : Mic" class="icon" />{{ isListening ? 'Listening…' : 'Use your voice' }}</button>
       <button class="primary-button" :disabled="loading || !inputPrompt.trim()" @click="submit"><Loader2 v-if="loading" class="icon animate-spin" />{{ loading ? 'Working on it…' : 'Review meal' }}<ArrowUpRight v-if="!loading" class="icon" /></button></div>
     <div class="shortcuts"><span>Quick add</span><button v-for="shortcut in shortcuts" :key="shortcut.label" :disabled="loading" @click="inputPrompt = [inputPrompt.trim(), shortcut.text].filter(Boolean).join(', ')"><Plus class="small-icon" />{{ shortcut.label }}</button></div>

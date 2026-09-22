@@ -80,14 +80,14 @@ const submitConfirm = () => {
 </script>
 <template>
   <section class="card meal-review">
-    <div class="section-heading"><div><p class="eyebrow">A quick look before you log</p><h2>Make it accurate.</h2></div><span class="pill">Review</span></div>
+    <div class="section-heading"><h2>Review</h2></div>
     <p class="muted review-description">“{{ rawPrompt }}”</p>
     <fieldset :disabled="isSaving" class="review-fieldset">
       <div class="meal-meta"><label>Meal name<input v-model="mealName" aria-label="Meal name" /></label><label>Time <span class="muted">(optional)</span><input v-model="mealTime" type="time" aria-label="Optional meal time" /></label></div>
       <p v-if="entryDate" class="muted small">Saving to {{ new Date(entryDate + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) }}</p>
       <div class="review-items">
         <article v-for="(item, idx) in editableItems" :key="idx" class="review-item">
-          <div class="item-heading"><div><h3>{{ item.foodName }}</h3><p class="muted small">{{ item.grams }} g · {{ Math.round(item.calories) }} kcal <span class="source-label">{{ item.usdaMatchStatus === 'VerifiedStaple' ? 'Reference food' : item.usdaMatchStatus === 'UsdaApiMatch' ? 'USDA match' : 'Estimate / edited' }}</span></p></div>
+          <div class="item-heading"><div><h3>{{ item.foodName }}</h3><p class="muted small">{{ item.grams }} g · {{ Math.round(item.calories) }} kcal <span class="source-label">{{ item.usdaMatchStatus === 'VerifiedStaple' ? 'Reference food' : item.usdaMatchStatus === 'UsdaApiMatch' ? 'USDA match' : item.usdaMatchStatus === 'Unparsed' ? 'Could not read' : 'Estimate / edited' }}</span></p></div>
             <button class="icon-button" :aria-label="'Remove ' + item.foodName" @click="removeItem(idx)"><Trash2 class="icon" /></button></div>
           <div class="assumptions">
             <button v-for="assumption in assumptions(item)" :key="assumption" class="assumption-pill" @click="openIndex = idx"><Pencil class="small-icon" />{{ assumption }}</button>

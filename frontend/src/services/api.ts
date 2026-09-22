@@ -124,8 +124,8 @@ api.interceptors.request.use((config) => {
 export const DiaryApi = localDiary;
 
 export const AiApi = {
-  parseMeal: (prompt: string, mealTypeHint?: string, signal?: AbortSignal) =>
-    api.post<AiParsedMealResult>('/ai/parse', { prompt, mealTypeHint }, { signal }).then((r) => {
+  parseMeal: (prompt: string, mealTypeHint?: string, signal?: AbortSignal, mode: 'ai' | 'exact' = 'ai') =>
+    api.post<AiParsedMealResult>('/ai/parse', { prompt, mealTypeHint, mode }, { signal }).then((r) => {
       if (!r.data || !Array.isArray(r.data.items)) throw new Error('Browser verification is required. Reload this page and try again.');
       return r.data;
     }),
