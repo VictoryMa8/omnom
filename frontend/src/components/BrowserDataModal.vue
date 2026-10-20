@@ -41,7 +41,7 @@ async function importDiary(event: Event) {
   <div v-if="show" class="modal-backdrop" @click.self="close">
     <section ref="dialog" role="dialog" aria-modal="true" aria-labelledby="diary-settings-title" class="modal">
       <div class="section-heading"><h2 id="diary-settings-title">Diary backup</h2><button aria-label="Close settings" class="icon-button" :disabled="busy" @click="close"><X class="icon" /></button></div>
-      <p class="muted">omnom AI saves meals and goals in this browser. Export a backup to keep a copy or bring your diary to another device.</p>
+      <p class="muted">omnom AI saves meals, goals, favorites, and food defaults in this browser. Your backup includes them all.</p>
       <button class="primary-button w-full" @click="exportDiary"><Download class="icon" />Export your diary</button>
       <label class="backup-import"><span class="flex items-center gap-2"><Upload class="icon" />Restore a backup</span><input aria-label="Choose diary backup" type="file" accept="application/json,.json" :disabled="busy" @change="importDiary" /></label>
       <p class="muted small">Clearing browser data removes this diary. People using the same browser profile share it. Meal descriptions are sent to our server and AI provider to help estimate nutrition.</p>

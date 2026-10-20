@@ -21,6 +21,8 @@ public class FoodsController : ControllerBase
     [HttpGet("search")]
     public async Task<ActionResult<List<FoodSearchItemDto>>> Search([FromQuery] string? q, [FromQuery] int limit = 15)
     {
+        if ((q?.Length ?? 0) > 120 || limit is < 1 or > 30)
+            return BadRequest(new { message = "Use a search under 120 characters and a limit between 1 and 30." });
         var foods = await _usdaFoodService.SearchFoodsAsync(q ?? string.Empty, limit);
         var dtos = foods.Select(f => new FoodSearchItemDto(
             f.Id,

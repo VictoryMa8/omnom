@@ -23,6 +23,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\backend\Omnom.Api.csproj" />
+    <ProjectReference Include="../../tools/Omnom.Evaluation/Omnom.Evaluation.csproj" />
+    <None Include="../fixtures/meal-evaluation/v1/*.json" Link="MealEvaluation/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

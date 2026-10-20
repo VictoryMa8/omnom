@@ -40,3 +40,7 @@ pnpm-debug.log*
 .vercel/
 .vercel
 .agents/
+
+# Local browser smoke reports, traces, and downloads
+frontend/.smoke/
+.evaluation/

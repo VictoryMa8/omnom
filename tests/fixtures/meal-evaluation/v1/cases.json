@@ -1,0 +1,4501 @@
+{
+  "version": "1.0.0",
+  "description": "OM-003 synthetic meal corpus; intended semantics, not a golden copy of current parser output.",
+  "cases": [
+    {
+      "id": "MASS-001",
+      "category": "mass",
+      "prompt": "100g cooked chicken breast",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "chicken breast"
+          ],
+          "sourceText": "100g cooked chicken breast",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Chicken Breast (Cooked, roasted/grilled)",
+          "nutrition": {
+            "calories": 165.0,
+            "protein": 31.0,
+            "carbs": 0.0,
+            "fat": 3.6,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Chicken Breast (Cooked, roasted/grilled). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g cooked chicken breast",
+            "foodName": "chicken breast",
+            "searchQuery": "chicken breast cooked grilled roasted",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "fenced"
+    },
+    {
+      "id": "MASS-002",
+      "category": "mass",
+      "prompt": "150g raw chicken breast",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "chicken breast"
+          ],
+          "sourceText": "150g raw chicken breast",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 150,
+          "quantityKind": "explicit-mass",
+          "quantity": 150,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Chicken Breast (Raw, boneless skinless)",
+          "nutrition": {
+            "calories": 180.0,
+            "protein": 33.8,
+            "carbs": 0.0,
+            "fat": 3.9,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Chicken Breast (Raw, boneless skinless). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "150g raw chicken breast",
+            "foodName": "chicken breast",
+            "searchQuery": "chicken breast raw boneless skinless",
+            "quantity": 150,
+            "unit": "g",
+            "estimatedGrams": 150,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "MASS-003",
+      "category": "mass",
+      "prompt": "8oz cooked chicken thigh",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "chicken thigh"
+          ],
+          "sourceText": "8oz cooked chicken thigh",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 226.8,
+          "quantityKind": "explicit-mass",
+          "quantity": 8,
+          "unit": "oz",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Chicken Thigh (Cooked, skinless)",
+          "nutrition": {
+            "calories": 474.0,
+            "protein": 59.0,
+            "carbs": 0.0,
+            "fat": 24.7,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Chicken Thigh (Cooked, skinless). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "8oz cooked chicken thigh",
+            "foodName": "chicken thigh",
+            "searchQuery": "chicken thigh cooked skinless",
+            "quantity": 8,
+            "unit": "oz",
+            "estimatedGrams": 226.8,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "MASS-004",
+      "category": "mass",
+      "prompt": ".5 kg cooked chicken breast",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "chicken breast"
+          ],
+          "sourceText": ".5 kg cooked chicken breast",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 500,
+          "quantityKind": "explicit-mass",
+          "quantity": 0.5,
+          "unit": "kg",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Chicken Breast (Cooked, roasted/grilled)",
+          "nutrition": {
+            "calories": 825.0,
+            "protein": 155.0,
+            "carbs": 0.0,
+            "fat": 18.0,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Chicken Breast (Cooked, roasted/grilled). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": ".5 kg cooked chicken breast",
+            "foodName": "chicken breast",
+            "searchQuery": "chicken breast cooked grilled roasted",
+            "quantity": 0.5,
+            "unit": "kg",
+            "estimatedGrams": 500,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "MASS-005",
+      "category": "mass",
+      "prompt": "1/2 lb cooked ground lamb",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "ground lamb"
+          ],
+          "sourceText": "1/2 lb cooked ground lamb",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 226.8,
+          "quantityKind": "explicit-mass",
+          "quantity": 0.5,
+          "unit": "lb",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Ground Lamb (Cooked)",
+          "nutrition": {
+            "calories": 641.8,
+            "protein": 56.2,
+            "carbs": 0.0,
+            "fat": 44.7,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Ground Lamb (Cooked). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "1/2 lb cooked ground lamb",
+            "foodName": "ground lamb",
+            "searchQuery": "lamb ground lamb cooked",
+            "quantity": 0.5,
+            "unit": "lb",
+            "estimatedGrams": 226.8,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "MASS-006",
+      "category": "mass",
+      "prompt": ".25 kg dry oats",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "oats"
+          ],
+          "sourceText": ".25 kg dry oats",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 250,
+          "quantityKind": "explicit-mass",
+          "quantity": 0.25,
+          "unit": "kg",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Rolled Oats / Oatmeal (Dry)",
+          "nutrition": {
+            "calories": 972.5,
+            "protein": 42.2,
+            "carbs": 165.8,
+            "fat": 17.2,
+            "fiber": 26.5
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Rolled Oats / Oatmeal (Dry). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": ".25 kg dry oats",
+            "foodName": "oats",
+            "searchQuery": "oats oatmeal rolled oats dry",
+            "quantity": 0.25,
+            "unit": "kg",
+            "estimatedGrams": 250,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "MASS-007",
+      "category": "mass",
+      "prompt": "150.5g cooked jasmine rice",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "rice"
+          ],
+          "sourceText": "150.5g cooked jasmine rice",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 150.5,
+          "quantityKind": "explicit-mass",
+          "quantity": 150.5,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Jasmine Rice / White Rice (Cooked)",
+          "nutrition": {
+            "calories": 195.7,
+            "protein": 4.1,
+            "carbs": 42.4,
+            "fat": 0.5,
+            "fiber": 0.6
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Jasmine Rice / White Rice (Cooked). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "150.5g cooked jasmine rice",
+            "foodName": "rice",
+            "searchQuery": "white rice jasmine rice cooked",
+            "quantity": 150.5,
+            "unit": "g",
+            "estimatedGrams": 150.5,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "MASS-008",
+      "category": "mass",
+      "prompt": "3/4 oz almonds",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "almonds"
+          ],
+          "sourceText": "3/4 oz almonds",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 21.3,
+          "quantityKind": "explicit-mass",
+          "quantity": 0.75,
+          "unit": "oz",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Almonds (Raw / Roasted)",
+          "nutrition": {
+            "calories": 123.3,
+            "protein": 4.5,
+            "carbs": 4.7,
+            "fat": 10.7,
+            "fiber": 2.7
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Almonds (Raw / Roasted). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "3/4 oz almonds",
+            "foodName": "almonds",
+            "searchQuery": "almonds raw roasted nuts",
+            "quantity": 0.75,
+            "unit": "oz",
+            "estimatedGrams": 21.3,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "PREPARATION-001",
+      "category": "preparation",
+      "prompt": "100g raw chicken breast",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "chicken breast"
+          ],
+          "sourceText": "100g raw chicken breast",
+          "qualifiers": [
+            "raw"
+          ],
+          "forbiddenQualifiers": [
+            "cooked"
+          ],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Chicken Breast (Raw, boneless skinless)",
+          "nutrition": {
+            "calories": 120.0,
+            "protein": 22.5,
+            "carbs": 0.0,
+            "fat": 2.6,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Chicken Breast (Raw, boneless skinless). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g raw chicken breast",
+            "foodName": "chicken breast",
+            "searchQuery": "chicken breast raw boneless skinless",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "PREPARATION-002",
+      "category": "preparation",
+      "prompt": "100g cooked chicken breast",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "chicken breast"
+          ],
+          "sourceText": "100g cooked chicken breast",
+          "qualifiers": [
+            "cooked|roasted|grilled"
+          ],
+          "forbiddenQualifiers": [
+            "raw"
+          ],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Chicken Breast (Cooked, roasted/grilled)",
+          "nutrition": {
+            "calories": 165.0,
+            "protein": 31.0,
+            "carbs": 0.0,
+            "fat": 3.6,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Chicken Breast (Cooked, roasted/grilled). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g cooked chicken breast",
+            "foodName": "chicken breast",
+            "searchQuery": "chicken breast cooked grilled roasted",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "PREPARATION-003",
+      "category": "preparation",
+      "prompt": "100g dry white rice",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "rice"
+          ],
+          "sourceText": "100g dry white rice",
+          "qualifiers": [
+            "dry|raw"
+          ],
+          "forbiddenQualifiers": [
+            "cooked"
+          ],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "White Rice (Dry / Raw)",
+          "nutrition": {
+            "calories": 365.0,
+            "protein": 7.1,
+            "carbs": 80.0,
+            "fat": 0.7,
+            "fiber": 1.3
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / White Rice (Dry / Raw). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g dry white rice",
+            "foodName": "rice",
+            "searchQuery": "white rice jasmine rice dry raw",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "PREPARATION-004",
+      "category": "preparation",
+      "prompt": "100g cooked white rice",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "rice"
+          ],
+          "sourceText": "100g cooked white rice",
+          "qualifiers": [
+            "cooked"
+          ],
+          "forbiddenQualifiers": [
+            "dry",
+            "raw"
+          ],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Jasmine Rice / White Rice (Cooked)",
+          "nutrition": {
+            "calories": 130.0,
+            "protein": 2.7,
+            "carbs": 28.2,
+            "fat": 0.3,
+            "fiber": 0.4
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Jasmine Rice / White Rice (Cooked). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g cooked white rice",
+            "foodName": "rice",
+            "searchQuery": "white rice jasmine rice cooked",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "PREPARATION-005",
+      "category": "preparation",
+      "prompt": "120g raw chicken thigh",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "chicken thigh"
+          ],
+          "sourceText": "120g raw chicken thigh",
+          "qualifiers": [
+            "raw"
+          ],
+          "forbiddenQualifiers": [
+            "cooked"
+          ],
+          "grams": 120,
+          "quantityKind": "explicit-mass",
+          "quantity": 120,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Chicken Thigh (Raw, skinless)",
+          "nutrition": {
+            "calories": 145.2,
+            "protein": 24.0,
+            "carbs": 0.0,
+            "fat": 5.4,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Chicken Thigh (Raw, skinless). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "120g raw chicken thigh",
+            "foodName": "chicken thigh",
+            "searchQuery": "chicken thigh raw skinless",
+            "quantity": 120,
+            "unit": "g",
+            "estimatedGrams": 120,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "PREPARATION-006",
+      "category": "preparation",
+      "prompt": "120g cooked chicken thigh",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "chicken thigh"
+          ],
+          "sourceText": "120g cooked chicken thigh",
+          "qualifiers": [
+            "cooked"
+          ],
+          "forbiddenQualifiers": [
+            "raw"
+          ],
+          "grams": 120,
+          "quantityKind": "explicit-mass",
+          "quantity": 120,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Chicken Thigh (Cooked, skinless)",
+          "nutrition": {
+            "calories": 250.8,
+            "protein": 31.2,
+            "carbs": 0.0,
+            "fat": 13.1,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Chicken Thigh (Cooked, skinless). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "120g cooked chicken thigh",
+            "foodName": "chicken thigh",
+            "searchQuery": "chicken thigh cooked skinless",
+            "quantity": 120,
+            "unit": "g",
+            "estimatedGrams": 120,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "PREPARATION-007",
+      "category": "preparation",
+      "prompt": "100g raw ground lamb",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "ground lamb"
+          ],
+          "sourceText": "100g raw ground lamb",
+          "qualifiers": [
+            "raw"
+          ],
+          "forbiddenQualifiers": [
+            "cooked"
+          ],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "unresolved",
+          "uncertainFields": [],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Synthetic identity/quantity expectation from the literal prompt. No matching local reference or defensible exact nutrition; must remain unresolved."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g raw ground lamb",
+            "foodName": "raw ground lamb",
+            "searchQuery": "raw ground lamb",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "PREPARATION-008",
+      "category": "preparation",
+      "prompt": "100g dry pasta",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "pasta"
+          ],
+          "sourceText": "100g dry pasta",
+          "qualifiers": [
+            "dry"
+          ],
+          "forbiddenQualifiers": [
+            "cooked"
+          ],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "unresolved",
+          "uncertainFields": [],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Synthetic identity/quantity expectation from the literal prompt. No matching local reference or defensible exact nutrition; must remain unresolved."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g dry pasta",
+            "foodName": "dry pasta",
+            "searchQuery": "dry pasta",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "QUALIFIERS-001",
+      "category": "qualifiers",
+      "prompt": "100g nonfat Greek yogurt",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "greek yogurt"
+          ],
+          "sourceText": "100g nonfat Greek yogurt",
+          "qualifiers": [
+            "nonfat|0"
+          ],
+          "forbiddenQualifiers": [
+            "whole"
+          ],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Greek Yogurt (Nonfat, Plain 0%)",
+          "nutrition": {
+            "calories": 59.0,
+            "protein": 10.2,
+            "carbs": 3.6,
+            "fat": 0.4,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Greek Yogurt (Nonfat, Plain 0%). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g nonfat Greek yogurt",
+            "foodName": "greek yogurt",
+            "searchQuery": "greek yogurt nonfat plain 0%",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "QUALIFIERS-002",
+      "category": "qualifiers",
+      "prompt": "100g skim milk",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "milk"
+          ],
+          "sourceText": "100g skim milk",
+          "qualifiers": [
+            "skim|nonfat"
+          ],
+          "forbiddenQualifiers": [
+            "whole"
+          ],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Skim Milk (Nonfat)",
+          "nutrition": {
+            "calories": 34.0,
+            "protein": 3.4,
+            "carbs": 5.0,
+            "fat": 0.1,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Skim Milk (Nonfat). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g skim milk",
+            "foodName": "milk",
+            "searchQuery": "skim milk fat free nonfat milk",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "QUALIFIERS-003",
+      "category": "qualifiers",
+      "prompt": "100g whole milk",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "milk"
+          ],
+          "sourceText": "100g whole milk",
+          "qualifiers": [
+            "whole"
+          ],
+          "forbiddenQualifiers": [
+            "skim",
+            "nonfat"
+          ],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Whole Milk",
+          "nutrition": {
+            "calories": 61.0,
+            "protein": 3.2,
+            "carbs": 4.8,
+            "fat": 3.3,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Whole Milk. Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g whole milk",
+            "foodName": "milk",
+            "searchQuery": "whole milk cows milk",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "QUALIFIERS-004",
+      "category": "qualifiers",
+      "prompt": "100g 93/7 cooked ground beef",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "ground beef"
+          ],
+          "sourceText": "100g 93/7 cooked ground beef",
+          "qualifiers": [
+            "93/7"
+          ],
+          "forbiddenQualifiers": [
+            "80/20"
+          ],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Ground Beef 93/7 Lean (Cooked)",
+          "nutrition": {
+            "calories": 218.0,
+            "protein": 26.5,
+            "carbs": 0.0,
+            "fat": 11.5,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Ground Beef 93/7 Lean (Cooked). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g 93/7 cooked ground beef",
+            "foodName": "ground beef",
+            "searchQuery": "ground beef 93 7 93/7 cooked lean",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "QUALIFIERS-005",
+      "category": "qualifiers",
+      "prompt": "100g 80/20 cooked ground beef",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "ground beef"
+          ],
+          "sourceText": "100g 80/20 cooked ground beef",
+          "qualifiers": [
+            "80/20"
+          ],
+          "forbiddenQualifiers": [
+            "93/7"
+          ],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Ground Beef 80/20 Lean (Cooked)",
+          "nutrition": {
+            "calories": 270.0,
+            "protein": 24.0,
+            "carbs": 0.0,
+            "fat": 19.0,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Ground Beef 80/20 Lean (Cooked). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g 80/20 cooked ground beef",
+            "foodName": "ground beef",
+            "searchQuery": "ground beef 80 20 80/20 cooked",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "QUALIFIERS-006",
+      "category": "qualifiers",
+      "prompt": "1 can diet coke",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "diet coke|diet cola"
+          ],
+          "sourceText": "1 can diet coke",
+          "qualifiers": [
+            "diet|zero|sugar free"
+          ],
+          "forbiddenQualifiers": [
+            "regular"
+          ],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "uncertain",
+          "uncertainFields": [
+            "container mass"
+          ],
+          "reference": "MealParserService.IsZeroCalorieDrink semantic contract",
+          "nutrition": {
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          "nutritionTolerance": {
+            "calories": 0.01,
+            "protein": 0.01,
+            "carbs": 0.01,
+            "fat": 0.01,
+            "fiber": 0.01
+          },
+          "evidence": "Known zero-calorie drink contract from MealParserService.IsZeroCalorieDrink; no exact container weight is claimed."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "1 can diet coke",
+            "foodName": "diet coke",
+            "searchQuery": "diet coke|diet cola",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "QUALIFIERS-007",
+      "category": "qualifiers",
+      "prompt": "1 can coke zero",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "coke zero|cola zero"
+          ],
+          "sourceText": "1 can coke zero",
+          "qualifiers": [
+            "zero|diet|sugar free"
+          ],
+          "forbiddenQualifiers": [
+            "regular"
+          ],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "uncertain",
+          "uncertainFields": [
+            "container mass"
+          ],
+          "reference": "MealParserService.IsZeroCalorieDrink semantic contract",
+          "nutrition": {
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          "nutritionTolerance": {
+            "calories": 0.01,
+            "protein": 0.01,
+            "carbs": 0.01,
+            "fat": 0.01,
+            "fiber": 0.01
+          },
+          "evidence": "Known zero-calorie drink contract from MealParserService.IsZeroCalorieDrink; no exact container weight is claimed."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "1 can coke zero",
+            "foodName": "coke zero",
+            "searchQuery": "coke zero|cola zero",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "QUALIFIERS-008",
+      "category": "qualifiers",
+      "prompt": "100g lowfat cottage cheese",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "cottage cheese"
+          ],
+          "sourceText": "100g lowfat cottage cheese",
+          "qualifiers": [
+            "lowfat|2"
+          ],
+          "forbiddenQualifiers": [
+            "nonfat"
+          ],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Cottage Cheese (Lowfat 2%)",
+          "nutrition": {
+            "calories": 81.0,
+            "protein": 11.0,
+            "carbs": 4.8,
+            "fat": 2.3,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Cottage Cheese (Lowfat 2%). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g lowfat cottage cheese",
+            "foodName": "cottage cheese",
+            "searchQuery": "cottage cheese 2% lowfat",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "BRANDS-001",
+      "category": "brands",
+      "prompt": "100g Aldi boule bread",
+      "intent": "Brand-specific nutrition is unknown; generic staples must not masquerade as an exact brand match.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "bread"
+          ],
+          "sourceText": "100g Aldi boule bread",
+          "qualifiers": [
+            "aldi",
+            "boule"
+          ],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "unresolved",
+          "uncertainFields": [],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Synthetic identity/quantity expectation from the literal prompt. No matching local reference or defensible exact nutrition; must remain unresolved."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g Aldi boule bread",
+            "foodName": "Aldi boule bread",
+            "searchQuery": "Aldi boule bread",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "BRANDS-002",
+      "category": "brands",
+      "prompt": "100g Fage nonfat Greek yogurt",
+      "intent": "Brand-specific nutrition is unknown; generic staples must not masquerade as an exact brand match.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "greek yogurt"
+          ],
+          "sourceText": "100g Fage nonfat Greek yogurt",
+          "qualifiers": [
+            "fage",
+            "nonfat"
+          ],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "unresolved",
+          "uncertainFields": [],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Synthetic identity/quantity expectation from the literal prompt. No matching local reference or defensible exact nutrition; must remain unresolved."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g Fage nonfat Greek yogurt",
+            "foodName": "Fage nonfat Greek yogurt",
+            "searchQuery": "Fage nonfat Greek yogurt",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "BRANDS-003",
+      "category": "brands",
+      "prompt": "100g Quest protein chips",
+      "intent": "Brand-specific nutrition is unknown; generic staples must not masquerade as an exact brand match.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "chips"
+          ],
+          "sourceText": "100g Quest protein chips",
+          "qualifiers": [
+            "quest"
+          ],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "unresolved",
+          "uncertainFields": [],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Synthetic identity/quantity expectation from the literal prompt. No matching local reference or defensible exact nutrition; must remain unresolved."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g Quest protein chips",
+            "foodName": "Quest protein chips",
+            "searchQuery": "Quest protein chips",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "BRANDS-004",
+      "category": "brands",
+      "prompt": "100g Huel instant meal",
+      "intent": "Brand-specific nutrition is unknown; generic staples must not masquerade as an exact brand match.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "meal"
+          ],
+          "sourceText": "100g Huel instant meal",
+          "qualifiers": [
+            "huel"
+          ],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "unresolved",
+          "uncertainFields": [],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Synthetic identity/quantity expectation from the literal prompt. No matching local reference or defensible exact nutrition; must remain unresolved."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g Huel instant meal",
+            "foodName": "Huel instant meal",
+            "searchQuery": "Huel instant meal",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "BRANDS-005",
+      "category": "brands",
+      "prompt": "100g Acme chocolate whey",
+      "intent": "Brand-specific nutrition is unknown; generic staples must not masquerade as an exact brand match.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "whey"
+          ],
+          "sourceText": "100g Acme chocolate whey",
+          "qualifiers": [
+            "acme",
+            "chocolate"
+          ],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "unresolved",
+          "uncertainFields": [],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Synthetic identity/quantity expectation from the literal prompt. No matching local reference or defensible exact nutrition; must remain unresolved."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g Acme chocolate whey",
+            "foodName": "Acme chocolate whey",
+            "searchQuery": "Acme chocolate whey",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "BRANDS-006",
+      "category": "brands",
+      "prompt": "100g Trader Joe hummus",
+      "intent": "Brand-specific nutrition is unknown; generic staples must not masquerade as an exact brand match.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "hummus"
+          ],
+          "sourceText": "100g Trader Joe hummus",
+          "qualifiers": [
+            "trader",
+            "joe"
+          ],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "unresolved",
+          "uncertainFields": [],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Synthetic identity/quantity expectation from the literal prompt. No matching local reference or defensible exact nutrition; must remain unresolved."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g Trader Joe hummus",
+            "foodName": "Trader Joe hummus",
+            "searchQuery": "Trader Joe hummus",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "BRANDS-007",
+      "category": "brands",
+      "prompt": "100g Costco pepperoni pizza",
+      "intent": "Brand-specific nutrition is unknown; generic staples must not masquerade as an exact brand match.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "pizza"
+          ],
+          "sourceText": "100g Costco pepperoni pizza",
+          "qualifiers": [
+            "costco",
+            "pepperoni"
+          ],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "unresolved",
+          "uncertainFields": [],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Synthetic identity/quantity expectation from the literal prompt. No matching local reference or defensible exact nutrition; must remain unresolved."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g Costco pepperoni pizza",
+            "foodName": "Costco pepperoni pizza",
+            "searchQuery": "Costco pepperoni pizza",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "BRANDS-008",
+      "category": "brands",
+      "prompt": "100g Fairlife Core Power milk",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "milk"
+          ],
+          "sourceText": "100g Fairlife Core Power milk",
+          "qualifiers": [
+            "fairlife"
+          ],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Fairlife Core Power / Ultra-Filtered Milk 2%",
+          "nutrition": {
+            "calories": 58.0,
+            "protein": 5.4,
+            "carbs": 2.5,
+            "fat": 1.9,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Fairlife Core Power / Ultra-Filtered Milk 2%. Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g Fairlife Core Power milk",
+            "foodName": "milk",
+            "searchQuery": "fairlife ultra-filtered milk core power",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "VAGUE-001",
+      "category": "vague",
+      "prompt": "a handful of green grapes",
+      "intent": "Keep food identity; disclose the portion assumption without pretending the vague description specifies exact nutrition.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "grapes"
+          ],
+          "sourceText": "a handful of green grapes",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "uncertain",
+          "uncertainFields": [
+            "portion grams",
+            "nutrition"
+          ],
+          "reference": "Green Grapes (Raw)",
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Literal food identity only. Portion/recipe is underspecified; grams/macros deliberately have no exact target. Any default must remain visibly uncertain."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "a handful of green grapes",
+            "foodName": "grapes",
+            "searchQuery": "grapes green grapes seedless grapes",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "VAGUE-002",
+      "category": "vague",
+      "prompt": "a medium plate of chicken breast",
+      "intent": "Keep food identity; disclose the portion assumption without pretending the vague description specifies exact nutrition.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "chicken breast"
+          ],
+          "sourceText": "a medium plate of chicken breast",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "uncertain",
+          "uncertainFields": [
+            "portion grams",
+            "nutrition"
+          ],
+          "reference": "Chicken Breast (Cooked, roasted/grilled)",
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Literal food identity only. Portion/recipe is underspecified; grams/macros deliberately have no exact target. Any default must remain visibly uncertain."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "a medium plate of chicken breast",
+            "foodName": "chicken breast",
+            "searchQuery": "chicken breast cooked grilled roasted",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 140,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "VAGUE-003",
+      "category": "vague",
+      "prompt": "some hummus",
+      "intent": "Keep food identity; disclose the portion assumption without pretending the vague description specifies exact nutrition.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "hummus"
+          ],
+          "sourceText": "some hummus",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "uncertain",
+          "uncertainFields": [
+            "portion grams",
+            "nutrition"
+          ],
+          "reference": "Hummus",
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Literal food identity only. Portion/recipe is underspecified; grams/macros deliberately have no exact target. Any default must remain visibly uncertain."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "some hummus",
+            "foodName": "hummus",
+            "searchQuery": "hummus chickpea dip",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 30,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "VAGUE-004",
+      "category": "vague",
+      "prompt": "a sprinkle of feta",
+      "intent": "Keep food identity; disclose the portion assumption without pretending the vague description specifies exact nutrition.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "feta"
+          ],
+          "sourceText": "a sprinkle of feta",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "uncertain",
+          "uncertainFields": [
+            "portion grams",
+            "nutrition"
+          ],
+          "reference": "Feta Cheese (Crumbled)",
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Literal food identity only. Portion/recipe is underspecified; grams/macros deliberately have no exact target. Any default must remain visibly uncertain."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "a sprinkle of feta",
+            "foodName": "feta",
+            "searchQuery": "feta cheese crumbled feta",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 28,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "VAGUE-005",
+      "category": "vague",
+      "prompt": "a bowl of rice",
+      "intent": "Keep food identity; disclose the portion assumption without pretending the vague description specifies exact nutrition.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "rice"
+          ],
+          "sourceText": "a bowl of rice",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "uncertain",
+          "uncertainFields": [
+            "portion grams",
+            "nutrition"
+          ],
+          "reference": "Jasmine Rice / White Rice (Cooked)",
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Literal food identity only. Portion/recipe is underspecified; grams/macros deliberately have no exact target. Any default must remain visibly uncertain."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "a bowl of rice",
+            "foodName": "rice",
+            "searchQuery": "white rice jasmine rice cooked",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 158,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "VAGUE-006",
+      "category": "vague",
+      "prompt": "a few almonds",
+      "intent": "Keep food identity; disclose the portion assumption without pretending the vague description specifies exact nutrition.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "almonds"
+          ],
+          "sourceText": "a few almonds",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "uncertain",
+          "uncertainFields": [
+            "portion grams",
+            "nutrition"
+          ],
+          "reference": "Almonds (Raw / Roasted)",
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Literal food identity only. Portion/recipe is underspecified; grams/macros deliberately have no exact target. Any default must remain visibly uncertain."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "a few almonds",
+            "foodName": "almonds",
+            "searchQuery": "almonds raw roasted nuts",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 28,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "VAGUE-007",
+      "category": "vague",
+      "prompt": "a small smoothie",
+      "intent": "Keep food identity; disclose the portion assumption without pretending the vague description specifies exact nutrition.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "smoothie"
+          ],
+          "sourceText": "a small smoothie",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "uncertain",
+          "uncertainFields": [
+            "portion grams",
+            "nutrition"
+          ],
+          "reference": "Fruit Smoothie",
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Literal food identity only. Portion/recipe is underspecified; grams/macros deliberately have no exact target. Any default must remain visibly uncertain."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "a small smoothie",
+            "foodName": "smoothie",
+            "searchQuery": "smoothie fruit smoothie orange julius",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 350,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "VAGUE-008",
+      "category": "vague",
+      "prompt": "a little peanut butter",
+      "intent": "Keep food identity; disclose the portion assumption without pretending the vague description specifies exact nutrition.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "peanut butter"
+          ],
+          "sourceText": "a little peanut butter",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "uncertain",
+          "uncertainFields": [
+            "portion grams",
+            "nutrition"
+          ],
+          "reference": "Peanut Butter",
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Literal food identity only. Portion/recipe is underspecified; grams/macros deliberately have no exact target. Any default must remain visibly uncertain."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "a little peanut butter",
+            "foodName": "peanut butter",
+            "searchQuery": "peanut butter pb creamy crunchy",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 32,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "MIXED-001",
+      "category": "mixed",
+      "prompt": "a bowl of homemade chicken curry",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "chicken curry"
+          ],
+          "sourceText": "a bowl of homemade chicken curry",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "uncertain",
+          "uncertainFields": [
+            "recipe",
+            "portion grams",
+            "nutrition"
+          ],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Literal food identity only. Portion/recipe is underspecified; grams/macros deliberately have no exact target. Any default must remain visibly uncertain."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "a bowl of homemade chicken curry",
+            "foodName": "chicken curry",
+            "searchQuery": "chicken curry",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "MIXED-002",
+      "category": "mixed",
+      "prompt": "a plate of restaurant beef lasagna",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "beef lasagna"
+          ],
+          "sourceText": "a plate of restaurant beef lasagna",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "uncertain",
+          "uncertainFields": [
+            "recipe",
+            "portion grams",
+            "nutrition"
+          ],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Literal food identity only. Portion/recipe is underspecified; grams/macros deliberately have no exact target. Any default must remain visibly uncertain."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "a plate of restaurant beef lasagna",
+            "foodName": "beef lasagna",
+            "searchQuery": "beef lasagna",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "MIXED-003",
+      "category": "mixed",
+      "prompt": "one homemade breakfast burrito",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "breakfast burrito"
+          ],
+          "sourceText": "one homemade breakfast burrito",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "uncertain",
+          "uncertainFields": [
+            "recipe",
+            "portion grams",
+            "nutrition"
+          ],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Literal food identity only. Portion/recipe is underspecified; grams/macros deliberately have no exact target. Any default must remain visibly uncertain."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "one homemade breakfast burrito",
+            "foodName": "breakfast burrito",
+            "searchQuery": "breakfast burrito",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "MIXED-004",
+      "category": "mixed",
+      "prompt": "one scoop of mixed tuna casserole",
+      "intent": "Preserve literal identities, amounts, qualifiers, and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "tuna casserole"
+          ],
+          "sourceText": "one scoop of mixed tuna casserole",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "uncertain",
+          "uncertainFields": [
+            "recipe",
+            "portion grams",
+            "nutrition"
+          ],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Literal food identity only. Portion/recipe is underspecified; grams/macros deliberately have no exact target. Any default must remain visibly uncertain."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "one scoop of mixed tuna casserole",
+            "foodName": "tuna casserole",
+            "searchQuery": "tuna casserole",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "MIXED-005",
+      "category": "mixed",
+      "prompt": "Bowl: 100g cooked chicken breast and 150g cooked jasmine rice",
+      "intent": "Only measured listed components have exact reference-backed nutrition; do not invent extra recipe ingredients.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "chicken breast"
+          ],
+          "sourceText": "100g cooked chicken breast",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Chicken Breast (Cooked, roasted/grilled)",
+          "nutrition": {
+            "calories": 165.0,
+            "protein": 31.0,
+            "carbs": 0.0,
+            "fat": 3.6,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Chicken Breast (Cooked, roasted/grilled). Scale per-100g values only for the stated/reference-backed weight."
+        },
+        {
+          "key": "food-2",
+          "aliases": [
+            "rice"
+          ],
+          "sourceText": "150g cooked jasmine rice",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 150,
+          "quantityKind": "explicit-mass",
+          "quantity": 150,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Jasmine Rice / White Rice (Cooked)",
+          "nutrition": {
+            "calories": 195.0,
+            "protein": 4.0,
+            "carbs": 42.3,
+            "fat": 0.5,
+            "fiber": 0.6
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Jasmine Rice / White Rice (Cooked). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g cooked chicken breast",
+            "foodName": "chicken breast",
+            "searchQuery": "chicken breast cooked grilled roasted",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          {
+            "sourceText": "150g cooked jasmine rice",
+            "foodName": "rice",
+            "searchQuery": "white rice jasmine rice cooked",
+            "quantity": 150,
+            "unit": "g",
+            "estimatedGrams": 150,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "MIXED-006",
+      "category": "mixed",
+      "prompt": "Salad: 50g raw spinach, 30g feta and 14g olive oil",
+      "intent": "Only measured listed components have exact reference-backed nutrition; do not invent extra recipe ingredients.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "spinach"
+          ],
+          "sourceText": "50g raw spinach",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 50,
+          "quantityKind": "explicit-mass",
+          "quantity": 50,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Baby Spinach (Raw)",
+          "nutrition": {
+            "calories": 11.5,
+            "protein": 1.4,
+            "carbs": 1.8,
+            "fat": 0.2,
+            "fiber": 1.1
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Baby Spinach (Raw). Scale per-100g values only for the stated/reference-backed weight."
+        },
+        {
+          "key": "food-2",
+          "aliases": [
+            "feta"
+          ],
+          "sourceText": "30g feta",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 30,
+          "quantityKind": "explicit-mass",
+          "quantity": 30,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Feta Cheese (Crumbled)",
+          "nutrition": {
+            "calories": 79.5,
+            "protein": 4.3,
+            "carbs": 1.2,
+            "fat": 6.4,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Feta Cheese (Crumbled). Scale per-100g values only for the stated/reference-backed weight."
+        },
+        {
+          "key": "food-3",
+          "aliases": [
+            "olive oil"
+          ],
+          "sourceText": "14g olive oil",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 14,
+          "quantityKind": "explicit-mass",
+          "quantity": 14,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Extra Virgin Olive Oil",
+          "nutrition": {
+            "calories": 123.8,
+            "protein": 0.0,
+            "carbs": 0.0,
+            "fat": 14.0,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Extra Virgin Olive Oil. Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "50g raw spinach",
+            "foodName": "spinach",
+            "searchQuery": "spinach baby spinach raw",
+            "quantity": 50,
+            "unit": "g",
+            "estimatedGrams": 50,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          {
+            "sourceText": "30g feta",
+            "foodName": "feta",
+            "searchQuery": "feta cheese crumbled feta",
+            "quantity": 30,
+            "unit": "g",
+            "estimatedGrams": 30,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          {
+            "sourceText": "14g olive oil",
+            "foodName": "olive oil",
+            "searchQuery": "olive oil evoo extra virgin",
+            "quantity": 14,
+            "unit": "g",
+            "estimatedGrams": 14,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "MIXED-007",
+      "category": "mixed",
+      "prompt": "Snack plate: 100g hummus and 100g whole wheat bread",
+      "intent": "Only measured listed components have exact reference-backed nutrition; do not invent extra recipe ingredients.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "hummus"
+          ],
+          "sourceText": "100g hummus",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Hummus",
+          "nutrition": {
+            "calories": 166.0,
+            "protein": 7.9,
+            "carbs": 14.3,
+            "fat": 9.6,
+            "fiber": 6.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Hummus. Scale per-100g values only for the stated/reference-backed weight."
+        },
+        {
+          "key": "food-2",
+          "aliases": [
+            "bread"
+          ],
+          "sourceText": "100g whole wheat bread",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Whole Wheat Bread",
+          "nutrition": {
+            "calories": 247.0,
+            "protein": 13.0,
+            "carbs": 41.0,
+            "fat": 3.4,
+            "fiber": 7.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Whole Wheat Bread. Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g hummus",
+            "foodName": "hummus",
+            "searchQuery": "hummus chickpea dip",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          {
+            "sourceText": "100g whole wheat bread",
+            "foodName": "bread",
+            "searchQuery": "whole wheat bread slice",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "MIXED-008",
+      "category": "mixed",
+      "prompt": "Smoothie ingredients: 100g banana, 30g whey protein and 100g whole milk",
+      "intent": "Only measured listed components have exact reference-backed nutrition; do not invent extra recipe ingredients.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "banana"
+          ],
+          "sourceText": "100g banana",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Banana (Raw)",
+          "nutrition": {
+            "calories": 89.0,
+            "protein": 1.1,
+            "carbs": 22.8,
+            "fat": 0.3,
+            "fiber": 2.6
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Banana (Raw). Scale per-100g values only for the stated/reference-backed weight."
+        },
+        {
+          "key": "food-2",
+          "aliases": [
+            "whey protein"
+          ],
+          "sourceText": "30g whey protein",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 30,
+          "quantityKind": "explicit-mass",
+          "quantity": 30,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Whey Protein Powder (Isolate / Concentrate)",
+          "nutrition": {
+            "calories": 114.0,
+            "protein": 24.0,
+            "carbs": 1.8,
+            "fat": 1.1,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Whey Protein Powder (Isolate / Concentrate). Scale per-100g values only for the stated/reference-backed weight."
+        },
+        {
+          "key": "food-3",
+          "aliases": [
+            "milk"
+          ],
+          "sourceText": "100g whole milk",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Whole Milk",
+          "nutrition": {
+            "calories": 61.0,
+            "protein": 3.2,
+            "carbs": 4.8,
+            "fat": 3.3,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Whole Milk. Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g banana",
+            "foodName": "banana",
+            "searchQuery": "banana raw bananas",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          {
+            "sourceText": "30g whey protein",
+            "foodName": "whey protein",
+            "searchQuery": "whey protein powder scoop isolate",
+            "quantity": 30,
+            "unit": "g",
+            "estimatedGrams": 30,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          {
+            "sourceText": "100g whole milk",
+            "foodName": "milk",
+            "searchQuery": "whole milk cows milk",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "CORRECTIONS-001",
+      "category": "corrections",
+      "prompt": "200g chicken breast, actually 150g",
+      "intent": "A correction replaces the rejected amount or ingredient; negations must not create additional foods.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "chicken breast"
+          ],
+          "sourceText": "200g chicken breast, actually 150g",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 150,
+          "quantityKind": "explicit-mass",
+          "quantity": 150,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Chicken Breast (Cooked, roasted/grilled)",
+          "nutrition": {
+            "calories": 247.5,
+            "protein": 46.5,
+            "carbs": 0.0,
+            "fat": 5.4,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Chicken Breast (Cooked, roasted/grilled). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "200g chicken breast, actually 150g",
+            "foodName": "chicken breast",
+            "searchQuery": "chicken breast cooked grilled roasted",
+            "quantity": 150,
+            "unit": "g",
+            "estimatedGrams": 150,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "CORRECTIONS-002",
+      "category": "corrections",
+      "prompt": "100g cooked chicken breast, no butter",
+      "intent": "A correction replaces the rejected amount or ingredient; negations must not create additional foods.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "chicken breast"
+          ],
+          "sourceText": "100g cooked chicken breast",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Chicken Breast (Cooked, roasted/grilled)",
+          "nutrition": {
+            "calories": 165.0,
+            "protein": 31.0,
+            "carbs": 0.0,
+            "fat": 3.6,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Chicken Breast (Cooked, roasted/grilled). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [
+        "butter"
+      ],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g cooked chicken breast",
+            "foodName": "chicken breast",
+            "searchQuery": "chicken breast cooked grilled roasted",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "CORRECTIONS-003",
+      "category": "corrections",
+      "prompt": "150g cooked rice without oil",
+      "intent": "A correction replaces the rejected amount or ingredient; negations must not create additional foods.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "rice"
+          ],
+          "sourceText": "150g cooked rice",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 150,
+          "quantityKind": "explicit-mass",
+          "quantity": 150,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Jasmine Rice / White Rice (Cooked)",
+          "nutrition": {
+            "calories": 195.0,
+            "protein": 4.0,
+            "carbs": 42.3,
+            "fat": 0.5,
+            "fiber": 0.6
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Jasmine Rice / White Rice (Cooked). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [
+        "oil"
+      ],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "150g cooked rice",
+            "foodName": "rice",
+            "searchQuery": "white rice jasmine rice cooked",
+            "quantity": 150,
+            "unit": "g",
+            "estimatedGrams": 150,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "CORRECTIONS-004",
+      "category": "corrections",
+      "prompt": "100g nonfat Greek yogurt, no honey",
+      "intent": "A correction replaces the rejected amount or ingredient; negations must not create additional foods.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "greek yogurt"
+          ],
+          "sourceText": "100g nonfat Greek yogurt",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Greek Yogurt (Nonfat, Plain 0%)",
+          "nutrition": {
+            "calories": 59.0,
+            "protein": 10.2,
+            "carbs": 3.6,
+            "fat": 0.4,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Greek Yogurt (Nonfat, Plain 0%). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [
+        "honey"
+      ],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g nonfat Greek yogurt",
+            "foodName": "greek yogurt",
+            "searchQuery": "greek yogurt nonfat plain 0%",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "CORRECTIONS-005",
+      "category": "corrections",
+      "prompt": "100g cooked ground lamb, not chicken",
+      "intent": "A correction replaces the rejected amount or ingredient; negations must not create additional foods.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "ground lamb"
+          ],
+          "sourceText": "100g cooked ground lamb",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Ground Lamb (Cooked)",
+          "nutrition": {
+            "calories": 283.0,
+            "protein": 24.8,
+            "carbs": 0.0,
+            "fat": 19.7,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Ground Lamb (Cooked). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [
+        "chicken"
+      ],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g cooked ground lamb",
+            "foodName": "ground lamb",
+            "searchQuery": "lamb ground lamb cooked",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "CORRECTIONS-006",
+      "category": "corrections",
+      "prompt": "100g raw chicken breast, not cooked",
+      "intent": "A correction replaces the rejected amount or ingredient; negations must not create additional foods.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "chicken breast"
+          ],
+          "sourceText": "100g raw chicken breast",
+          "qualifiers": [
+            "raw"
+          ],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Chicken Breast (Raw, boneless skinless)",
+          "nutrition": {
+            "calories": 120.0,
+            "protein": 22.5,
+            "carbs": 0.0,
+            "fat": 2.6,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Chicken Breast (Raw, boneless skinless). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g raw chicken breast",
+            "foodName": "chicken breast",
+            "searchQuery": "chicken breast raw boneless skinless",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "CORRECTIONS-007",
+      "category": "corrections",
+      "prompt": "100g dry rice; ignore the earlier 150g estimate",
+      "intent": "A correction replaces the rejected amount or ingredient; negations must not create additional foods.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "rice"
+          ],
+          "sourceText": "100g dry rice",
+          "qualifiers": [
+            "dry|raw"
+          ],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "White Rice (Dry / Raw)",
+          "nutrition": {
+            "calories": 365.0,
+            "protein": 7.1,
+            "carbs": 80.0,
+            "fat": 0.7,
+            "fiber": 1.3
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / White Rice (Dry / Raw). Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g dry rice",
+            "foodName": "rice",
+            "searchQuery": "white rice jasmine rice dry raw",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "CORRECTIONS-008",
+      "category": "corrections",
+      "prompt": "2 slices sourdough and 2 more slices sourdough",
+      "intent": "Additional slices are additive, not a replacement or duplicate loss.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "sourdough"
+          ],
+          "sourceText": "2 slices sourdough",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "reference-serving",
+          "quantity": 2,
+          "unit": "slice",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Sourdough Bread",
+          "nutrition": {
+            "calories": 260.0,
+            "protein": 9.0,
+            "carbs": 50.0,
+            "fat": 2.5,
+            "fiber": 2.2
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Sourdough Bread. Scale per-100g values only for the stated/reference-backed weight."
+        },
+        {
+          "key": "food-2",
+          "aliases": [
+            "sourdough"
+          ],
+          "sourceText": "2 more slices sourdough",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "reference-serving",
+          "quantity": 2,
+          "unit": "slice",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Sourdough Bread",
+          "nutrition": {
+            "calories": 260.0,
+            "protein": 9.0,
+            "carbs": 50.0,
+            "fat": 2.5,
+            "fiber": 2.2
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Sourdough Bread. Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "2 slices sourdough",
+            "foodName": "sourdough",
+            "searchQuery": "sourdough bread slice",
+            "quantity": 2,
+            "unit": "slice",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          {
+            "sourceText": "2 more slices sourdough",
+            "foodName": "sourdough",
+            "searchQuery": "sourdough bread slice",
+            "quantity": 2,
+            "unit": "slice",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "UNKNOWN-001",
+      "category": "unknown",
+      "prompt": "100g nebula protein squares",
+      "intent": "Intentionally unknown food: no unrelated substitution or arbitrary calorie density.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "nebula protein squares"
+          ],
+          "sourceText": "100g nebula protein squares",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "unresolved",
+          "uncertainFields": [],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Synthetic identity/quantity expectation from the literal prompt. No matching local reference or defensible exact nutrition; must remain unresolved."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g nebula protein squares",
+            "foodName": "nebula protein squares",
+            "searchQuery": "nebula protein squares",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "UNKNOWN-002",
+      "category": "unknown",
+      "prompt": "100g mysteryfood",
+      "intent": "Intentionally unknown food: no unrelated substitution or arbitrary calorie density.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "mysteryfood"
+          ],
+          "sourceText": "100g mysteryfood",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "unresolved",
+          "uncertainFields": [],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Synthetic identity/quantity expectation from the literal prompt. No matching local reference or defensible exact nutrition; must remain unresolved."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g mysteryfood",
+            "foodName": "mysteryfood",
+            "searchQuery": "mysteryfood",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "invalid"
+    },
+    {
+      "id": "UNKNOWN-003",
+      "category": "unknown",
+      "prompt": "150g unknownbrand crumbles",
+      "intent": "Intentionally unknown food: no unrelated substitution or arbitrary calorie density.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "unknownbrand crumbles"
+          ],
+          "sourceText": "150g unknownbrand crumbles",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 150,
+          "quantityKind": "explicit-mass",
+          "quantity": 150,
+          "unit": "g",
+          "resolution": "unresolved",
+          "uncertainFields": [],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Synthetic identity/quantity expectation from the literal prompt. No matching local reference or defensible exact nutrition; must remain unresolved."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "150g unknownbrand crumbles",
+            "foodName": "unknownbrand crumbles",
+            "searchQuery": "unknownbrand crumbles",
+            "quantity": 150,
+            "unit": "g",
+            "estimatedGrams": 150,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "UNKNOWN-004",
+      "category": "unknown",
+      "prompt": "100g quantum tofu bits",
+      "intent": "Intentionally unknown food: no unrelated substitution or arbitrary calorie density.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "quantum tofu bits"
+          ],
+          "sourceText": "100g quantum tofu bits",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "unresolved",
+          "uncertainFields": [],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Synthetic identity/quantity expectation from the literal prompt. No matching local reference or defensible exact nutrition; must remain unresolved."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g quantum tofu bits",
+            "foodName": "quantum tofu bits",
+            "searchQuery": "quantum tofu bits",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "UNKNOWN-005",
+      "category": "unknown",
+      "prompt": "50g zephyr sauce",
+      "intent": "Intentionally unknown food: no unrelated substitution or arbitrary calorie density.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "zephyr sauce"
+          ],
+          "sourceText": "50g zephyr sauce",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 50,
+          "quantityKind": "explicit-mass",
+          "quantity": 50,
+          "unit": "g",
+          "resolution": "unresolved",
+          "uncertainFields": [],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Synthetic identity/quantity expectation from the literal prompt. No matching local reference or defensible exact nutrition; must remain unresolved."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "50g zephyr sauce",
+            "foodName": "zephyr sauce",
+            "searchQuery": "zephyr sauce",
+            "quantity": 50,
+            "unit": "g",
+            "estimatedGrams": 50,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "UNKNOWN-006",
+      "category": "unknown",
+      "prompt": "100g fictional algae cakes",
+      "intent": "Intentionally unknown food: no unrelated substitution or arbitrary calorie density.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "fictional algae cakes"
+          ],
+          "sourceText": "100g fictional algae cakes",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "unresolved",
+          "uncertainFields": [],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Synthetic identity/quantity expectation from the literal prompt. No matching local reference or defensible exact nutrition; must remain unresolved."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g fictional algae cakes",
+            "foodName": "fictional algae cakes",
+            "searchQuery": "fictional algae cakes",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "UNKNOWN-007",
+      "category": "unknown",
+      "prompt": "30g stardust cereal",
+      "intent": "Intentionally unknown food: no unrelated substitution or arbitrary calorie density.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "stardust cereal"
+          ],
+          "sourceText": "30g stardust cereal",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 30,
+          "quantityKind": "explicit-mass",
+          "quantity": 30,
+          "unit": "g",
+          "resolution": "unresolved",
+          "uncertainFields": [],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Synthetic identity/quantity expectation from the literal prompt. No matching local reference or defensible exact nutrition; must remain unresolved."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "30g stardust cereal",
+            "foodName": "stardust cereal",
+            "searchQuery": "stardust cereal",
+            "quantity": 30,
+            "unit": "g",
+            "estimatedGrams": 30,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "UNKNOWN-008",
+      "category": "unknown",
+      "prompt": "100g unlisted protein pudding",
+      "intent": "Intentionally unknown food: no unrelated substitution or arbitrary calorie density.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "unlisted protein pudding"
+          ],
+          "sourceText": "100g unlisted protein pudding",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "unresolved",
+          "uncertainFields": [],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Synthetic identity/quantity expectation from the literal prompt. No matching local reference or defensible exact nutrition; must remain unresolved."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g unlisted protein pudding",
+            "foodName": "unlisted protein pudding",
+            "searchQuery": "unlisted protein pudding",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "FULL-DAY-001",
+      "category": "full-day",
+      "prompt": "Breakfast: 100g eggs, Lunch: 150g cooked chicken breast, Dinner: 100g cooked rice and 100g whole milk",
+      "intent": "Full-day logging must retain every listed component without clock-derived meal names.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "egg"
+          ],
+          "sourceText": "100g eggs",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Whole Egg (Large, Grade A)",
+          "nutrition": {
+            "calories": 143.0,
+            "protein": 12.6,
+            "carbs": 0.7,
+            "fat": 9.5,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Whole Egg (Large, Grade A). Scale per-100g values only for the stated/reference-backed weight."
+        },
+        {
+          "key": "food-2",
+          "aliases": [
+            "chicken breast"
+          ],
+          "sourceText": "150g cooked chicken breast",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 150,
+          "quantityKind": "explicit-mass",
+          "quantity": 150,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Chicken Breast (Cooked, roasted/grilled)",
+          "nutrition": {
+            "calories": 247.5,
+            "protein": 46.5,
+            "carbs": 0.0,
+            "fat": 5.4,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Chicken Breast (Cooked, roasted/grilled). Scale per-100g values only for the stated/reference-backed weight."
+        },
+        {
+          "key": "food-3",
+          "aliases": [
+            "rice"
+          ],
+          "sourceText": "100g cooked rice",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Jasmine Rice / White Rice (Cooked)",
+          "nutrition": {
+            "calories": 130.0,
+            "protein": 2.7,
+            "carbs": 28.2,
+            "fat": 0.3,
+            "fiber": 0.4
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Jasmine Rice / White Rice (Cooked). Scale per-100g values only for the stated/reference-backed weight."
+        },
+        {
+          "key": "food-4",
+          "aliases": [
+            "milk"
+          ],
+          "sourceText": "100g whole milk",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 100,
+          "quantityKind": "explicit-mass",
+          "quantity": 100,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Whole Milk",
+          "nutrition": {
+            "calories": 61.0,
+            "protein": 3.2,
+            "carbs": 4.8,
+            "fat": 3.3,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Whole Milk. Scale per-100g values only for the stated/reference-backed weight."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "100g eggs",
+            "foodName": "egg",
+            "searchQuery": "egg whole egg large eggs",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          {
+            "sourceText": "150g cooked chicken breast",
+            "foodName": "chicken breast",
+            "searchQuery": "chicken breast cooked grilled roasted",
+            "quantity": 150,
+            "unit": "g",
+            "estimatedGrams": 150,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          {
+            "sourceText": "100g cooked rice",
+            "foodName": "rice",
+            "searchQuery": "white rice jasmine rice cooked",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          {
+            "sourceText": "100g whole milk",
+            "foodName": "milk",
+            "searchQuery": "whole milk cows milk",
+            "quantity": 100,
+            "unit": "g",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    },
+    {
+      "id": "FULL-DAY-002",
+      "category": "full-day",
+      "prompt": "a medium size plate of chicken breast, 2 slices aldi boule bread, few teaspoons of jam, a medium light smoothie from orange julius, a 8oz decaf latte w/ dairy milk, 2 more slices of boule, maybe 150g ground lamb, 120g rice, a few tablespoons of hummus, a sprinkle of feta, and maybe 2 handfuls of green grapes",
+      "intent": "Original complex guide example: preserve all components, additive bread, explicit lamb/rice weights, brands and honest uncertainty.",
+      "expected": [
+        {
+          "key": "food-1",
+          "aliases": [
+            "chicken breast"
+          ],
+          "sourceText": "a medium size plate of chicken breast",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "uncertain",
+          "uncertainFields": [
+            "portion grams"
+          ],
+          "reference": "Chicken Breast (Cooked, roasted/grilled)",
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Literal food identity only. Portion/recipe is underspecified; grams/macros deliberately have no exact target. Any default must remain visibly uncertain."
+        },
+        {
+          "key": "food-2",
+          "aliases": [
+            "bread"
+          ],
+          "sourceText": "2 slices aldi boule bread",
+          "qualifiers": [
+            "aldi",
+            "boule"
+          ],
+          "forbiddenQualifiers": [],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "unresolved",
+          "uncertainFields": [],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Synthetic identity/quantity expectation from the literal prompt. No matching local reference or defensible exact nutrition; must remain unresolved."
+        },
+        {
+          "key": "food-3",
+          "aliases": [
+            "jam"
+          ],
+          "sourceText": "few teaspoons of jam",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "uncertain",
+          "uncertainFields": [
+            "portion grams"
+          ],
+          "reference": "Fruit Jam / Preserves",
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Literal food identity only. Portion/recipe is underspecified; grams/macros deliberately have no exact target. Any default must remain visibly uncertain."
+        },
+        {
+          "key": "food-4",
+          "aliases": [
+            "smoothie"
+          ],
+          "sourceText": "a medium light smoothie from orange julius",
+          "qualifiers": [
+            "orange",
+            "julius"
+          ],
+          "forbiddenQualifiers": [],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "uncertain",
+          "uncertainFields": [
+            "recipe",
+            "portion grams"
+          ],
+          "reference": null,
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Literal food identity only. Portion/recipe is underspecified; grams/macros deliberately have no exact target. Any default must remain visibly uncertain."
+        },
+        {
+          "key": "food-5",
+          "aliases": [
+            "latte"
+          ],
+          "sourceText": "a 8oz decaf latte w/ dairy milk",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "uncertain",
+          "uncertainFields": [
+            "volume versus mass",
+            "nutrition"
+          ],
+          "reference": "Caffe Latte (Whole Milk)",
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Literal food identity only. Portion/recipe is underspecified; grams/macros deliberately have no exact target. Any default must remain visibly uncertain."
+        },
+        {
+          "key": "food-6",
+          "aliases": [
+            "boule"
+          ],
+          "sourceText": "2 more slices of boule",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 90,
+          "quantityKind": "reference-serving",
+          "quantity": 2,
+          "unit": "slice",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Boule Bread (Artisan Sourdough)",
+          "nutrition": {
+            "calories": 234.0,
+            "protein": 8.1,
+            "carbs": 45.0,
+            "fat": 2.2,
+            "fiber": 2.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Boule Bread (Artisan Sourdough). Scale per-100g values only for the stated/reference-backed weight."
+        },
+        {
+          "key": "food-7",
+          "aliases": [
+            "ground lamb"
+          ],
+          "sourceText": "maybe 150g ground lamb",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 150,
+          "quantityKind": "explicit-mass",
+          "quantity": 150,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Ground Lamb (Cooked)",
+          "nutrition": {
+            "calories": 424.5,
+            "protein": 37.2,
+            "carbs": 0.0,
+            "fat": 29.6,
+            "fiber": 0.0
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Ground Lamb (Cooked). Scale per-100g values only for the stated/reference-backed weight."
+        },
+        {
+          "key": "food-8",
+          "aliases": [
+            "rice"
+          ],
+          "sourceText": "120g rice",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": 120,
+          "quantityKind": "explicit-mass",
+          "quantity": 120,
+          "unit": "g",
+          "resolution": "reference",
+          "uncertainFields": [],
+          "reference": "Jasmine Rice / White Rice (Cooked)",
+          "nutrition": {
+            "calories": 156.0,
+            "protein": 3.2,
+            "carbs": 33.8,
+            "fat": 0.4,
+            "fiber": 0.5
+          },
+          "nutritionTolerance": {
+            "calories": 0.2,
+            "protein": 0.15,
+            "carbs": 0.15,
+            "fat": 0.15,
+            "fiber": 0.15
+          },
+          "evidence": "Pinned local seed contract: references.json / Jasmine Rice / White Rice (Cooked). Scale per-100g values only for the stated/reference-backed weight."
+        },
+        {
+          "key": "food-9",
+          "aliases": [
+            "hummus"
+          ],
+          "sourceText": "a few tablespoons of hummus",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "uncertain",
+          "uncertainFields": [
+            "portion grams"
+          ],
+          "reference": "Hummus",
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Literal food identity only. Portion/recipe is underspecified; grams/macros deliberately have no exact target. Any default must remain visibly uncertain."
+        },
+        {
+          "key": "food-10",
+          "aliases": [
+            "feta"
+          ],
+          "sourceText": "a sprinkle of feta",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "uncertain",
+          "uncertainFields": [
+            "portion grams"
+          ],
+          "reference": "Feta Cheese (Crumbled)",
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Literal food identity only. Portion/recipe is underspecified; grams/macros deliberately have no exact target. Any default must remain visibly uncertain."
+        },
+        {
+          "key": "food-11",
+          "aliases": [
+            "grapes"
+          ],
+          "sourceText": "maybe 2 handfuls of green grapes",
+          "qualifiers": [],
+          "forbiddenQualifiers": [],
+          "grams": null,
+          "quantityKind": "unspecified",
+          "quantity": null,
+          "unit": null,
+          "resolution": "uncertain",
+          "uncertainFields": [
+            "portion grams"
+          ],
+          "reference": "Green Grapes (Raw)",
+          "nutrition": null,
+          "nutritionTolerance": null,
+          "evidence": "Literal food identity only. Portion/recipe is underspecified; grams/macros deliberately have no exact target. Any default must remain visibly uncertain."
+        }
+      ],
+      "excludedFoods": [],
+      "stubResponse": {
+        "suggestedMealName": "Meal",
+        "items": [
+          {
+            "sourceText": "a medium size plate of chicken breast",
+            "foodName": "chicken breast",
+            "searchQuery": "chicken breast cooked grilled roasted",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 140,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          {
+            "sourceText": "2 slices aldi boule bread",
+            "foodName": "aldi boule bread",
+            "searchQuery": "aldi boule bread",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          {
+            "sourceText": "few teaspoons of jam",
+            "foodName": "jam",
+            "searchQuery": "jam fruit jam jelly preserves",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 20,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          {
+            "sourceText": "a medium light smoothie from orange julius",
+            "foodName": "a medium light smoothie from orange julius",
+            "searchQuery": "a medium light smoothie from orange julius",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          {
+            "sourceText": "a 8oz decaf latte w/ dairy milk",
+            "foodName": "latte",
+            "searchQuery": "latte caffe latte decaf latte dairy milk",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 240,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          {
+            "sourceText": "2 more slices of boule",
+            "foodName": "boule",
+            "searchQuery": "boule aldi boule bread artisan loaf",
+            "quantity": 2,
+            "unit": "slice",
+            "estimatedGrams": 90,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          {
+            "sourceText": "maybe 150g ground lamb",
+            "foodName": "ground lamb",
+            "searchQuery": "lamb ground lamb cooked",
+            "quantity": 150,
+            "unit": "g",
+            "estimatedGrams": 150,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          {
+            "sourceText": "120g rice",
+            "foodName": "rice",
+            "searchQuery": "white rice jasmine rice cooked",
+            "quantity": 120,
+            "unit": "g",
+            "estimatedGrams": 120,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          {
+            "sourceText": "a few tablespoons of hummus",
+            "foodName": "hummus",
+            "searchQuery": "hummus chickpea dip",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 30,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          {
+            "sourceText": "a sprinkle of feta",
+            "foodName": "feta",
+            "searchQuery": "feta cheese crumbled feta",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 28,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          },
+          {
+            "sourceText": "maybe 2 handfuls of green grapes",
+            "foodName": "grapes",
+            "searchQuery": "grapes green grapes seedless grapes",
+            "quantity": 1,
+            "unit": "serving",
+            "estimatedGrams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0
+          }
+        ]
+      },
+      "stubFormat": "json"
+    }
+  ]
+}

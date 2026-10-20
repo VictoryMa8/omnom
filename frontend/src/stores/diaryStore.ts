@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { DiaryApi, TargetsApi, type DayTimeline, type MealItem } from '../services/api';
+import { DiaryApi, TargetsApi, type DayTimeline, type MealItem, type MealEntry, type FavoriteMeal, type RememberedFood } from '../services/api';
 
 export const useDiaryStore = defineStore('diary', () => {
   const getTodayString = () => {
@@ -15,6 +15,10 @@ export const useDiaryStore = defineStore('diary', () => {
   const timeline = ref<DayTimeline | null>(null);
   const loading = ref(false);
   const error = ref<string | null>(null);
+  const week = ref<DayTimeline[]>([]);
+  const recentMeals = ref<MealEntry[]>([]);
+  const favorites = ref<FavoriteMeal[]>([]);
+  const rememberedFoods = ref<RememberedFood[]>([]);
 
   let latestRequest = 0;
 
@@ -25,11 +29,17 @@ export const useDiaryStore = defineStore('diary', () => {
     error.value = null;
     try {
       selectedDate.value = date;
-      const data = await DiaryApi.getTimeline(date);
-      if (requestId === latestRequest) timeline.value = data;
+      const [data, days, recent, library] = await Promise.all([
+        DiaryApi.getTimeline(date), DiaryApi.getWeek(date), DiaryApi.getRecentMeals(), DiaryApi.getLibrary(),
+      ]);
+      if (requestId === latestRequest) {
+        timeline.value = data; week.value = days; recentMeals.value = recent;
+        favorites.value = library.favorites; rememberedFoods.value = library.foods;
+      }
     } catch (err: any) {
       if (requestId === latestRequest) {
         timeline.value = null;
+        week.value = []; recentMeals.value = []; favorites.value = []; rememberedFoods.value = [];
         error.value = err.message || 'Failed to load timeline';
       }
     } finally {
@@ -102,6 +112,21 @@ export const useDiaryStore = defineStore('diary', () => {
     await fetchTimeline(selectedDate.value);
   };
 
+  const editMeal = async (id: number, data: { name: string; time?: string; rawDescription?: string; items: MealItem[] }) => {
+    loading.value = true;
+    try {
+      const change = await DiaryApi.updateMeal(id, data);
+      await fetchTimeline();
+      return async () => { await change.undo(); await fetchTimeline(); };
+    } finally { loading.value = false; }
+  };
+  const saveFavorite = async (meal: MealEntry) => { await DiaryApi.saveFavorite(meal); await fetchTimeline(); };
+  const deleteFavorite = async (id: number) => { await DiaryApi.deleteFavorite(id); await fetchTimeline(); };
+  const rememberFood = async (alias: string, item: MealItem, usePortion: boolean) => {
+    await DiaryApi.rememberFood(alias, item, usePortion); await fetchTimeline();
+  };
+  const forgetFood = async (id: number) => { await DiaryApi.forgetFood(id); await fetchTimeline(); };
+
   return {
     selectedDate,
     timeline,
@@ -113,5 +138,6 @@ export const useDiaryStore = defineStore('diary', () => {
     addMeal,
     deleteMeal,
     updateTarget,
+    editMeal, week, recentMeals, favorites, rememberedFoods, saveFavorite, deleteFavorite, rememberFood, forgetFood,
   };
 });

@@ -70,8 +70,9 @@ public sealed class PasscodeAccessFilter(PasscodeAccess access, IConfiguration c
         {
             if (configuration.GetValue<bool>("PUBLIC_DIARY"))
             {
-                // Public users only need parsing. Never expose the legacy shared diary or settings.
-                if (action.ControllerTypeInfo.AsType() == typeof(AiController)) return;
+                // Food references are public. Legacy shared diaries and settings remain private.
+                if (action.ControllerTypeInfo.AsType() == typeof(AiController)
+                    || action.ControllerTypeInfo.AsType() == typeof(FoodsController)) return;
                 context.Result = new NotFoundResult();
                 return;
             }

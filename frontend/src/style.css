@@ -212,3 +212,51 @@ label { font-size: 12px; color: #69755f; }
   .meal-meta { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+
+.food-search { display: grid; gap: 10px; }
+.food-search-input { display: flex; align-items: end; gap: 8px; }
+.food-search-input input { flex: 1; }
+.food-results { max-height: 240px; overflow-y: auto; display: grid; gap: 5px; }
+.food-result { display: flex; justify-content: space-between; text-align: left; gap: 14px; border: 1px solid #e3e8da; border-radius: 9px; background: #fff; padding: 10px; font-size: 12px; }
+.food-result:hover { background: #edf2e7; }
+.food-result span { min-width: 0; overflow-wrap: anywhere; }
+.food-result small { display: block; color: #7a866f; font-size: 10px; margin-top: 3px; }
+.food-result strong { flex-shrink: 0; font-weight: 500; text-align: right; }
+.remember-food { border-top: 1px solid #dfe5d7; padding-top: 12px; }
+.remember-food summary { font-size: 12px; color: #426548; cursor: pointer; }
+.remember-food > p, .remember-food > label, .remember-food > button { margin-top: 12px; }
+.meal-review .checkbox-label { display: flex; align-items: center; gap: 8px; line-height: 1.6; }
+.meal-review .checkbox-label input { display: inline; width: 16px; flex-shrink: 0; margin: 0; }
+.meal-actions { display: flex; gap: 2px; flex-shrink: 0; }
+.is-favorite { color: #9b7833; }
+.is-favorite svg { fill: #eee2b8; }
+.meal-library { padding: 22px; }
+.library-tabs { display: flex; flex-wrap: wrap; gap: 5px; margin: 16px 0; }
+.library-tabs button { background: transparent; border: 1px solid #dfe5d7; padding: 7px 12px; border-radius: 8px; font-size: 12px; color: #6e7b60; }
+.library-tabs .selected { background: #edf2e7; color: #31533f; border-color: #bccdaf; }
+.library-list { display: grid; gap: 7px; max-height: 310px; overflow-y: auto; }
+.library-row { display: flex; align-items: center; gap: 5px; border: 1px solid #e7ebdf; border-radius: 10px; padding: 3px 5px; }
+.library-pick { display: flex; justify-content: space-between; align-items: center; text-align: left; gap: 12px; flex: 1; min-width: 0; border: 0; background: transparent; color: #3e5537; padding: 9px; border-radius: 8px; font-size: 13px; }
+.library-pick:hover:not(:disabled) { background: #f3f6ed; }
+.library-pick span { overflow-wrap: anywhere; }
+.library-pick small { display: block; color: #7c8972; font-size: 11px; margin-top: 5px; }
+.weekly-progress { padding: 20px; }
+.weekly-progress h2 { font-size: 18px; }
+.week-stats { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; padding: 20px 0; }
+.week-stats strong { font-size: 19px; font-weight: 500; }
+.week-stats small { display: block; font-size: 10px; color: #7a866f; line-height: 1.5; margin-top: 5px; }
+.week-days { display: grid; gap: 5px; margin-bottom: 16px; }
+.week-day { display: flex; gap: 10px; align-items: center; border: 0; text-align: left; background: transparent; border-radius: 8px; padding: 8px 5px; color: #5b6c50; }
+.week-day:hover, .selected-day { background: #f0f4e9; }
+.week-day > span { width: 29px; flex-shrink: 0; font-size: 11px; }
+.week-day > span small { display: block; color: #8c977f; font-size: 10px; margin-top: 3px; }
+.week-day > div { min-width: 0; flex: 1; }
+.week-day > div > small { font-size: 9px; display: block; margin-top: 5px; color: #7c8972; line-height: 1.5; }
+.week-track { height: 5px; border-radius: 8px; background: #e6ebde; overflow: hidden; }
+.week-track i { display: block; height: 100%; background: #8ca479; border-radius: inherit; }
+@media (max-width: 700px) {
+  .weekly-progress { margin-top: 18px; }
+  .saved-meal-footer { flex-wrap: wrap; gap: 10px; }
+  .meal-actions { margin-left: auto; }
+  .meal-library { padding: 20px 16px; }
+}

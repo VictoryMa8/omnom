@@ -1,0 +1,4968 @@
+{
+  "datasetVersion": "1.0.0",
+  "datasetSha256": "7AAF0FDBB0744B84BBA2466B39EF3ABBB061213746519AE49D07C7600B147594",
+  "referenceSha256": "30558462F409F1E754F6A153874F6DCA00DF014618F5191FEBDBD0B512901B3A",
+  "mode": "stubbed-ai",
+  "revision": "11239373c2da77dea10da4ff170903f70244f70f",
+  "workingTree": "M .dockerignore\n M .gitignore\n M .vercelignore\n M AGENTS.md\n M DEV_README.md\n M README.md\n M backend/Controllers/FoodsController.cs\n M backend/Models/AiParsingModels.cs\n M backend/Services/MealParserService.cs\n M backend/Services/OpenRouterService.cs\n M backend/Services/ParseLimits.cs\n M backend/Services/PasscodeAccess.cs\n M backend/Services/UsdaFoodService.cs\n D backend/wwwroot/assets/index-B16lk6XZ.js\n D backend/wwwroot/assets/index-CirqwieY.css\n M backend/wwwroot/index.html\n M frontend/README.md\n M frontend/package-lock.json\n M frontend/package.json\n M frontend/src/App.vue\n M frontend/src/components/BrowserDataModal.vue\n M frontend/src/components/MealCard.vue\n M frontend/src/components/MealConfirmCard.vue\n M frontend/src/components/QuickLogInput.vue\n M frontend/src/components/TimelineFeed.vue\n M frontend/src/services/api.ts\n M frontend/src/services/localDiary.ts\n M frontend/src/stores/diaryStore.ts\n M frontend/src/style.css\n M frontend/tests/regressions.test.mjs\n M frontend/vite.config.ts\n M tests/Omnom.Tests/MealMatchingTests.cs\n M tests/Omnom.Tests/Omnom.Tests.csproj\n M tests/Omnom.Tests/PublicDiaryTests.cs\n M tests/Omnom.Tests/ServerAiConfigurationTests.cs\n?? RELEASES.md\n?? ROADMAP.md\n?? backend/wwwroot/assets/index--fV-JC2x.css\n?? backend/wwwroot/assets/index-T1PuEMa2.js\n?? docs/\n?? frontend/src/components/FoodSearch.vue\n?? frontend/src/components/MealLibrary.vue\n?? frontend/src/components/WeeklyProgress.vue\n?? frontend/src/utils/foodDefaults.ts\n?? frontend/tests/smoke/\n?? tests/Omnom.Tests/FreeModelRoutingTests.cs\n?? tests/Omnom.Tests/IntelligenceRegressionTests.cs\n?? tests/Omnom.Tests/MealEvaluationTests.cs\n?? tests/Omnom.Tests/ReferenceClarificationTests.cs\n?? tests/fixtures/\n?? tools/",
+  "startedAt": "2026-10-20T23:23:20.282121+00:00",
+  "completedAt": "2026-10-20T23:23:20.438417+00:00",
+  "environment": {
+    "dotnet": "8.0.19",
+    "platform": "Darwin 27.0.0 Darwin Kernel Version 27.0.0: Tue Aug 11 21:02:57 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T8132"
+  },
+  "massToleranceGrams": 0.1,
+  "offlineNetworkAttempts": 0,
+  "selectedCases": 66,
+  "unattemptedCaseIds": [],
+  "stopReason": null,
+  "live": {
+    "enabled": false,
+    "requestCap": null,
+    "requestsSent": 0,
+    "approvedModels": [
+      "inclusionai/ling-3.1-flash",
+      "apodex/apodex-1.1-mini:free"
+    ],
+    "requestedModels": [],
+    "actualModels": [],
+    "requestsWithReportedCost": 0,
+    "reportedCostSum": null,
+    "requestsWithoutReportedCost": 0
+  },
+  "metrics": {
+    "attempted": 66,
+    "scored": 66,
+    "notScored": 0,
+    "itemPrecision": {
+      "numerator": 77,
+      "denominator": 86,
+      "rate": 0.8953
+    },
+    "itemRecall": {
+      "numerator": 77,
+      "denominator": 86,
+      "rate": 0.8953
+    },
+    "fullyCorrectMeals": {
+      "numerator": 52,
+      "denominator": 66,
+      "rate": 0.7879
+    },
+    "explicitMassAccuracy": {
+      "numerator": 56,
+      "denominator": 61,
+      "rate": 0.918
+    },
+    "portionAccuracy": {
+      "numerator": 59,
+      "denominator": 64,
+      "rate": 0.9219
+    },
+    "quantityAccuracy": {
+      "numerator": 59,
+      "denominator": 64,
+      "rate": 0.9219
+    },
+    "qualifierErrors": 6,
+    "forbiddenSubstitutions": 11,
+    "exclusionViolations": 0,
+    "unresolvedItems": 8,
+    "estimatedItems": 2,
+    "fallback": {
+      "numerator": 1,
+      "denominator": 66,
+      "rate": 0.0152
+    },
+    "failures": 0
+  },
+  "byCategory": {
+    "mass": {
+      "attempted": 8,
+      "scored": 8,
+      "notScored": 0,
+      "itemPrecision": {
+        "numerator": 8,
+        "denominator": 8,
+        "rate": 1
+      },
+      "itemRecall": {
+        "numerator": 8,
+        "denominator": 8,
+        "rate": 1
+      },
+      "fullyCorrectMeals": {
+        "numerator": 8,
+        "denominator": 8,
+        "rate": 1
+      },
+      "explicitMassAccuracy": {
+        "numerator": 8,
+        "denominator": 8,
+        "rate": 1
+      },
+      "portionAccuracy": {
+        "numerator": 8,
+        "denominator": 8,
+        "rate": 1
+      },
+      "quantityAccuracy": {
+        "numerator": 8,
+        "denominator": 8,
+        "rate": 1
+      },
+      "qualifierErrors": 0,
+      "forbiddenSubstitutions": 0,
+      "exclusionViolations": 0,
+      "unresolvedItems": 0,
+      "estimatedItems": 0,
+      "fallback": {
+        "numerator": 0,
+        "denominator": 8,
+        "rate": 0
+      },
+      "failures": 0
+    },
+    "preparation": {
+      "attempted": 8,
+      "scored": 8,
+      "notScored": 0,
+      "itemPrecision": {
+        "numerator": 8,
+        "denominator": 8,
+        "rate": 1
+      },
+      "itemRecall": {
+        "numerator": 8,
+        "denominator": 8,
+        "rate": 1
+      },
+      "fullyCorrectMeals": {
+        "numerator": 8,
+        "denominator": 8,
+        "rate": 1
+      },
+      "explicitMassAccuracy": {
+        "numerator": 8,
+        "denominator": 8,
+        "rate": 1
+      },
+      "portionAccuracy": {
+        "numerator": 8,
+        "denominator": 8,
+        "rate": 1
+      },
+      "quantityAccuracy": {
+        "numerator": 8,
+        "denominator": 8,
+        "rate": 1
+      },
+      "qualifierErrors": 0,
+      "forbiddenSubstitutions": 0,
+      "exclusionViolations": 0,
+      "unresolvedItems": 2,
+      "estimatedItems": 0,
+      "fallback": {
+        "numerator": 0,
+        "denominator": 8,
+        "rate": 0
+      },
+      "failures": 0
+    },
+    "qualifiers": {
+      "attempted": 8,
+      "scored": 8,
+      "notScored": 0,
+      "itemPrecision": {
+        "numerator": 8,
+        "denominator": 8,
+        "rate": 1
+      },
+      "itemRecall": {
+        "numerator": 8,
+        "denominator": 8,
+        "rate": 1
+      },
+      "fullyCorrectMeals": {
+        "numerator": 8,
+        "denominator": 8,
+        "rate": 1
+      },
+      "explicitMassAccuracy": {
+        "numerator": 6,
+        "denominator": 6,
+        "rate": 1
+      },
+      "portionAccuracy": {
+        "numerator": 6,
+        "denominator": 6,
+        "rate": 1
+      },
+      "quantityAccuracy": {
+        "numerator": 6,
+        "denominator": 6,
+        "rate": 1
+      },
+      "qualifierErrors": 0,
+      "forbiddenSubstitutions": 0,
+      "exclusionViolations": 0,
+      "unresolvedItems": 0,
+      "estimatedItems": 2,
+      "fallback": {
+        "numerator": 0,
+        "denominator": 8,
+        "rate": 0
+      },
+      "failures": 0
+    },
+    "brands": {
+      "attempted": 8,
+      "scored": 8,
+      "notScored": 0,
+      "itemPrecision": {
+        "numerator": 6,
+        "denominator": 8,
+        "rate": 0.75
+      },
+      "itemRecall": {
+        "numerator": 6,
+        "denominator": 8,
+        "rate": 0.75
+      },
+      "fullyCorrectMeals": {
+        "numerator": 2,
+        "denominator": 8,
+        "rate": 0.25
+      },
+      "explicitMassAccuracy": {
+        "numerator": 6,
+        "denominator": 8,
+        "rate": 0.75
+      },
+      "portionAccuracy": {
+        "numerator": 6,
+        "denominator": 8,
+        "rate": 0.75
+      },
+      "quantityAccuracy": {
+        "numerator": 6,
+        "denominator": 8,
+        "rate": 0.75
+      },
+      "qualifierErrors": 4,
+      "forbiddenSubstitutions": 6,
+      "exclusionViolations": 0,
+      "unresolvedItems": 1,
+      "estimatedItems": 0,
+      "fallback": {
+        "numerator": 0,
+        "denominator": 8,
+        "rate": 0
+      },
+      "failures": 0
+    },
+    "vague": {
+      "attempted": 8,
+      "scored": 8,
+      "notScored": 0,
+      "itemPrecision": {
+        "numerator": 8,
+        "denominator": 8,
+        "rate": 1
+      },
+      "itemRecall": {
+        "numerator": 8,
+        "denominator": 8,
+        "rate": 1
+      },
+      "fullyCorrectMeals": {
+        "numerator": 8,
+        "denominator": 8,
+        "rate": 1
+      },
+      "explicitMassAccuracy": {
+        "numerator": 0,
+        "denominator": 0,
+        "rate": null
+      },
+      "portionAccuracy": {
+        "numerator": 0,
+        "denominator": 0,
+        "rate": null
+      },
+      "quantityAccuracy": {
+        "numerator": 0,
+        "denominator": 0,
+        "rate": null
+      },
+      "qualifierErrors": 0,
+      "forbiddenSubstitutions": 0,
+      "exclusionViolations": 0,
+      "unresolvedItems": 0,
+      "estimatedItems": 0,
+      "fallback": {
+        "numerator": 0,
+        "denominator": 8,
+        "rate": 0
+      },
+      "failures": 0
+    },
+    "mixed": {
+      "attempted": 8,
+      "scored": 8,
+      "notScored": 0,
+      "itemPrecision": {
+        "numerator": 10,
+        "denominator": 14,
+        "rate": 0.7143
+      },
+      "itemRecall": {
+        "numerator": 10,
+        "denominator": 14,
+        "rate": 0.7143
+      },
+      "fullyCorrectMeals": {
+        "numerator": 4,
+        "denominator": 8,
+        "rate": 0.5
+      },
+      "explicitMassAccuracy": {
+        "numerator": 10,
+        "denominator": 10,
+        "rate": 1
+      },
+      "portionAccuracy": {
+        "numerator": 10,
+        "denominator": 10,
+        "rate": 1
+      },
+      "quantityAccuracy": {
+        "numerator": 10,
+        "denominator": 10,
+        "rate": 1
+      },
+      "qualifierErrors": 0,
+      "forbiddenSubstitutions": 0,
+      "exclusionViolations": 0,
+      "unresolvedItems": 0,
+      "estimatedItems": 0,
+      "fallback": {
+        "numerator": 0,
+        "denominator": 8,
+        "rate": 0
+      },
+      "failures": 0
+    },
+    "corrections": {
+      "attempted": 8,
+      "scored": 8,
+      "notScored": 0,
+      "itemPrecision": {
+        "numerator": 9,
+        "denominator": 9,
+        "rate": 1
+      },
+      "itemRecall": {
+        "numerator": 9,
+        "denominator": 9,
+        "rate": 1
+      },
+      "fullyCorrectMeals": {
+        "numerator": 8,
+        "denominator": 8,
+        "rate": 1
+      },
+      "explicitMassAccuracy": {
+        "numerator": 7,
+        "denominator": 7,
+        "rate": 1
+      },
+      "portionAccuracy": {
+        "numerator": 9,
+        "denominator": 9,
+        "rate": 1
+      },
+      "quantityAccuracy": {
+        "numerator": 9,
+        "denominator": 9,
+        "rate": 1
+      },
+      "qualifierErrors": 0,
+      "forbiddenSubstitutions": 0,
+      "exclusionViolations": 0,
+      "unresolvedItems": 0,
+      "estimatedItems": 0,
+      "fallback": {
+        "numerator": 0,
+        "denominator": 8,
+        "rate": 0
+      },
+      "failures": 0
+    },
+    "unknown": {
+      "attempted": 8,
+      "scored": 8,
+      "notScored": 0,
+      "itemPrecision": {
+        "numerator": 5,
+        "denominator": 8,
+        "rate": 0.625
+      },
+      "itemRecall": {
+        "numerator": 5,
+        "denominator": 8,
+        "rate": 0.625
+      },
+      "fullyCorrectMeals": {
+        "numerator": 5,
+        "denominator": 8,
+        "rate": 0.625
+      },
+      "explicitMassAccuracy": {
+        "numerator": 5,
+        "denominator": 8,
+        "rate": 0.625
+      },
+      "portionAccuracy": {
+        "numerator": 5,
+        "denominator": 8,
+        "rate": 0.625
+      },
+      "quantityAccuracy": {
+        "numerator": 5,
+        "denominator": 8,
+        "rate": 0.625
+      },
+      "qualifierErrors": 0,
+      "forbiddenSubstitutions": 3,
+      "exclusionViolations": 0,
+      "unresolvedItems": 5,
+      "estimatedItems": 0,
+      "fallback": {
+        "numerator": 1,
+        "denominator": 8,
+        "rate": 0.125
+      },
+      "failures": 0
+    },
+    "full-day": {
+      "attempted": 2,
+      "scored": 2,
+      "notScored": 0,
+      "itemPrecision": {
+        "numerator": 15,
+        "denominator": 15,
+        "rate": 1
+      },
+      "itemRecall": {
+        "numerator": 15,
+        "denominator": 15,
+        "rate": 1
+      },
+      "fullyCorrectMeals": {
+        "numerator": 1,
+        "denominator": 2,
+        "rate": 0.5
+      },
+      "explicitMassAccuracy": {
+        "numerator": 6,
+        "denominator": 6,
+        "rate": 1
+      },
+      "portionAccuracy": {
+        "numerator": 7,
+        "denominator": 7,
+        "rate": 1
+      },
+      "quantityAccuracy": {
+        "numerator": 7,
+        "denominator": 7,
+        "rate": 1
+      },
+      "qualifierErrors": 2,
+      "forbiddenSubstitutions": 2,
+      "exclusionViolations": 0,
+      "unresolvedItems": 0,
+      "estimatedItems": 0,
+      "fallback": {
+        "numerator": 0,
+        "denominator": 2,
+        "rate": 0
+      },
+      "failures": 0
+    }
+  },
+  "cases": [
+    {
+      "id": "MASS-001",
+      "category": "mass",
+      "outcome": "scored",
+      "elapsedMs": 39.8681,
+      "fallback": false,
+      "score": {
+        "id": "MASS-001",
+        "category": "mass",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g cooked chicken breast",
+            "referenceFoodId": 1,
+            "foodName": "Chicken Breast (Cooked, roasted/grilled)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 165,
+            "protein": 31,
+            "carbs": 0,
+            "fat": 3.6,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "MASS-002",
+      "category": "mass",
+      "outcome": "scored",
+      "elapsedMs": 1.0188,
+      "fallback": false,
+      "score": {
+        "id": "MASS-002",
+        "category": "mass",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "150g raw chicken breast",
+            "referenceFoodId": 2,
+            "foodName": "Chicken Breast (Raw, boneless skinless)",
+            "quantity": 150,
+            "unit": "g",
+            "grams": 150,
+            "calories": 180,
+            "protein": 33.8,
+            "carbs": 0,
+            "fat": 3.9,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "MASS-003",
+      "category": "mass",
+      "outcome": "scored",
+      "elapsedMs": 0.8687,
+      "fallback": false,
+      "score": {
+        "id": "MASS-003",
+        "category": "mass",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "8oz cooked chicken thigh",
+            "referenceFoodId": 3,
+            "foodName": "Chicken Thigh (Cooked, skinless)",
+            "quantity": 8,
+            "unit": "oz",
+            "grams": 226.8,
+            "calories": 474,
+            "protein": 59,
+            "carbs": 0,
+            "fat": 24.7,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "MASS-004",
+      "category": "mass",
+      "outcome": "scored",
+      "elapsedMs": 0.8508,
+      "fallback": false,
+      "score": {
+        "id": "MASS-004",
+        "category": "mass",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": ".5 kg cooked chicken breast",
+            "referenceFoodId": 1,
+            "foodName": "Chicken Breast (Cooked, roasted/grilled)",
+            "quantity": 0.5,
+            "unit": "kg",
+            "grams": 500,
+            "calories": 825,
+            "protein": 155,
+            "carbs": 0,
+            "fat": 18,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "MASS-005",
+      "category": "mass",
+      "outcome": "scored",
+      "elapsedMs": 0.832,
+      "fallback": false,
+      "score": {
+        "id": "MASS-005",
+        "category": "mass",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "1/2 lb cooked ground lamb",
+            "referenceFoodId": 48,
+            "foodName": "Ground Lamb (Cooked)",
+            "quantity": 0.5,
+            "unit": "lb",
+            "grams": 226.8,
+            "calories": 641.8,
+            "protein": 56.2,
+            "carbs": 0,
+            "fat": 44.7,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "MASS-006",
+      "category": "mass",
+      "outcome": "scored",
+      "elapsedMs": 4.0776,
+      "fallback": false,
+      "score": {
+        "id": "MASS-006",
+        "category": "mass",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": ".25 kg dry oats",
+            "referenceFoodId": 27,
+            "foodName": "Rolled Oats / Oatmeal (Dry)",
+            "quantity": 0.25,
+            "unit": "kg",
+            "grams": 250,
+            "calories": 972.5,
+            "protein": 42.2,
+            "carbs": 165.8,
+            "fat": 17.2,
+            "fiber": 26.5,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "MASS-007",
+      "category": "mass",
+      "outcome": "scored",
+      "elapsedMs": 0.8797,
+      "fallback": false,
+      "score": {
+        "id": "MASS-007",
+        "category": "mass",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "150.5g cooked jasmine rice",
+            "referenceFoodId": 24,
+            "foodName": "Jasmine Rice / White Rice (Cooked)",
+            "quantity": 150.5,
+            "unit": "g",
+            "grams": 150.5,
+            "calories": 195.6,
+            "protein": 4.1,
+            "carbs": 42.4,
+            "fat": 0.5,
+            "fiber": 0.6,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "MASS-008",
+      "category": "mass",
+      "outcome": "scored",
+      "elapsedMs": 0.369,
+      "fallback": false,
+      "score": {
+        "id": "MASS-008",
+        "category": "mass",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "3/4 oz almonds",
+            "referenceFoodId": 40,
+            "foodName": "Almonds (Raw / Roasted)",
+            "quantity": 0.75,
+            "unit": "oz",
+            "grams": 21.3,
+            "calories": 123.1,
+            "protein": 4.5,
+            "carbs": 4.7,
+            "fat": 10.6,
+            "fiber": 2.7,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "PREPARATION-001",
+      "category": "preparation",
+      "outcome": "scored",
+      "elapsedMs": 0.8336,
+      "fallback": false,
+      "score": {
+        "id": "PREPARATION-001",
+        "category": "preparation",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g raw chicken breast",
+            "referenceFoodId": 2,
+            "foodName": "Chicken Breast (Raw, boneless skinless)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 120,
+            "protein": 22.5,
+            "carbs": 0,
+            "fat": 2.6,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "PREPARATION-002",
+      "category": "preparation",
+      "outcome": "scored",
+      "elapsedMs": 1.0012,
+      "fallback": false,
+      "score": {
+        "id": "PREPARATION-002",
+        "category": "preparation",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g cooked chicken breast",
+            "referenceFoodId": 1,
+            "foodName": "Chicken Breast (Cooked, roasted/grilled)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 165,
+            "protein": 31,
+            "carbs": 0,
+            "fat": 3.6,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "PREPARATION-003",
+      "category": "preparation",
+      "outcome": "scored",
+      "elapsedMs": 0.3728,
+      "fallback": false,
+      "score": {
+        "id": "PREPARATION-003",
+        "category": "preparation",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g dry white rice",
+            "referenceFoodId": 25,
+            "foodName": "White Rice (Dry / Raw)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 365,
+            "protein": 7.1,
+            "carbs": 80,
+            "fat": 0.7,
+            "fiber": 1.3,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "PREPARATION-004",
+      "category": "preparation",
+      "outcome": "scored",
+      "elapsedMs": 0.355,
+      "fallback": false,
+      "score": {
+        "id": "PREPARATION-004",
+        "category": "preparation",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g cooked white rice",
+            "referenceFoodId": 24,
+            "foodName": "Jasmine Rice / White Rice (Cooked)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 130,
+            "protein": 2.7,
+            "carbs": 28.2,
+            "fat": 0.3,
+            "fiber": 0.4,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "PREPARATION-005",
+      "category": "preparation",
+      "outcome": "scored",
+      "elapsedMs": 0.9373,
+      "fallback": false,
+      "score": {
+        "id": "PREPARATION-005",
+        "category": "preparation",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "120g raw chicken thigh",
+            "referenceFoodId": 4,
+            "foodName": "Chicken Thigh (Raw, skinless)",
+            "quantity": 120,
+            "unit": "g",
+            "grams": 120,
+            "calories": 145.2,
+            "protein": 24,
+            "carbs": 0,
+            "fat": 5.4,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "PREPARATION-006",
+      "category": "preparation",
+      "outcome": "scored",
+      "elapsedMs": 0.912,
+      "fallback": false,
+      "score": {
+        "id": "PREPARATION-006",
+        "category": "preparation",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "120g cooked chicken thigh",
+            "referenceFoodId": 3,
+            "foodName": "Chicken Thigh (Cooked, skinless)",
+            "quantity": 120,
+            "unit": "g",
+            "grams": 120,
+            "calories": 250.8,
+            "protein": 31.2,
+            "carbs": 0,
+            "fat": 13.1,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "PREPARATION-007",
+      "category": "preparation",
+      "outcome": "scored",
+      "elapsedMs": 0.4019,
+      "fallback": false,
+      "score": {
+        "id": "PREPARATION-007",
+        "category": "preparation",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g raw ground lamb",
+            "referenceFoodId": null,
+            "foodName": "raw ground lamb",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "Unparsed",
+            "assumptions": [
+              "No nutrition match; enter values from the label"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "PREPARATION-008",
+      "category": "preparation",
+      "outcome": "scored",
+      "elapsedMs": 0.2695,
+      "fallback": false,
+      "score": {
+        "id": "PREPARATION-008",
+        "category": "preparation",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g dry pasta",
+            "referenceFoodId": null,
+            "foodName": "dry pasta",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "Unparsed",
+            "assumptions": [
+              "No nutrition match; enter values from the label"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "QUALIFIERS-001",
+      "category": "qualifiers",
+      "outcome": "scored",
+      "elapsedMs": 0.2859,
+      "fallback": false,
+      "score": {
+        "id": "QUALIFIERS-001",
+        "category": "qualifiers",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g nonfat Greek yogurt",
+            "referenceFoodId": 16,
+            "foodName": "Greek Yogurt (Nonfat, Plain 0%)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 59,
+            "protein": 10.2,
+            "carbs": 3.6,
+            "fat": 0.4,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "QUALIFIERS-002",
+      "category": "qualifiers",
+      "outcome": "scored",
+      "elapsedMs": 0.3132,
+      "fallback": false,
+      "score": {
+        "id": "QUALIFIERS-002",
+        "category": "qualifiers",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g skim milk",
+            "referenceFoodId": 22,
+            "foodName": "Skim Milk (Nonfat)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 34,
+            "protein": 3.4,
+            "carbs": 5,
+            "fat": 0.1,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "QUALIFIERS-003",
+      "category": "qualifiers",
+      "outcome": "scored",
+      "elapsedMs": 0.3282,
+      "fallback": false,
+      "score": {
+        "id": "QUALIFIERS-003",
+        "category": "qualifiers",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g whole milk",
+            "referenceFoodId": 21,
+            "foodName": "Whole Milk",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 61,
+            "protein": 3.2,
+            "carbs": 4.8,
+            "fat": 3.3,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "QUALIFIERS-004",
+      "category": "qualifiers",
+      "outcome": "scored",
+      "elapsedMs": 0.749,
+      "fallback": false,
+      "score": {
+        "id": "QUALIFIERS-004",
+        "category": "qualifiers",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g 93/7 cooked ground beef",
+            "referenceFoodId": 5,
+            "foodName": "Ground Beef 93/7 Lean (Cooked)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 218,
+            "protein": 26.5,
+            "carbs": 0,
+            "fat": 11.5,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "QUALIFIERS-005",
+      "category": "qualifiers",
+      "outcome": "scored",
+      "elapsedMs": 0.7009,
+      "fallback": false,
+      "score": {
+        "id": "QUALIFIERS-005",
+        "category": "qualifiers",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g 80/20 cooked ground beef",
+            "referenceFoodId": 6,
+            "foodName": "Ground Beef 80/20 Lean (Cooked)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 270,
+            "protein": 24,
+            "carbs": 0,
+            "fat": 19,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "QUALIFIERS-006",
+      "category": "qualifiers",
+      "outcome": "scored",
+      "elapsedMs": 0.2408,
+      "fallback": false,
+      "score": {
+        "id": "QUALIFIERS-006",
+        "category": "qualifiers",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 0,
+        "explicitMassCorrect": 0,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "1 can diet coke",
+            "referenceFoodId": null,
+            "foodName": "diet coke",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "Estimated",
+            "assumptions": [
+              "Estimated portion",
+              "Estimated nutrition"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "QUALIFIERS-007",
+      "category": "qualifiers",
+      "outcome": "scored",
+      "elapsedMs": 0.2176,
+      "fallback": false,
+      "score": {
+        "id": "QUALIFIERS-007",
+        "category": "qualifiers",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 0,
+        "explicitMassCorrect": 0,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "1 can coke zero",
+            "referenceFoodId": null,
+            "foodName": "coke zero",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "Estimated",
+            "assumptions": [
+              "Estimated portion",
+              "Estimated nutrition"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "QUALIFIERS-008",
+      "category": "qualifiers",
+      "outcome": "scored",
+      "elapsedMs": 0.2671,
+      "fallback": false,
+      "score": {
+        "id": "QUALIFIERS-008",
+        "category": "qualifiers",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g lowfat cottage cheese",
+            "referenceFoodId": 18,
+            "foodName": "Cottage Cheese (Lowfat 2%)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 81,
+            "protein": 11,
+            "carbs": 4.8,
+            "fat": 2.3,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "BRANDS-001",
+      "category": "brands",
+      "outcome": "scored",
+      "elapsedMs": 0.3099,
+      "fallback": false,
+      "score": {
+        "id": "BRANDS-001",
+        "category": "brands",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 1,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 1,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": false,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": false,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": false,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": false,
+            "failures": [
+              "preparation/brand/diet/lean qualifier mismatch",
+              "resolution/source expectation differs"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g Aldi boule bread",
+            "referenceFoodId": 55,
+            "foodName": "Boule Bread (Artisan Sourdough)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 260,
+            "protein": 9,
+            "carbs": 50,
+            "fat": 2.5,
+            "fiber": 2.2,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "BRANDS-002",
+      "category": "brands",
+      "outcome": "scored",
+      "elapsedMs": 0.3387,
+      "fallback": false,
+      "score": {
+        "id": "BRANDS-002",
+        "category": "brands",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 1,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 1,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": false,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": false,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": false,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": false,
+            "failures": [
+              "preparation/brand/diet/lean qualifier mismatch",
+              "resolution/source expectation differs"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g Fage nonfat Greek yogurt",
+            "referenceFoodId": 16,
+            "foodName": "Greek Yogurt (Nonfat, Plain 0%)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 59,
+            "protein": 10.2,
+            "carbs": 3.6,
+            "fat": 0.4,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "BRANDS-003",
+      "category": "brands",
+      "outcome": "scored",
+      "elapsedMs": 0.3951,
+      "fallback": false,
+      "score": {
+        "id": "BRANDS-003",
+        "category": "brands",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 0,
+        "falsePositives": 1,
+        "falseNegatives": 1,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 1,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 0,
+        "fullyCorrect": false,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": null,
+            "identityCorrect": false,
+            "qualifiersCorrect": false,
+            "explicitMassCorrect": false,
+            "portionCorrect": false,
+            "countCorrect": false,
+            "resolutionCorrect": false,
+            "uncertaintyVisible": false,
+            "nutritionCorrect": null,
+            "correct": false,
+            "failures": [
+              "missing food"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g Quest protein chips",
+            "referenceFoodId": 19,
+            "foodName": "Whey Protein Powder (Isolate / Concentrate)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 380,
+            "protein": 80,
+            "carbs": 6,
+            "fat": 3.5,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "BRANDS-004",
+      "category": "brands",
+      "outcome": "scored",
+      "elapsedMs": 0.332,
+      "fallback": false,
+      "score": {
+        "id": "BRANDS-004",
+        "category": "brands",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g Huel instant meal",
+            "referenceFoodId": null,
+            "foodName": "Huel instant meal",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "Unparsed",
+            "assumptions": [
+              "No nutrition match; enter values from the label"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "BRANDS-005",
+      "category": "brands",
+      "outcome": "scored",
+      "elapsedMs": 0.3213,
+      "fallback": false,
+      "score": {
+        "id": "BRANDS-005",
+        "category": "brands",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 0,
+        "falsePositives": 1,
+        "falseNegatives": 1,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 1,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 0,
+        "fullyCorrect": false,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": null,
+            "identityCorrect": false,
+            "qualifiersCorrect": false,
+            "explicitMassCorrect": false,
+            "portionCorrect": false,
+            "countCorrect": false,
+            "resolutionCorrect": false,
+            "uncertaintyVisible": false,
+            "nutritionCorrect": null,
+            "correct": false,
+            "failures": [
+              "missing food"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g Acme chocolate whey",
+            "referenceFoodId": 58,
+            "foodName": "Cola (Regular)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 42,
+            "protein": 0,
+            "carbs": 10.4,
+            "fat": 0,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "BRANDS-006",
+      "category": "brands",
+      "outcome": "scored",
+      "elapsedMs": 0.2855,
+      "fallback": false,
+      "score": {
+        "id": "BRANDS-006",
+        "category": "brands",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 1,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 1,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": false,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": false,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": false,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": false,
+            "failures": [
+              "preparation/brand/diet/lean qualifier mismatch",
+              "resolution/source expectation differs"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g Trader Joe hummus",
+            "referenceFoodId": 50,
+            "foodName": "Hummus",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 166,
+            "protein": 7.9,
+            "carbs": 14.3,
+            "fat": 9.6,
+            "fiber": 6,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "BRANDS-007",
+      "category": "brands",
+      "outcome": "scored",
+      "elapsedMs": 0.3602,
+      "fallback": false,
+      "score": {
+        "id": "BRANDS-007",
+        "category": "brands",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 1,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 1,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": false,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": false,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": false,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": false,
+            "failures": [
+              "preparation/brand/diet/lean qualifier mismatch",
+              "resolution/source expectation differs"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g Costco pepperoni pizza",
+            "referenceFoodId": 56,
+            "foodName": "Cheese Pizza",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 266,
+            "protein": 11.4,
+            "carbs": 33.3,
+            "fat": 9.8,
+            "fiber": 2.3,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "BRANDS-008",
+      "category": "brands",
+      "outcome": "scored",
+      "elapsedMs": 1.3843,
+      "fallback": false,
+      "score": {
+        "id": "BRANDS-008",
+        "category": "brands",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g Fairlife Core Power milk",
+            "referenceFoodId": 23,
+            "foodName": "Fairlife Core Power / Ultra-Filtered Milk 2%",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 58,
+            "protein": 5.4,
+            "carbs": 2.5,
+            "fat": 1.9,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "VAGUE-001",
+      "category": "vague",
+      "outcome": "scored",
+      "elapsedMs": 0.513,
+      "fallback": false,
+      "score": {
+        "id": "VAGUE-001",
+        "category": "vague",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 0,
+        "explicitMassCorrect": 0,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "a handful of green grapes",
+            "referenceFoodId": 52,
+            "foodName": "Green Grapes (Raw)",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 100,
+            "calories": 69,
+            "protein": 0.7,
+            "carbs": 18.1,
+            "fat": 0.2,
+            "fiber": 0.9,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "VAGUE-002",
+      "category": "vague",
+      "outcome": "scored",
+      "elapsedMs": 1.7349,
+      "fallback": false,
+      "score": {
+        "id": "VAGUE-002",
+        "category": "vague",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 0,
+        "explicitMassCorrect": 0,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "a medium plate of chicken breast",
+            "referenceFoodId": 1,
+            "foodName": "Chicken Breast (Cooked, roasted/grilled)",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 140,
+            "calories": 231,
+            "protein": 43.4,
+            "carbs": 0,
+            "fat": 5,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "VAGUE-003",
+      "category": "vague",
+      "outcome": "scored",
+      "elapsedMs": 0.2655,
+      "fallback": false,
+      "score": {
+        "id": "VAGUE-003",
+        "category": "vague",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 0,
+        "explicitMassCorrect": 0,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "some hummus",
+            "referenceFoodId": 50,
+            "foodName": "Hummus",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 30,
+            "calories": 49.8,
+            "protein": 2.4,
+            "carbs": 4.3,
+            "fat": 2.9,
+            "fiber": 1.8,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "VAGUE-004",
+      "category": "vague",
+      "outcome": "scored",
+      "elapsedMs": 0.2673,
+      "fallback": false,
+      "score": {
+        "id": "VAGUE-004",
+        "category": "vague",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 0,
+        "explicitMassCorrect": 0,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "a sprinkle of feta",
+            "referenceFoodId": 49,
+            "foodName": "Feta Cheese (Crumbled)",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 28,
+            "calories": 74.2,
+            "protein": 4,
+            "carbs": 1.1,
+            "fat": 6,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "VAGUE-005",
+      "category": "vague",
+      "outcome": "scored",
+      "elapsedMs": 0.6508,
+      "fallback": false,
+      "score": {
+        "id": "VAGUE-005",
+        "category": "vague",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 0,
+        "explicitMassCorrect": 0,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "a bowl of rice",
+            "referenceFoodId": 24,
+            "foodName": "Jasmine Rice / White Rice (Cooked)",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 158,
+            "calories": 205.4,
+            "protein": 4.3,
+            "carbs": 44.6,
+            "fat": 0.5,
+            "fiber": 0.6,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "VAGUE-006",
+      "category": "vague",
+      "outcome": "scored",
+      "elapsedMs": 0.2241,
+      "fallback": false,
+      "score": {
+        "id": "VAGUE-006",
+        "category": "vague",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 0,
+        "explicitMassCorrect": 0,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "a few almonds",
+            "referenceFoodId": 40,
+            "foodName": "Almonds (Raw / Roasted)",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 28,
+            "calories": 162.1,
+            "protein": 5.9,
+            "carbs": 6.2,
+            "fat": 14,
+            "fiber": 3.5,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "VAGUE-007",
+      "category": "vague",
+      "outcome": "scored",
+      "elapsedMs": 0.3097,
+      "fallback": false,
+      "score": {
+        "id": "VAGUE-007",
+        "category": "vague",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 0,
+        "explicitMassCorrect": 0,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "a small smoothie",
+            "referenceFoodId": 54,
+            "foodName": "Fruit Smoothie",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 350,
+            "calories": 210,
+            "protein": 3.5,
+            "carbs": 49,
+            "fat": 0.7,
+            "fiber": 3.5,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "VAGUE-008",
+      "category": "vague",
+      "outcome": "scored",
+      "elapsedMs": 0.2825,
+      "fallback": false,
+      "score": {
+        "id": "VAGUE-008",
+        "category": "vague",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 0,
+        "explicitMassCorrect": 0,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "a little peanut butter",
+            "referenceFoodId": 37,
+            "foodName": "Peanut Butter",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 32,
+            "calories": 188.2,
+            "protein": 8,
+            "carbs": 6.4,
+            "fat": 16,
+            "fiber": 1.9,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "MIXED-001",
+      "category": "mixed",
+      "outcome": "scored",
+      "elapsedMs": 1.1094,
+      "fallback": false,
+      "score": {
+        "id": "MIXED-001",
+        "category": "mixed",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 0,
+        "falsePositives": 1,
+        "falseNegatives": 1,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 0,
+        "explicitMassCorrect": 0,
+        "fullyCorrect": false,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": null,
+            "identityCorrect": false,
+            "qualifiersCorrect": false,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": false,
+            "uncertaintyVisible": false,
+            "nutritionCorrect": null,
+            "correct": false,
+            "failures": [
+              "missing food"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "a bowl of homemade chicken curry",
+            "referenceFoodId": 1,
+            "foodName": "Chicken Breast (Cooked, roasted/grilled)",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 100,
+            "calories": 165,
+            "protein": 31,
+            "carbs": 0,
+            "fat": 3.6,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "MIXED-002",
+      "category": "mixed",
+      "outcome": "scored",
+      "elapsedMs": 1.4806,
+      "fallback": false,
+      "score": {
+        "id": "MIXED-002",
+        "category": "mixed",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 0,
+        "falsePositives": 1,
+        "falseNegatives": 1,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 0,
+        "explicitMassCorrect": 0,
+        "fullyCorrect": false,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": null,
+            "identityCorrect": false,
+            "qualifiersCorrect": false,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": false,
+            "uncertaintyVisible": false,
+            "nutritionCorrect": null,
+            "correct": false,
+            "failures": [
+              "missing food"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "a plate of restaurant beef lasagna",
+            "referenceFoodId": 5,
+            "foodName": "Ground Beef 93/7 Lean (Cooked)",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 100,
+            "calories": 218,
+            "protein": 26.5,
+            "carbs": 0,
+            "fat": 11.5,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "MIXED-003",
+      "category": "mixed",
+      "outcome": "scored",
+      "elapsedMs": 0.3744,
+      "fallback": false,
+      "score": {
+        "id": "MIXED-003",
+        "category": "mixed",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 0,
+        "falsePositives": 1,
+        "falseNegatives": 1,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 0,
+        "explicitMassCorrect": 0,
+        "fullyCorrect": false,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": null,
+            "identityCorrect": false,
+            "qualifiersCorrect": false,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": false,
+            "uncertaintyVisible": false,
+            "nutritionCorrect": null,
+            "correct": false,
+            "failures": [
+              "missing food"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "one homemade breakfast burrito",
+            "referenceFoodId": 57,
+            "foodName": "Flour Tortilla (Large)",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 100,
+            "calories": 306,
+            "protein": 8.2,
+            "carbs": 49.6,
+            "fat": 7.5,
+            "fiber": 2.4,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "MIXED-004",
+      "category": "mixed",
+      "outcome": "scored",
+      "elapsedMs": 0.3315,
+      "fallback": false,
+      "score": {
+        "id": "MIXED-004",
+        "category": "mixed",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 0,
+        "falsePositives": 1,
+        "falseNegatives": 1,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 0,
+        "explicitMassCorrect": 0,
+        "fullyCorrect": false,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": null,
+            "identityCorrect": false,
+            "qualifiersCorrect": false,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": false,
+            "uncertaintyVisible": false,
+            "nutritionCorrect": null,
+            "correct": false,
+            "failures": [
+              "missing food"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "one scoop of mixed tuna casserole",
+            "referenceFoodId": 11,
+            "foodName": "Canned Tuna in Water (Drained)",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 100,
+            "calories": 116,
+            "protein": 25.5,
+            "carbs": 0,
+            "fat": 0.8,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "MIXED-005",
+      "category": "mixed",
+      "outcome": "scored",
+      "elapsedMs": 0.9623,
+      "fallback": false,
+      "score": {
+        "id": "MIXED-005",
+        "category": "mixed",
+        "expectedItems": 2,
+        "actualItems": 2,
+        "truePositives": 2,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 2,
+        "explicitMassCorrect": 2,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          },
+          {
+            "key": "food-2",
+            "actualIndex": 1,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g cooked chicken breast",
+            "referenceFoodId": 1,
+            "foodName": "Chicken Breast (Cooked, roasted/grilled)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 165,
+            "protein": 31,
+            "carbs": 0,
+            "fat": 3.6,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          },
+          {
+            "sourceText": "150g cooked jasmine rice",
+            "referenceFoodId": 24,
+            "foodName": "Jasmine Rice / White Rice (Cooked)",
+            "quantity": 150,
+            "unit": "g",
+            "grams": 150,
+            "calories": 195,
+            "protein": 4.1,
+            "carbs": 42.3,
+            "fat": 0.4,
+            "fiber": 0.6,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "MIXED-006",
+      "category": "mixed",
+      "outcome": "scored",
+      "elapsedMs": 0.8283,
+      "fallback": false,
+      "score": {
+        "id": "MIXED-006",
+        "category": "mixed",
+        "expectedItems": 3,
+        "actualItems": 3,
+        "truePositives": 3,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 3,
+        "explicitMassCorrect": 3,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          },
+          {
+            "key": "food-2",
+            "actualIndex": 1,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          },
+          {
+            "key": "food-3",
+            "actualIndex": 2,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "50g raw spinach",
+            "referenceFoodId": 46,
+            "foodName": "Baby Spinach (Raw)",
+            "quantity": 50,
+            "unit": "g",
+            "grams": 50,
+            "calories": 11.5,
+            "protein": 1.4,
+            "carbs": 1.8,
+            "fat": 0.2,
+            "fiber": 1.1,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          },
+          {
+            "sourceText": "30g feta",
+            "referenceFoodId": 49,
+            "foodName": "Feta Cheese (Crumbled)",
+            "quantity": 30,
+            "unit": "g",
+            "grams": 30,
+            "calories": 79.5,
+            "protein": 4.3,
+            "carbs": 1.2,
+            "fat": 6.4,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          },
+          {
+            "sourceText": "14g olive oil",
+            "referenceFoodId": 35,
+            "foodName": "Extra Virgin Olive Oil",
+            "quantity": 14,
+            "unit": "g",
+            "grams": 14,
+            "calories": 123.8,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 14,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "MIXED-007",
+      "category": "mixed",
+      "outcome": "scored",
+      "elapsedMs": 0.5788,
+      "fallback": false,
+      "score": {
+        "id": "MIXED-007",
+        "category": "mixed",
+        "expectedItems": 2,
+        "actualItems": 2,
+        "truePositives": 2,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 2,
+        "explicitMassCorrect": 2,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          },
+          {
+            "key": "food-2",
+            "actualIndex": 1,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g hummus",
+            "referenceFoodId": 50,
+            "foodName": "Hummus",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 166,
+            "protein": 7.9,
+            "carbs": 14.3,
+            "fat": 9.6,
+            "fiber": 6,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          },
+          {
+            "sourceText": "100g whole wheat bread",
+            "referenceFoodId": 30,
+            "foodName": "Whole Wheat Bread",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 247,
+            "protein": 13,
+            "carbs": 41,
+            "fat": 3.4,
+            "fiber": 7,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "MIXED-008",
+      "category": "mixed",
+      "outcome": "scored",
+      "elapsedMs": 0.832,
+      "fallback": false,
+      "score": {
+        "id": "MIXED-008",
+        "category": "mixed",
+        "expectedItems": 3,
+        "actualItems": 3,
+        "truePositives": 3,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 3,
+        "explicitMassCorrect": 3,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          },
+          {
+            "key": "food-2",
+            "actualIndex": 1,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          },
+          {
+            "key": "food-3",
+            "actualIndex": 2,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g banana",
+            "referenceFoodId": 41,
+            "foodName": "Banana (Raw)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 89,
+            "protein": 1.1,
+            "carbs": 22.8,
+            "fat": 0.3,
+            "fiber": 2.6,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          },
+          {
+            "sourceText": "30g whey protein",
+            "referenceFoodId": 19,
+            "foodName": "Whey Protein Powder (Isolate / Concentrate)",
+            "quantity": 30,
+            "unit": "g",
+            "grams": 30,
+            "calories": 114,
+            "protein": 24,
+            "carbs": 1.8,
+            "fat": 1,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          },
+          {
+            "sourceText": "100g whole milk",
+            "referenceFoodId": 21,
+            "foodName": "Whole Milk",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 61,
+            "protein": 3.2,
+            "carbs": 4.8,
+            "fat": 3.3,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "CORRECTIONS-001",
+      "category": "corrections",
+      "outcome": "scored",
+      "elapsedMs": 3.9991,
+      "fallback": false,
+      "score": {
+        "id": "CORRECTIONS-001",
+        "category": "corrections",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "200g chicken breast, actually 150g",
+            "referenceFoodId": 1,
+            "foodName": "Chicken Breast (Cooked, roasted/grilled)",
+            "quantity": 150,
+            "unit": "g",
+            "grams": 150,
+            "calories": 247.5,
+            "protein": 46.5,
+            "carbs": 0,
+            "fat": 5.4,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "CORRECTIONS-002",
+      "category": "corrections",
+      "outcome": "scored",
+      "elapsedMs": 0.7199,
+      "fallback": false,
+      "score": {
+        "id": "CORRECTIONS-002",
+        "category": "corrections",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g cooked chicken breast",
+            "referenceFoodId": 1,
+            "foodName": "Chicken Breast (Cooked, roasted/grilled)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 165,
+            "protein": 31,
+            "carbs": 0,
+            "fat": 3.6,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "CORRECTIONS-003",
+      "category": "corrections",
+      "outcome": "scored",
+      "elapsedMs": 0.2661,
+      "fallback": false,
+      "score": {
+        "id": "CORRECTIONS-003",
+        "category": "corrections",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "150g cooked rice",
+            "referenceFoodId": 24,
+            "foodName": "Jasmine Rice / White Rice (Cooked)",
+            "quantity": 150,
+            "unit": "g",
+            "grams": 150,
+            "calories": 195,
+            "protein": 4.1,
+            "carbs": 42.3,
+            "fat": 0.4,
+            "fiber": 0.6,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "CORRECTIONS-004",
+      "category": "corrections",
+      "outcome": "scored",
+      "elapsedMs": 0.2797,
+      "fallback": false,
+      "score": {
+        "id": "CORRECTIONS-004",
+        "category": "corrections",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g nonfat Greek yogurt",
+            "referenceFoodId": 16,
+            "foodName": "Greek Yogurt (Nonfat, Plain 0%)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 59,
+            "protein": 10.2,
+            "carbs": 3.6,
+            "fat": 0.4,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "CORRECTIONS-005",
+      "category": "corrections",
+      "outcome": "scored",
+      "elapsedMs": 0.6814,
+      "fallback": false,
+      "score": {
+        "id": "CORRECTIONS-005",
+        "category": "corrections",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g cooked ground lamb",
+            "referenceFoodId": 48,
+            "foodName": "Ground Lamb (Cooked)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 283,
+            "protein": 24.8,
+            "carbs": 0,
+            "fat": 19.7,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "CORRECTIONS-006",
+      "category": "corrections",
+      "outcome": "scored",
+      "elapsedMs": 0.663,
+      "fallback": false,
+      "score": {
+        "id": "CORRECTIONS-006",
+        "category": "corrections",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g raw chicken breast",
+            "referenceFoodId": 2,
+            "foodName": "Chicken Breast (Raw, boneless skinless)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 120,
+            "protein": 22.5,
+            "carbs": 0,
+            "fat": 2.6,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "CORRECTIONS-007",
+      "category": "corrections",
+      "outcome": "scored",
+      "elapsedMs": 0.2612,
+      "fallback": false,
+      "score": {
+        "id": "CORRECTIONS-007",
+        "category": "corrections",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g dry rice",
+            "referenceFoodId": 25,
+            "foodName": "White Rice (Dry / Raw)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 365,
+            "protein": 7.1,
+            "carbs": 80,
+            "fat": 0.7,
+            "fiber": 1.3,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "CORRECTIONS-008",
+      "category": "corrections",
+      "outcome": "scored",
+      "elapsedMs": 0.5101,
+      "fallback": false,
+      "score": {
+        "id": "CORRECTIONS-008",
+        "category": "corrections",
+        "expectedItems": 2,
+        "actualItems": 2,
+        "truePositives": 2,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 0,
+        "explicitMassCorrect": 0,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 1,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": null,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          },
+          {
+            "key": "food-2",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": null,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "2 slices sourdough",
+            "referenceFoodId": 29,
+            "foodName": "Sourdough Bread",
+            "quantity": 2,
+            "unit": "slice",
+            "grams": 100,
+            "calories": 260,
+            "protein": 9,
+            "carbs": 50,
+            "fat": 2.5,
+            "fiber": 2.2,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          },
+          {
+            "sourceText": "2 more slices sourdough",
+            "referenceFoodId": 29,
+            "foodName": "Sourdough Bread",
+            "quantity": 2,
+            "unit": "slice",
+            "grams": 100,
+            "calories": 260,
+            "protein": 9,
+            "carbs": 50,
+            "fat": 2.5,
+            "fiber": 2.2,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "UNKNOWN-001",
+      "category": "unknown",
+      "outcome": "scored",
+      "elapsedMs": 0.3227,
+      "fallback": false,
+      "score": {
+        "id": "UNKNOWN-001",
+        "category": "unknown",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 0,
+        "falsePositives": 1,
+        "falseNegatives": 1,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 1,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 0,
+        "fullyCorrect": false,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": null,
+            "identityCorrect": false,
+            "qualifiersCorrect": false,
+            "explicitMassCorrect": false,
+            "portionCorrect": false,
+            "countCorrect": false,
+            "resolutionCorrect": false,
+            "uncertaintyVisible": false,
+            "nutritionCorrect": null,
+            "correct": false,
+            "failures": [
+              "missing food"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g nebula protein squares",
+            "referenceFoodId": 19,
+            "foodName": "Whey Protein Powder (Isolate / Concentrate)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 380,
+            "protein": 80,
+            "carbs": 6,
+            "fat": 3.5,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "UNKNOWN-002",
+      "category": "unknown",
+      "outcome": "scored",
+      "elapsedMs": 8.4855,
+      "fallback": true,
+      "score": {
+        "id": "UNKNOWN-002",
+        "category": "unknown",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g mysteryfood",
+            "referenceFoodId": null,
+            "foodName": "Mysteryfood",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "Unparsed",
+            "assumptions": [
+              "No nutrition match; enter values from the label"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "UNKNOWN-003",
+      "category": "unknown",
+      "outcome": "scored",
+      "elapsedMs": 0.2913,
+      "fallback": false,
+      "score": {
+        "id": "UNKNOWN-003",
+        "category": "unknown",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "150g unknownbrand crumbles",
+            "referenceFoodId": null,
+            "foodName": "unknownbrand crumbles",
+            "quantity": 150,
+            "unit": "g",
+            "grams": 150,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "Unparsed",
+            "assumptions": [
+              "No nutrition match; enter values from the label"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "UNKNOWN-004",
+      "category": "unknown",
+      "outcome": "scored",
+      "elapsedMs": 0.2929,
+      "fallback": false,
+      "score": {
+        "id": "UNKNOWN-004",
+        "category": "unknown",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g quantum tofu bits",
+            "referenceFoodId": null,
+            "foodName": "quantum tofu bits",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "Unparsed",
+            "assumptions": [
+              "No nutrition match; enter values from the label"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "UNKNOWN-005",
+      "category": "unknown",
+      "outcome": "scored",
+      "elapsedMs": 0.2609,
+      "fallback": false,
+      "score": {
+        "id": "UNKNOWN-005",
+        "category": "unknown",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "50g zephyr sauce",
+            "referenceFoodId": null,
+            "foodName": "zephyr sauce",
+            "quantity": 50,
+            "unit": "g",
+            "grams": 50,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "Unparsed",
+            "assumptions": [
+              "No nutrition match; enter values from the label"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "UNKNOWN-006",
+      "category": "unknown",
+      "outcome": "scored",
+      "elapsedMs": 0.2935,
+      "fallback": false,
+      "score": {
+        "id": "UNKNOWN-006",
+        "category": "unknown",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 1,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g fictional algae cakes",
+            "referenceFoodId": null,
+            "foodName": "fictional algae cakes",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 0,
+            "protein": 0,
+            "carbs": 0,
+            "fat": 0,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "Unparsed",
+            "assumptions": [
+              "No nutrition match; enter values from the label"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "UNKNOWN-007",
+      "category": "unknown",
+      "outcome": "scored",
+      "elapsedMs": 0.7083,
+      "fallback": false,
+      "score": {
+        "id": "UNKNOWN-007",
+        "category": "unknown",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 0,
+        "falsePositives": 1,
+        "falseNegatives": 1,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 1,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 0,
+        "fullyCorrect": false,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": null,
+            "identityCorrect": false,
+            "qualifiersCorrect": false,
+            "explicitMassCorrect": false,
+            "portionCorrect": false,
+            "countCorrect": false,
+            "resolutionCorrect": false,
+            "uncertaintyVisible": false,
+            "nutritionCorrect": null,
+            "correct": false,
+            "failures": [
+              "missing food"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "30g stardust cereal",
+            "referenceFoodId": 28,
+            "foodName": "Cream of Rice (Dry)",
+            "quantity": 30,
+            "unit": "g",
+            "grams": 30,
+            "calories": 108,
+            "protein": 2.1,
+            "carbs": 24.3,
+            "fat": 0.2,
+            "fiber": 0.3,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "UNKNOWN-008",
+      "category": "unknown",
+      "outcome": "scored",
+      "elapsedMs": 0.3179,
+      "fallback": false,
+      "score": {
+        "id": "UNKNOWN-008",
+        "category": "unknown",
+        "expectedItems": 1,
+        "actualItems": 1,
+        "truePositives": 0,
+        "falsePositives": 1,
+        "falseNegatives": 1,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 1,
+        "explicitMassChecks": 1,
+        "explicitMassCorrect": 0,
+        "fullyCorrect": false,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": null,
+            "identityCorrect": false,
+            "qualifiersCorrect": false,
+            "explicitMassCorrect": false,
+            "portionCorrect": false,
+            "countCorrect": false,
+            "resolutionCorrect": false,
+            "uncertaintyVisible": false,
+            "nutritionCorrect": null,
+            "correct": false,
+            "failures": [
+              "missing food"
+            ]
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g unlisted protein pudding",
+            "referenceFoodId": 19,
+            "foodName": "Whey Protein Powder (Isolate / Concentrate)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 380,
+            "protein": 80,
+            "carbs": 6,
+            "fat": 3.5,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "FULL-DAY-001",
+      "category": "full-day",
+      "outcome": "scored",
+      "elapsedMs": 1.3972,
+      "fallback": false,
+      "score": {
+        "id": "FULL-DAY-001",
+        "category": "full-day",
+        "expectedItems": 4,
+        "actualItems": 4,
+        "truePositives": 4,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 0,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 0,
+        "explicitMassChecks": 4,
+        "explicitMassCorrect": 4,
+        "fullyCorrect": true,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          },
+          {
+            "key": "food-2",
+            "actualIndex": 1,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          },
+          {
+            "key": "food-3",
+            "actualIndex": 2,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          },
+          {
+            "key": "food-4",
+            "actualIndex": 3,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "100g eggs",
+            "referenceFoodId": 14,
+            "foodName": "Whole Egg (Large, Grade A)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 143,
+            "protein": 12.6,
+            "carbs": 0.7,
+            "fat": 9.5,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          },
+          {
+            "sourceText": "150g cooked chicken breast",
+            "referenceFoodId": 1,
+            "foodName": "Chicken Breast (Cooked, roasted/grilled)",
+            "quantity": 150,
+            "unit": "g",
+            "grams": 150,
+            "calories": 247.5,
+            "protein": 46.5,
+            "carbs": 0,
+            "fat": 5.4,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          },
+          {
+            "sourceText": "100g cooked rice",
+            "referenceFoodId": 24,
+            "foodName": "Jasmine Rice / White Rice (Cooked)",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 130,
+            "protein": 2.7,
+            "carbs": 28.2,
+            "fat": 0.3,
+            "fiber": 0.4,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          },
+          {
+            "sourceText": "100g whole milk",
+            "referenceFoodId": 21,
+            "foodName": "Whole Milk",
+            "quantity": 100,
+            "unit": "g",
+            "grams": 100,
+            "calories": 61,
+            "protein": 3.2,
+            "carbs": 4.8,
+            "fat": 3.3,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          }
+        ]
+      },
+      "failure": null
+    },
+    {
+      "id": "FULL-DAY-002",
+      "category": "full-day",
+      "outcome": "scored",
+      "elapsedMs": 4.63,
+      "fallback": false,
+      "score": {
+        "id": "FULL-DAY-002",
+        "category": "full-day",
+        "expectedItems": 11,
+        "actualItems": 11,
+        "truePositives": 11,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "qualifierErrors": 2,
+        "exclusionViolations": 0,
+        "forbiddenSubstitutions": 2,
+        "explicitMassChecks": 2,
+        "explicitMassCorrect": 2,
+        "fullyCorrect": false,
+        "foods": [
+          {
+            "key": "food-1",
+            "actualIndex": 0,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          },
+          {
+            "key": "food-2",
+            "actualIndex": 1,
+            "identityCorrect": true,
+            "qualifiersCorrect": false,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": false,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": false,
+            "failures": [
+              "preparation/brand/diet/lean qualifier mismatch",
+              "resolution/source expectation differs"
+            ]
+          },
+          {
+            "key": "food-3",
+            "actualIndex": 2,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          },
+          {
+            "key": "food-4",
+            "actualIndex": 3,
+            "identityCorrect": true,
+            "qualifiersCorrect": false,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": false,
+            "failures": [
+              "preparation/brand/diet/lean qualifier mismatch"
+            ]
+          },
+          {
+            "key": "food-5",
+            "actualIndex": 4,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          },
+          {
+            "key": "food-6",
+            "actualIndex": 5,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": null,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          },
+          {
+            "key": "food-7",
+            "actualIndex": 6,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          },
+          {
+            "key": "food-8",
+            "actualIndex": 7,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": true,
+            "portionCorrect": true,
+            "countCorrect": true,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": true,
+            "correct": true,
+            "failures": []
+          },
+          {
+            "key": "food-9",
+            "actualIndex": 8,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          },
+          {
+            "key": "food-10",
+            "actualIndex": 9,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          },
+          {
+            "key": "food-11",
+            "actualIndex": 10,
+            "identityCorrect": true,
+            "qualifiersCorrect": true,
+            "explicitMassCorrect": null,
+            "portionCorrect": null,
+            "countCorrect": null,
+            "resolutionCorrect": true,
+            "uncertaintyVisible": true,
+            "nutritionCorrect": null,
+            "correct": true,
+            "failures": []
+          }
+        ],
+        "actual": [
+          {
+            "sourceText": "a medium size plate of chicken breast",
+            "referenceFoodId": 1,
+            "foodName": "Chicken Breast (Cooked, roasted/grilled)",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 140,
+            "calories": 231,
+            "protein": 43.4,
+            "carbs": 0,
+            "fat": 5,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          },
+          {
+            "sourceText": "2 slices aldi boule bread",
+            "referenceFoodId": 55,
+            "foodName": "Boule Bread (Artisan Sourdough)",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 100,
+            "calories": 260,
+            "protein": 9,
+            "carbs": 50,
+            "fat": 2.5,
+            "fiber": 2.2,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          },
+          {
+            "sourceText": "few teaspoons of jam",
+            "referenceFoodId": 51,
+            "foodName": "Fruit Jam / Preserves",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 20,
+            "calories": 48,
+            "protein": 0.1,
+            "carbs": 13,
+            "fat": 0,
+            "fiber": 0.2,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          },
+          {
+            "sourceText": "a medium light smoothie from orange julius",
+            "referenceFoodId": 54,
+            "foodName": "Fruit Smoothie",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 100,
+            "calories": 60,
+            "protein": 1,
+            "carbs": 14,
+            "fat": 0.2,
+            "fiber": 1,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          },
+          {
+            "sourceText": "a 8oz decaf latte w/ dairy milk",
+            "referenceFoodId": 53,
+            "foodName": "Caffe Latte (Whole Milk)",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 240,
+            "calories": 156,
+            "protein": 7.9,
+            "carbs": 12,
+            "fat": 8.6,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          },
+          {
+            "sourceText": "2 more slices of boule",
+            "referenceFoodId": 55,
+            "foodName": "Boule Bread (Artisan Sourdough)",
+            "quantity": 2,
+            "unit": "slice",
+            "grams": 90,
+            "calories": 234,
+            "protein": 8.1,
+            "carbs": 45,
+            "fat": 2.2,
+            "fiber": 2,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          },
+          {
+            "sourceText": "maybe 150g ground lamb",
+            "referenceFoodId": 48,
+            "foodName": "Ground Lamb (Cooked)",
+            "quantity": 150,
+            "unit": "g",
+            "grams": 150,
+            "calories": 424.5,
+            "protein": 37.2,
+            "carbs": 0,
+            "fat": 29.6,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          },
+          {
+            "sourceText": "120g rice",
+            "referenceFoodId": 24,
+            "foodName": "Jasmine Rice / White Rice (Cooked)",
+            "quantity": 120,
+            "unit": "g",
+            "grams": 120,
+            "calories": 156,
+            "protein": 3.2,
+            "carbs": 33.8,
+            "fat": 0.4,
+            "fiber": 0.5,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": []
+          },
+          {
+            "sourceText": "a few tablespoons of hummus",
+            "referenceFoodId": 50,
+            "foodName": "Hummus",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 30,
+            "calories": 49.8,
+            "protein": 2.4,
+            "carbs": 4.3,
+            "fat": 2.9,
+            "fiber": 1.8,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          },
+          {
+            "sourceText": "a sprinkle of feta",
+            "referenceFoodId": 49,
+            "foodName": "Feta Cheese (Crumbled)",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 28,
+            "calories": 74.2,
+            "protein": 4,
+            "carbs": 1.1,
+            "fat": 6,
+            "fiber": 0,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          },
+          {
+            "sourceText": "maybe 2 handfuls of green grapes",
+            "referenceFoodId": 52,
+            "foodName": "Green Grapes (Raw)",
+            "quantity": 1,
+            "unit": "serving",
+            "grams": 100,
+            "calories": 69,
+            "protein": 0.7,
+            "carbs": 18.1,
+            "fat": 0.2,
+            "fiber": 0.9,
+            "usdaFdcId": null,
+            "usdaMatchStatus": "VerifiedStaple",
+            "assumptions": [
+              "Estimated portion"
+            ]
+          }
+        ]
+      },
+      "failure": null
+    }
+  ],
+  "limitations": [
+    "Offline canned AI does not measure model quality.",
+    "All modes resolve against pinned local references; no remote USDA.",
+    "Nutrition expectations are code-reference contracts, not independent dietary measurements.",
+    "Live usage/cost is unknown when a provider omits metadata."
+  ]
+}

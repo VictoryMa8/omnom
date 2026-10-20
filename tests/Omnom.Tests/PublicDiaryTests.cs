@@ -27,12 +27,12 @@ public class PublicDiaryTests
             ["REQUIRE_PASSCODE"] = "true",
             ["APP_PASSCODE"] = "should-not-be-needed"
         }).Build();
-        foreach (var controller in new[] { typeof(AiController), typeof(DiaryController), typeof(TargetsController), typeof(SettingsController), typeof(AuthController) })
+        foreach (var controller in new[] { typeof(AiController), typeof(FoodsController), typeof(DiaryController), typeof(TargetsController), typeof(SettingsController), typeof(AuthController) })
         {
             var context = new AuthorizationFilterContext(new ActionContext(new DefaultHttpContext(), new RouteData(),
                 new ControllerActionDescriptor { ControllerTypeInfo = controller.GetTypeInfo() }), new List<IFilterMetadata>());
             new PasscodeAccessFilter(new PasscodeAccess(db, config), config).OnAuthorization(context);
-            if (controller == typeof(AiController)) Assert.Null(context.Result);
+            if (controller == typeof(AiController) || controller == typeof(FoodsController)) Assert.Null(context.Result);
             else Assert.IsType<NotFoundResult>(context.Result);
         }
     }

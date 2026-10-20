@@ -29,9 +29,16 @@ public class ServerAiConfigurationTests
         var handler = new CaptureHandler();
         using var client = new HttpClient(handler);
         var service = new OpenRouterService(client, config, db, NullLogger<OpenRouterService>.Instance);
-        Assert.Equal("{}", await service.GenerateCompletionAsync("system", "meal", "client-model"));
+        Assert.Equal(CaptureHandler.Completion, await service.GenerateCompletionAsync("system", "meal", "client-model"));
         Assert.Equal("server-test-key", handler.Key);
         Assert.Equal(OpenRouterService.Model, handler.Model);
+        var payload = handler.Payload;
+        Assert.True(payload.GetProperty("reasoning").GetProperty("enabled").GetBoolean());
+        Assert.True(payload.GetProperty("reasoning").GetProperty("exclude").GetBoolean());
+        Assert.False(payload.TryGetProperty("response_format", out _)); // Ling does not support native JSON schema.
+        Assert.True(payload.GetProperty("provider").GetProperty("require_parameters").GetBoolean());
+        foreach (var price in payload.GetProperty("provider").GetProperty("max_price").EnumerateObject())
+            Assert.Equal(0, price.Value.GetDouble());
         var controller = new SettingsController(db, service);
         Assert.IsType<BadRequestObjectResult>(await controller.UpdateSettings(
             new UpdateSettingsRequest("replacement", null, null, null)));
@@ -67,15 +74,18 @@ public class ServerAiConfigurationTests
 
     private sealed class CaptureHandler : HttpMessageHandler
     {
+        public const string Completion = """{"items":[{"sourceText":"meal","foodName":"Rice","quantity":100,"unit":"g","estimatedGrams":100}]}""";
         public string? Key { get; private set; }
         public string? Model { get; private set; }
+        public JsonElement Payload { get; private set; }
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             Key = request.Headers.Authorization?.Parameter;
             using var payload = JsonDocument.Parse(await request.Content!.ReadAsStringAsync(cancellationToken));
+            Payload = payload.RootElement.Clone();
             Model = payload.RootElement.GetProperty("model").GetString();
             return new HttpResponseMessage(HttpStatusCode.OK) {
-                Content = new StringContent("{\"choices\":[{\"message\":{\"content\":\"{}\"}}]}", Encoding.UTF8, "application/json")
+                Content = new StringContent(JsonSerializer.Serialize(new { choices = new[] { new { message = new { content = Completion } } } }), Encoding.UTF8, "application/json")
             };
         }
     }

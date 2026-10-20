@@ -46,6 +46,20 @@ public class UsdaFoodService : IUsdaFoodService
         ["tortilla"] = ["wrap"],
     };
 
+    private static readonly HashSet<string> FoodIdentityTokens = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "chicken", "beef", "turkey", "lamb", "pork", "salmon", "tuna", "shrimp", "breast", "thigh",
+        "rice", "pasta", "pizza", "tortilla", "milk", "yogurt", "bread", "cheese", "egg", "eggs",
+        "oats", "oatmeal", "almond", "almonds", "peanut", "peanuts", "cashew", "cashews",
+        "banana", "apple", "grapes", "broccoli", "spinach", "hummus", "feta", "cheddar", "cottage"
+    };
+
+    private static readonly HashSet<string> NutritionQualifiers = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "raw", "dry", "cooked", "ground", "skinless", "boneless", "roasted", "grilled", "lean",
+        "fresh", "nonfat", "plain", "diet", "zero", "free", "sugar", "lowfat", "unsweetened"
+    };
+
     public UsdaFoodService(
         HttpClient httpClient,
         AppDbContext dbContext,
@@ -199,6 +213,23 @@ public class UsdaFoodService : IUsdaFoodService
         // evidence that the USDA food actually matches a subsequent search.
         var targetTokens = Normalize(!isStaple && displayName != null ? displayName : targetNormalized)
             .Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        // Preparation and sugar content are constraints, not optional keyword matches.
+        // Do not satisfy "raw lamb" with a cooked reference just because "lamb" matches.
+        if (cleanTokens.Contains("raw") && !targetTokens.Contains("raw")
+            || cleanTokens.Contains("dry") && !targetTokens.Contains("dry")
+            || cleanTokens.Contains("cooked") && !targetTokens.Contains("cooked")) return 0;
+        var wantsDiet = cleanTokens.Any(t => t is "diet" or "zero" or "sugarfree");
+        var isDiet = targetTokens.Any(t => t is "diet" or "zero" or "sugarfree")
+            || targetTokens.Contains("sugar") && targetTokens.Contains("free");
+        if (wantsDiet != isDiet) return 0;
+        var leanRatio = cleanTokens.FirstOrDefault(t => t is "937" or "9010" or "8515" or "8020");
+        if (leanRatio != null && !targetTokens.Contains(leanRatio)) return 0;
+        bool MatchesIdentity(string token) => targetTokens.Any(t => GetTokenVariants(token).Any(v =>
+            t == v || t == v + "s" || v == t + "s"));
+        var identities = cleanTokens.Where(FoodIdentityTokens.Contains).ToArray();
+        if (identities.Any(t => !MatchesIdentity(t))) return 0;
+        // Shared modifiers ("raw", "ground") cannot establish food identity on their own.
+        if (!cleanTokens.Where(t => !NutritionQualifiers.Contains(t) && !t.All(char.IsDigit)).Any(MatchesIdentity)) return 0;
         int matched = 0;
 
         foreach (var token in cleanTokens)

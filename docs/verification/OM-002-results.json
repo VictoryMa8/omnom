@@ -1,0 +1,240 @@
+{
+  "task": "OM-002",
+  "startedAt": "2026-10-20T23:07:02.123Z",
+  "appVersion": "0.0.1-beta",
+  "revision": "11239373c2da77dea10da4ff170903f70244f70f",
+  "workingTree": "M .gitignore\n M AGENTS.md\n M DEV_README.md\n M README.md\n M backend/Controllers/FoodsController.cs\n M backend/Models/AiParsingModels.cs\n M backend/Services/MealParserService.cs\n M backend/Services/OpenRouterService.cs\n M backend/Services/ParseLimits.cs\n M backend/Services/PasscodeAccess.cs\n M backend/Services/UsdaFoodService.cs\n D backend/wwwroot/assets/index-B16lk6XZ.js\n D backend/wwwroot/assets/index-CirqwieY.css\n M backend/wwwroot/index.html\n M frontend/README.md\n M frontend/package-lock.json\n M frontend/package.json\n M frontend/src/App.vue\n M frontend/src/components/BrowserDataModal.vue\n M frontend/src/components/MealCard.vue\n M frontend/src/components/MealConfirmCard.vue\n M frontend/src/components/QuickLogInput.vue\n M frontend/src/components/TimelineFeed.vue\n M frontend/src/services/api.ts\n M frontend/src/services/localDiary.ts\n M frontend/src/stores/diaryStore.ts\n M frontend/src/style.css\n M frontend/tests/regressions.test.mjs\n M frontend/vite.config.ts\n M tests/Omnom.Tests/MealMatchingTests.cs\n M tests/Omnom.Tests/PublicDiaryTests.cs\n M tests/Omnom.Tests/ServerAiConfigurationTests.cs\n?? RELEASES.md\n?? ROADMAP.md\n?? backend/wwwroot/assets/index--fV-JC2x.css\n?? backend/wwwroot/assets/index-T1PuEMa2.js\n?? docs/\n?? frontend/src/components/FoodSearch.vue\n?? frontend/src/components/MealLibrary.vue\n?? frontend/src/components/WeeklyProgress.vue\n?? frontend/src/utils/foodDefaults.ts\n?? frontend/tests/smoke/\n?? tests/Omnom.Tests/FreeModelRoutingTests.cs\n?? tests/Omnom.Tests/IntelligenceRegressionTests.cs\n?? tests/Omnom.Tests/ReferenceClarificationTests.cs",
+  "dotnetSdk": "10.0.301",
+  "playwright": "1.64.1",
+  "node": "v24.4.0",
+  "platform": "darwin/arm64",
+  "command": "npm --prefix frontend run test:smoke",
+  "providerMode": "Browser API fixtures; real API checks use Exact/local references only. No live AI/USDA.",
+  "actualWorkers": 1,
+  "completedAt": "2026-10-20T23:07:16.323Z",
+  "status": "passed",
+  "durationMs": 14107.597000000002,
+  "tests": [
+    {
+      "test": "desktop / release.spec.mjs / packaged app crosses the real API boundary with Exact references and public restrictions",
+      "status": "passed",
+      "durationMs": 616,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "desktop / release.spec.mjs / stubbed review replacement persists every nutrient, source, date, and remembered default",
+      "status": "passed",
+      "durationMs": 509,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "desktop / release.spec.mjs / favorites, recent/repeat, editing, deletion, and each Undo update daily and weekly totals",
+      "status": "passed",
+      "durationMs": 2762,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "desktop / release.spec.mjs / remembered aliases resolve unknowns but explicit grams override the usual portion",
+      "status": "passed",
+      "durationMs": 395,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "desktop / release.spec.mjs / historical targets, missing days, rapid navigation, and keyboard goal dialog remain correct",
+      "status": "passed",
+      "durationMs": 426,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "desktop / release.spec.mjs / backup export/restore, invalid and oversized files preserve data and keyboard access",
+      "status": "passed",
+      "durationMs": 986,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "desktop / release.spec.mjs / quota errors never announce success or overwrite the saved diary",
+      "status": "passed",
+      "durationMs": 337,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "desktop / release.spec.mjs / corrupt storage is surfaced without clearing it, and blocked reads remain visible",
+      "status": "passed",
+      "durationMs": 228,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "desktop / release.spec.mjs / API failure/loading feedback, search errors, and responsive controls stay usable",
+      "status": "passed",
+      "durationMs": 433,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "mobile / release.spec.mjs / packaged app crosses the real API boundary with Exact references and public restrictions",
+      "status": "passed",
+      "durationMs": 460,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "mobile / release.spec.mjs / stubbed review replacement persists every nutrient, source, date, and remembered default",
+      "status": "passed",
+      "durationMs": 470,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "mobile / release.spec.mjs / favorites, recent/repeat, editing, deletion, and each Undo update daily and weekly totals",
+      "status": "passed",
+      "durationMs": 1870,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "mobile / release.spec.mjs / remembered aliases resolve unknowns but explicit grams override the usual portion",
+      "status": "passed",
+      "durationMs": 394,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "mobile / release.spec.mjs / historical targets, missing days, rapid navigation, and keyboard goal dialog remain correct",
+      "status": "passed",
+      "durationMs": 398,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "mobile / release.spec.mjs / backup export/restore, invalid and oversized files preserve data and keyboard access",
+      "status": "passed",
+      "durationMs": 917,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "mobile / release.spec.mjs / quota errors never announce success or overwrite the saved diary",
+      "status": "passed",
+      "durationMs": 314,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "mobile / release.spec.mjs / corrupt storage is surfaced without clearing it, and blocked reads remain visible",
+      "status": "passed",
+      "durationMs": 216,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "mobile / release.spec.mjs / API failure/loading feedback, search errors, and responsive controls stay usable",
+      "status": "passed",
+      "durationMs": 429,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "limitations": [
+    "Not a live model-quality evaluation.",
+    "Chromium only; viewport coverage is not real-device coverage.",
+    "Storage/parse/search failures are injected into disposable test contexts."
+  ]
+}

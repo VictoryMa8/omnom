@@ -1,165 +1,95 @@
-# AGENTS.md — Omnom Developer & Architecture Guide
+# AGENTS.md — Omnom contributor guide
 
-Welcome to **Omnom**! This document provides future AI agents and developers with complete context on the architecture, technical decisions, data models, workflows, and design philosophies of the codebase.
+Read [ROADMAP.md](ROADMAP.md) before selecting future work. Use stable `OM-xxx` IDs and update status, acceptance criteria, and verification evidence in the same change. [README.md](README.md) contains setup; [DEV_README.md](DEV_README.md) explains the current architecture. This guide was reconciled with the working tree on October 20, 2026.
 
----
+## Product rules
 
-## 1. Project Overview & Philosophy
+1. **Fast natural-language logging:** support text/voice descriptions and an editable review. Keep clarification chips optional; avoid multi-turn chat as the primary logging flow.
+2. **Time is optional:** do not require meal time, infer meal names from the clock, or sort meals by clock time. Preserve insertion order and original dates/positions when editing or undoing.
+3. **Ground nutrition:** prefer local/USDA references and checked user values; distinguish them from estimates. Preserve raw/cooked/dry, diet, lean ratios, and explicit weights. Never substitute an unrelated food or invent generic calorie density for an unknown item.
+4. **User amounts win:** explicit weights override model arithmetic and remembered portions. Unsupported foods remain unresolved until reviewed, replaced, entered manually, or removed.
+5. **Athletic, focused tone:** avoid cartoon emoji clutter and infantile copy. The active interface is light with green accents; older dark Tailwind tokens remain for compatibility. Extend the current UI consistently unless a redesign is requested.
+6. **Immediate feedback:** loading, save/error toasts, and Undo should reflect actual persistence. Never silently reset corrupt data or announce a failed write as saved.
+7. **Free-only AI:** preserve zero-price limits on every model attempt, bounded requests, robust fenced/substring JSON extraction, semantic validation, and local fallback. The key/model list is server-managed.
+8. **Local-first privacy:** preserve account-free browser diaries, backups, favorite snapshots, and opt-in defaults. Do not upload diaries or treat the existing server PIN as multi-user auth.
 
-**Omnom** is an AI-assisted fitness and nutrition tracking app tailored specifically for **weightlifters and athletes**.
+## Current stack and boundaries
 
-### Core Principles
-1. **Frictionless Natural Language Logging**: Users simply type or voice-dictate what they ate (e.g., *"a medium plate of chicken breast, 2 slices aldi boule bread, 150g ground lamb, 120g rice, and 2 tbsp hummus"*).
-2. **Time is Optional**: Weightlifters frequently log all food once at night after a tiring day. **Never** require clock time, and **never** auto-assign meal names based on system clock time (e.g., don't call lunch "Late Snack" just because it was logged at 11:30 PM).
-3. **USDA-Verified Nutritional Accuracy**: Macros and calories are matched against USDA FoodData Central and pre-seeded high-protein staple databases. Unmatched items must never arbitrarily fallback to irrelevant defaults.
-4. **Non-Blocking Clarification Chips**: Instead of multi-turn chat dialogues, the AI offers optional 1-tap clarification chips (e.g., `[Cooked (Default)] [Raw]` or `[0-Cal Spray / None] [+1 tbsp Olive Oil]`).
-5. **Athletic, Clean, Lighthearted Tone**: Confident, modern dark-mode aesthetic. **Avoid kid-like emoji clutter** (no `🤤`, `🍪`, `🦖`, `🥣` on every card). Keep it athletic, crisp, and functional with subtle lifter touches.
-6. **Immediate User Feedback**: Every user interaction (saving a meal, adjusting macro targets, deleting an item) provides visual confirmation via loading states and toast notifications.
+- Backend: .NET 8 Web API, EF Core; SQLite locally, PostgreSQL when `DATABASE_URL` is configured. `DbInitializer` uses `EnsureCreated` plus targeted compatibility SQL.
+- Extraction: `OpenRouterService` uses a fixed server-owned free-only model list. Read code and dated review evidence rather than assuming model availability or reusing historical provider capabilities.
+- Nutrition: seeded/cached `FoodReference` records, optional USDA lookup in AI mode. `/api/foods/search` searches local/cached references; remote branded search is future work.
+- Frontend: Vue 3 Composition API, TypeScript, Vite, Pinia, Tailwind plus active light-theme CSS, Lucide icons, optional Web Speech API input.
+- Active storage: `DiaryApi` and `TargetsApi` in `frontend/src/services/api.ts` are aliases for `localDiary`. Meals/targets/library data do not use server CRUD in the current shell.
+- Public access: `PUBLIC_DIARY=true` allows AI parsing and food-reference search, returning 404 for legacy private endpoints. Legacy auth/settings components and controllers exist but are not mounted by `App.vue`.
+- Tests: xUnit (including EF InMemory and targeted relational checks), Node regressions, and browser verification. Mocked tests do not prove live model accuracy.
 
----
+## Code map
 
-## 2. Tech Stack
+| Area | Files and responsibility |
+|---|---|
+| Startup | `backend/Program.cs`, `EnvironmentFile.cs`, `HostedDatabase.cs`: configuration, DI, database selection/seeding, static SPA serving |
+| API | `backend/Controllers/AiController.cs`, `FoodsController.cs`: active parse and reference search endpoints |
+| Legacy APIs | `DiaryController.cs`, `TargetsController.cs`, `SettingsController.cs`, `AuthController.cs`: private server diary/settings/PIN paths |
+| Parsing | `backend/Services/MealParserService.cs`, `OpenRouterService.cs`, `ParseLimits.cs`: extraction, validation, exact/heuristic paths, nutrition resolution, chips, time budgets |
+| Access/limits | `backend/Services/PasscodeAccess.cs`, `RequestBudget.cs`: legacy PIN/JWT access filter and shared request counters |
+| Nutrition | `backend/Services/UsdaFoodService.cs`, `backend/Data/DbInitializer.cs`: matching, reference cache, seed data |
+| Entities/contracts | `backend/Data/Entities/{MealEntry,MealItem,DailyTarget,FoodReference,UserSetting}.cs`; `backend/Models/{DTOs,AiParsingModels}.cs` |
+| Active UI | `frontend/src/App.vue`, `components/{QuickLogInput,MealConfirmCard,FoodSearch,MealCard,TimelineFeed,MealLibrary,WeeklyProgress}.vue` |
+| Targets/dates/backups | `components/{DailySummaryHeader,QuickTargetModal,DateNavigator,BrowserDataModal}.vue` |
+| State/storage | `frontend/src/stores/{diaryStore,toastStore}.ts`, `services/{api,localDiary}.ts`, `utils/{foodDefaults,nutritionReview,useModal}.ts` |
+| Legacy client | `components/{SettingsModal,PasscodeModal}.vue`, `stores/{settingsStore,authStore}.ts`: not wired into the active app shell |
+| Verification | `tests/Omnom.Tests/`, `frontend/tests/regressions.test.mjs`, `frontend/tests/smoke/`, `docs/verification/` |
 
-- **Backend**: C# (.NET 8 Web API)
-  - **Database**: SQLite via Entity Framework Core (`omnom.db`)
-  - **AI Provider**: OpenRouter Free Tier (rotates across `google/gemini-2.0-flash-lite:free`, `meta-llama/llama-3.3-70b-instruct:free`, `deepseek/deepseek-r1:free`, `qwen/qwen-2.5-72b-instruct:free`, etc.)
-  - **Nutrition Data**: USDA FoodData Central API + local verified staple table
-  - **Auth**: Passcode protection via BCrypt and JWT
-- **Frontend**: Vue 3 (Composition API `<script setup>`), TypeScript
-  - **Bundler**: Vite (build target configured to `backend/wwwroot` for single-service deployment)
-  - **Styling**: Tailwind CSS (custom theme: `omnom-dark`, `omnom-matcha`, `omnom-strawberry`, `omnom-blueberry`, `omnom-yellow`, `omnom-caramel`)
-  - **State Management**: Pinia (`diaryStore`, `settingsStore`, `authStore`, `toastStore`)
-  - **Icons**: Lucide Icons (`lucide-vue-next`)
-  - **Voice**: Web Speech API (`webkitSpeechRecognition`)
-- **Testing**: xUnit with .NET EF In-Memory testing in `tests/Omnom.Tests`
+## Workflows to preserve
 
----
+- **AI:** user text → validated extraction or heuristic fallback → compatible reference matching/explicit estimates → review → browser save. Keep first-`{` to last-`}` extraction and fallback when a model returns chatter or invalid content.
+- **Exact:** backend deterministic parser and local reference matching; no AI or remote USDA lookup. Unsupported fragments stay visible for correction. Exact is not an offline client-side mode.
+- **Review:** replacement changes all nutrients/source IDs at the current weight and clears incompatible chips. Renaming alone does not establish a new reference match.
+- **Defaults/reuse:** aliases match exactly after normalization; remembered portions are opt-in; explicit mass wins. Favorites contain snapshots, not live links to an original meal.
+- **Dates/targets:** use local `YYYY-MM-DD`, not UTC-derived dates. Resolve targets by latest `effectiveDate <= selectedDate`, then latest ID. Pass the selected diary date when updating targets. Weekly averages use logged days; missing logs are not observed zero intake.
+- **Persistence:** `omnom_diary_v1` is scoped to browser profile/origin. Backups include optional favorites/foods; version-1 backups without them remain supported. Import replaces existing data. Preserve validation, quota/error handling, and stale-Undo guards.
 
-## 3. Directory Layout
+## Run and verify
 
-```
-omnom/
-├── AGENTS.md                  # This guide
-├── README.md                  # Human-facing setup & usage documentation
-├── Dockerfile                 # Multi-stage production container build
-├── docker-compose.yml         # Container runner
-├── backend/
-│   ├── Omnom.Api.csproj       # .NET 8 Web API project
-│   ├── Program.cs             # Web application bootstrap, DI, SPA fallback
-│   ├── Controllers/
-│   │   ├── AiController.cs        # /api/ai/parse natural language endpoint
-│   │   ├── DiaryController.cs     # /api/diary timeline, meal CRUD
-│   │   ├── TargetsController.cs   # /api/targets daily macro targets
-│   │   ├── SettingsController.cs  # /api/settings API keys & PIN
-│   │   ├── AuthController.cs      # /api/auth passcode validation
-│   │   └── FoodSearchController.cs# /api/foods local & USDA search
-│   ├── Data/
-│   │   ├── AppDbContext.cs        # EF Core SQLite DbContext
-│   │   ├── DbInitializer.cs       # Database migrations & staple seed data
-│   │   └── Entities/              # MealEntry, MealItem, DailyTarget, FoodStaple, AppSettings
-│   ├── Models/
-│   │   └── DTOs.cs                # Request/response records
-│   ├── Services/
-│   │   ├── MealParserService.cs   # OpenRouter LLM call, regex fallback, clarification generator
-│   │   ├── UsdaFoodService.cs     # USDA API integration + search algorithm
-│   │   └── AuthService.cs         # Passcode hashing & JWT tokens
-│   └── wwwroot/                   # Compiled Vue 3 production bundle
-├── frontend/
-│   ├── src/
-│   │   ├── App.vue                # Root shell, toast notifications, auth check
-│   │   ├── components/
-│   │   │   ├── DailySummaryHeader.vue # Calorie ring, macro progress bars, targets modal trigger
-│   │   │   ├── QuickLogInput.vue      # Natural language textarea + voice input
-│   │   │   ├── MealConfirmCard.vue    # Editable ingredients, grams stepper, clarification chips
-│   │   │   ├── TimelineFeed.vue       # Chronological meal feed
-│   │   │   ├── MealCard.vue           # Meal breakdown card with running totals
-│   │   │   ├── DateNavigator.vue      # Date switcher (Today / Prev / Next / Picker)
-│   │   │   ├── QuickTargetModal.vue   # Preset switcher (Bulk, Cut, Maintenance, Refeed)
-│   │   │   ├── SettingsModal.vue      # OpenRouter & USDA API keys, model selector
-│   │   │   └── PasscodeModal.vue      # Full-screen lock if passcode enabled
-│   │   ├── services/
-│   │   │   └── api.ts                 # Axios client, types, and API methods
-│   │   └── stores/
-│   │       ├── diaryStore.ts          # Active timeline, date navigation, meal/target mutations
-│   │       ├── toastStore.ts          # Global banner notifications
-│   │       ├── authStore.ts           # Authentication and lock state
-│   │       └── settingsStore.ts       # OpenRouter & USDA configuration
-│   ├── vite.config.ts                 # Builds directly into backend/wwwroot
-│   └── tailwind.config.js             # Custom color palette & fonts
-└── tests/
-    └── Omnom.Tests/                   # Backend unit and integration tests
+From the repository root, with a compatible .NET SDK/.NET 8 runtime and Node (Vite requires `^20.19.0 || >=22.12.0` as inspected October 20, 2026):
+
+```sh
+dotnet restore backend/Omnom.Api.csproj
+npm --prefix frontend ci
+dotnet run --project backend/Omnom.Api.csproj --launch-profile http
 ```
 
----
+In another terminal:
 
-## 4. Key Workflows & Implementation Details
-
-### A. Meal Parsing Pipeline (`MealParserService.cs`)
-1. **Prompt Sanitization**: Normalizes user text and extracts meal names (e.g. "Breakfast", "Lunch", "Dinner", "Post-Workout" if explicitly mentioned; otherwise clean `"Meal"`).
-2. **OpenRouter LLM Request**: Calls OpenRouter using `openrouter/auto` or user-selected free model with temperature 0.1 for deterministic JSON output.
-3. **Resilient JSON Extraction**: Uses regex to slice from the first `{` to the last `}`. Strips markdown fences (` ```json `).
-4. **Fallback Heuristic Extractor**: If the LLM produces invalid JSON or is unreachable, an in-memory regex parser extracts common units (e.g., `150g ground lamb`, `8oz chicken breast`, `2 slices bread`, `medium plate chicken`, `handful of grapes`).
-5. **Nutrition & Staple Matching**:
-   - Queries `UsdaFoodService.FindBestMatchAsync()`.
-   - Strips filler words (*"plate of", "medium light smoothie from", "handful of"*).
-   - Searches local staples first (chicken breast, 93/7 beef, eggs, rice, whey, lamb, bread, feta, hummus, olive oil, etc.).
-   - If not found locally, calls USDA FoodData Central API.
-   - If no USDA match, applies sensible estimations. **Never fall back to Chicken Breast for unrelated foods.**
-6. **Clarification Chips Generator**:
-   - Generates 1–2 actionable chips:
-     - `Cooking Fat`: `[0-Cal Spray / None]`, `[+1 tbsp Olive Oil (+124 kcal)]`, `[+1 tbsp Butter (+102 kcal)]`.
-     - `Meat State`: `[Cooked (Default)]`, `[Raw]`.
-     - `Ground Meat Lean %`: `[93/7 Lean]`, `[85/15]`, `[80/20]`.
-
-### B. Time Handling
-- `MealEntry.Time` is an optional `string?` (e.g. `"13:30"` or `null`).
-- HTML5 `<input type="time" />` outputs `"HH:mm"`.
-- In `DiaryController.cs`, meals for a day are ordered by sequential ID: `.OrderBy(m => m.Id)`.
-- In `MealConfirmCard.vue`, the time input is clearable and optional.
-- In `MealCard.vue`, the time badge only renders if a non-empty `meal.time` exists.
-
-### C. Daily Targets & Timeline
-- Targets have an `EffectiveDate` (`DateOnly`).
-- When fetching `/api/diary?date=YYYY-MM-DD`, EF queries `DailyTargets.Where(t => t.EffectiveDate <= queryDate).OrderByDescending(t => t.EffectiveDate).ThenByDescending(t => t.Id).FirstOrDefaultAsync()`.
-- When updating targets via `TargetsController.UpdateTarget`, the client passes `EffectiveDate` matching the current diary date (`selectedDate`), avoiding UTC timezone drift.
-
----
-
-## 5. Running & Testing
-
-### Run Backend
-```bash
-dotnet run --project backend/Omnom.Api.csproj
+```sh
+npm --prefix frontend run dev -- --strictPort
 ```
-Runs at `http://localhost:5000` (or `https://localhost:5001`).
 
-### Run Frontend in Dev Mode (with Hot Reload)
-```bash
-cd frontend
-npm install
-npm run dev
-```
-Vite runs at `http://localhost:5173` and proxies `/api` to `http://localhost:5000`.
+Backend: `http://localhost:5027`; frontend: `http://localhost:5173`. The Vite proxy matches the backend HTTP profile. Use [isolated startup overrides](docs/verification/OM-001-local-startup.md#isolated-startup) when a root `.env` or existing databases would affect verification. Never print keys or include them in reports.
 
-### Build Frontend for Production
-```bash
-cd frontend
-npm run build
-```
-This compiles the SPA and writes production bundles directly into `backend/wwwroot/`. The .NET Web API serves this directory as static files and falls back to `index.html` for client-side routing.
+Required checks:
 
-### Run Automated Tests
-```bash
+```sh
+# After backend edits; also run before committing application changes
 dotnet test tests/Omnom.Tests
+
+# After frontend behavior changes
+npm --prefix frontend test
+
+# Always after frontend .vue or .ts edits
+npm --prefix frontend run build
 ```
-Ensure all tests pass before making or committing changes.
 
----
+The build replaces `backend/wwwroot/`; keep generated bundles synchronized. Check browser-visible changes in a disposable profile/origin with isolated server data. Describe the actual result, skipped checks, and environment in the task evidence; do not substitute historical test counts for a fresh run. The executable release browser gate is `npm --prefix frontend run test:smoke` (one-time browser setup: `npm --prefix frontend run test:smoke:install`). See [the suite guide](frontend/tests/smoke/README.md) for isolation, reports, and failure diagnosis. Docs-only changes need path/link/command checks. Do not run live provider evaluations unless that is part of the authorized task; use synthetic inputs and preserve free-only limits.
 
-## 6. Guidelines for Future AI Agents
+For backend schema changes, inspect `DbInitializer` and both configured providers; do not assume a migration command exists. Preserve public/private endpoint boundaries. Account ownership and sync require the OM-010 design before implementation.
 
-1. **Keep Tone Athletic & Focused**: Do not add cartoonish emojis or infantile copy. The target demographic is weightlifters and athletes tracking macros. Lighthearted and encouraging is good; silly or childish is not.
-2. **Never Break Time-Freedom**: Keep meal time optional. Do not enforce chronological sorting by clock time or require timestamps.
-3. **Preserve JSON Parsing Resilience**: OpenRouter free models occasionally output chat intros or imperfect JSON. Always maintain the robust substring extractor (`firstOpen` to `lastClose`) and the regex heuristic fallback.
-4. **Always Build Frontend After Edits**: Whenever editing `.vue` or `.ts` files in `frontend/`, always run `npm run build` in `frontend/` so that `backend/wwwroot/` is kept in sync.
-5. **Run Backend Tests**: Always run `dotnet test tests/Omnom.Tests` after backend edits.
+## Meal evaluation
+
+See [the OM-003 corpus guide](tests/fixtures/meal-evaluation/README.md). Run the heuristic and stubbed-AI modes from the repository root; both forbid provider networking and use frozen references. A completed baseline can contain measured correctness failures; do not change expectations to conceal them. Live mode requires explicit opt-in and a real HTTP-attempt cap; do not run it without live-evaluation authorization.
+
+## Release versioning
+
+Every new deployment must have a unique, increasing beta version, starting at **beta 0.0.1**. The next deployment after that is **beta 0.0.2**, then **beta 0.0.3**; increment the patch number for every deployment, including previews and redeployments. Do not reuse a version for a new deployment after a failed build; retrying inspection or promoting the same deployment does not consume another version.
+
+Use `frontend/package.json` as the source of truth (`0.0.1-beta` in package SemVer, displayed as `beta 0.0.1`). Update it and the lockfile together with `npm --prefix frontend version <next-version>-beta --no-git-tag-version` before building. The footer reads this value. Record each deployment attempt, version, target, result, and URL in [RELEASES.md](RELEASES.md); for CLI releases include `appVersion` and `releaseLabel` Vercel metadata, and include the human-readable version in the final handoff. For Git-triggered releases, include the version in the release commit subject (propagated into Vercel Git metadata), keep the same footer version, and record the resulting deployment ID/URL. Check Git integration before pushing: this project's `main` branch is connected to production, so a push is a deployment attempt and needs the next version. Follow the [release procedure](RELEASES.md#release-procedure) without exposing credentials or pushing unrelated changes.

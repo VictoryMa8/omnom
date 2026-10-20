@@ -1,5 +1,21 @@
-# Vue 3 + TypeScript + Vite
+# Omnom frontend
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Vue 3, TypeScript, Pinia, Tailwind CSS, and Vite. See the root [README](../README.md) for prerequisites/configuration and the [developer guide](../DEV_README.md) for current architecture.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+From the repository root:
+
+```sh
+npm --prefix frontend ci
+npm --prefix frontend run dev -- --strictPort
+```
+
+Run the backend separately with `dotnet run --project backend/Omnom.Api.csproj --launch-profile http`. Open `http://localhost:5173`; `/api` proxies to `http://localhost:5027`. Changing origin creates a different browser diary.
+
+```sh
+npm --prefix frontend test
+npm --prefix frontend run build
+```
+
+The build type-checks and replaces `backend/wwwroot/` with production assets. The active diary/targets are browser-local; Exact logging still calls the backend. Planned work is in [ROADMAP.md](../ROADMAP.md).
+
+For isolated desktop/mobile browser checks, install Chromium with `npm --prefix frontend run test:smoke:install`, then run `npm --prefix frontend run test:smoke`. See [the smoke suite guide](tests/smoke/README.md) for reports and release gates.

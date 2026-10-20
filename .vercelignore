@@ -10,3 +10,5 @@
 **/*.db-shm
 **/*.db-wal
 tests
+frontend/.smoke
+.evaluation

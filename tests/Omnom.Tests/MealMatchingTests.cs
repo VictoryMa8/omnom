@@ -133,7 +133,7 @@ public class MealMatchingTests
     {
         using var db = CreateDb();
         var usda = new UsdaFoodService(new HttpClient(), db, new ConfigurationBuilder().Build(), NullLogger<UsdaFoodService>.Instance);
-        var parser = new MealParserService(new CompletingOpenRouter("""{"suggestedMealName":"Ground Lamb Wrap with I","items":[{"foodName":"Ground Lamb","searchQuery":"ground lamb","quantity":0.75,"unit":"lb","estimatedGrams":340}]}"""), usda, NullLogger<MealParserService>.Instance);
+        var parser = new MealParserService(new CompletingOpenRouter("""{"suggestedMealName":"Ground Lamb Wrap with I","items":[{"sourceText":".75 lb of ground lamb","foodName":"Ground Lamb","searchQuery":"ground lamb","quantity":0.75,"unit":"lb","estimatedGrams":340}]}"""), usda, NullLogger<MealParserService>.Instance);
 
         var result = await parser.ParseMealAsync(".75 lb of ground lamb");
         Assert.Equal("Ground Lamb Wrap", result.SuggestedMealName);

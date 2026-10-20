@@ -2,6 +2,8 @@ import axios from 'axios';
 import { localDiary } from './localDiary';
 
 export interface MealItem {
+  sourceText?: string;
+  referenceFoodId?: number;
   id?: number;
   foodName: string;
   quantity: number;
@@ -70,6 +72,10 @@ export interface ClarificationOption {
   replacementProtein?: number;
   replacementCarbs?: number;
   replacementFat?: number;
+  replacementFiber?: number;
+  replacementFdcId?: number;
+  replacementReferenceFoodId?: number;
+  replacementMatchStatus?: string;
   replacementGrams?: number;
   replacementFoodName?: string;
   isAdditiveItem?: boolean;
@@ -79,6 +85,24 @@ export interface ClarificationOption {
   additiveProtein?: number;
   additiveCarbs?: number;
   additiveFat?: number;
+  additiveFiber?: number;
+  additiveFdcId?: number;
+  additiveReferenceFoodId?: number;
+  additiveMatchStatus?: string;
+}
+
+export interface FoodReference {
+  id?: number; fdcId?: number; name: string; category: string;
+  caloriesPer100g: number; proteinPer100g: number; carbsPer100g: number; fatPer100g: number; fiberPer100g: number;
+  defaultServingGrams: number; defaultServingUnit: string; isStaple: boolean;
+}
+
+export interface FavoriteMeal {
+  id: number; sourceMealId?: number; name: string; rawDescription?: string; items: MealItem[];
+}
+
+export interface RememberedFood {
+  id: number; alias: string; item: MealItem; usePortion: boolean;
 }
 
 export interface AiClarificationChip {
@@ -107,7 +131,7 @@ export interface SettingsData {
 
 const api = axios.create({
   baseURL: '/api',
-  timeout: 40000,
+  timeout: 55000,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -122,6 +146,13 @@ api.interceptors.request.use((config) => {
 });
 
 export const DiaryApi = localDiary;
+
+export const FoodsApi = {
+  search: (q: string, signal?: AbortSignal) => api.get<FoodReference[]>('/foods/search', { params: { q, limit: 20 }, signal }).then(r => {
+    if (!Array.isArray(r.data)) throw new Error('Could not load reference foods. Reload this page and try again.');
+    return r.data;
+  }),
+};
 
 export const AiApi = {
   parseMeal: (prompt: string, mealTypeHint?: string, signal?: AbortSignal, mode: 'ai' | 'exact' = 'ai') =>

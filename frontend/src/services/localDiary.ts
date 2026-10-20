@@ -1,7 +1,7 @@
-import type { DailyTarget, DayTimeline, MealEntry, MealItem } from './api';
+import type { DailyTarget, DayTimeline, MealEntry, MealItem, FavoriteMeal, RememberedFood } from './api';
 
 const KEY = 'omnom_diary_v1';
-interface DiaryData { version: 1; meals: MealEntry[]; targets: DailyTarget[]; nextMealId?: number }
+interface DiaryData { version: 1; meals: MealEntry[]; targets: DailyTarget[]; nextMealId?: number; favorites?: FavoriteMeal[]; foods?: RememberedFood[] }
 type NewMeal = Pick<MealEntry, 'date' | 'name' | 'time' | 'rawDescription' | 'notes' | 'items'>;
 type NewTarget = Omit<DailyTarget, 'id' | 'effectiveDate'> & { effectiveDate?: string };
 const today = () => {
@@ -15,6 +15,11 @@ const fields = ['calories', 'protein', 'carbs', 'fat', 'fiber', 'grams', 'quanti
 const validNumber = (value: unknown) => typeof value === 'number' && Number.isFinite(value) && value >= 0;
 const validDate = (value: unknown) => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value)
   && !Number.isNaN(Date.parse(value)) && new Date(value).toISOString().startsWith(value);
+const validFood = (item: MealItem) => item && typeof item.foodName === 'string' && item.foodName.trim()
+  && typeof item.unit === 'string' && fields.every(field => validNumber(item[field])) && item.grams > 0 && item.quantity > 0
+  && item.usdaMatchStatus !== 'Unparsed' && (item.assumptions == null || Array.isArray(item.assumptions) && item.assumptions.every(a => typeof a === 'string'));
+const clone = <T>(value: T): T => JSON.parse(JSON.stringify(value));
+const aliasKey = (alias: string) => alias.trim().replace(/\s+/g, ' ').toLocaleLowerCase();
 
 function validate(data: DiaryData): DiaryData {
   if (data?.version !== 1 || !Array.isArray(data.meals) || !Array.isArray(data.targets)) throw new Error('Invalid diary backup.');
@@ -32,6 +37,13 @@ function validate(data: DiaryData): DiaryData {
   }
   if (new Set(data.meals.map(m => m.id)).size !== data.meals.length
     || new Set(data.targets.map(t => t.id)).size !== data.targets.length) throw new Error('Duplicate entries in diary backup.');
+  if (data.favorites != null && (!Array.isArray(data.favorites) || data.favorites.some(f => !f || !Number.isSafeInteger(f.id) || f.id < 1
+    || typeof f.name !== 'string' || !f.name.trim() || !Array.isArray(f.items) || !f.items.length || !f.items.every(validFood))
+    || new Set(data.favorites.map(f => f.id)).size !== data.favorites.length)) throw new Error('Invalid favorites in diary backup.');
+  if (data.foods != null && (!Array.isArray(data.foods) || data.foods.some(f => !f || !Number.isSafeInteger(f.id) || f.id < 1
+    || typeof f.alias !== 'string' || !f.alias.trim() || f.alias.length > 120 || typeof f.usePortion !== 'boolean' || !validFood(f.item))
+    || new Set(data.foods.map(f => f.id)).size !== data.foods.length
+    || new Set(data.foods.map(f => aliasKey(f.alias))).size !== data.foods.length)) throw new Error('Invalid remembered foods in diary backup.');
   return data;
 }
 
@@ -56,9 +68,7 @@ export function createLocalDiary(storage: Pick<Storage, 'getItem' | 'setItem'>) 
     return data.targets.filter(t => t.effectiveDate <= date)
       .sort((a, b) => b.effectiveDate.localeCompare(a.effectiveDate) || b.id - a.id)[0] ?? { ...defaultTarget };
   }
-  return {
-    async getTimeline(date: string): Promise<DayTimeline> {
-      const data = read();
+  function timelineFor(data: DiaryData, date: string): DayTimeline {
       const target = targetFor(data, date);
       let cal = 0, protein = 0, carbs = 0, fat = 0, fiber = 0;
       const meals = data.meals.filter(m => m.date === date).sort((a, b) => a.id - b.id).map(meal => {
@@ -71,6 +81,42 @@ export function createLocalDiary(storage: Pick<Storage, 'getItem' | 'setItem'>) 
         consumedFat: fat, consumedFiber: fiber, remainingCalories: round(target.targetCalories - cal),
         remainingProtein: round(target.targetProtein - protein), remainingCarbs: round(target.targetCarbs - carbs),
         remainingFat: round(target.targetFat - fat) };
+  }
+  return {
+    async getTimeline(date: string): Promise<DayTimeline> { return timelineFor(read(), date); },
+    async getWeek(endDate: string): Promise<DayTimeline[]> {
+      if (!validDate(endDate)) throw new Error('Choose a valid date.');
+      const data = read();
+      const end = new Date(endDate + 'T12:00:00');
+      return Array.from({ length: 7 }, (_, index) => {
+        const date = new Date(end); date.setDate(date.getDate() - 6 + index);
+        const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+        return timelineFor(data, key);
+      });
+    },
+    async getRecentMeals(limit = 8): Promise<MealEntry[]> {
+      return read().meals.sort((a, b) => b.date.localeCompare(a.date) || b.id - a.id).slice(0, limit).map(m => ({ ...m, ...totals(m.items) }));
+    },
+    async getLibrary() { const data = read(); return { favorites: data.favorites ?? [], foods: data.foods ?? [] }; },
+    async saveFavorite(meal: Pick<MealEntry, 'name' | 'rawDescription' | 'items'> & { id?: number }) {
+      const data = read(); data.favorites ??= [];
+      const existing = meal.id == null ? undefined : data.favorites.find(f => f.sourceMealId === meal.id);
+      if (existing) return existing;
+      const favorite = clone({ id: Math.max(0, ...data.favorites.map(f => f.id)) + 1,
+        sourceMealId: meal.id, name: meal.name, rawDescription: meal.rawDescription, items: meal.items });
+      data.favorites.push(favorite); save(data); return favorite;
+    },
+    async deleteFavorite(id: number) {
+      const data = read(); data.favorites = (data.favorites ?? []).filter(f => f.id !== id); save(data);
+    },
+    async rememberFood(alias: string, item: MealItem, usePortion: boolean) {
+      const data = read(); data.foods ??= [];
+      const existing = data.foods.find(f => aliasKey(f.alias) === aliasKey(alias));
+      const food = clone({ id: existing?.id ?? Math.max(0, ...data.foods.map(f => f.id)) + 1, alias: alias.trim(), item, usePortion });
+      data.foods = data.foods.filter(f => f.id !== food.id); data.foods.push(food); save(data); return food;
+    },
+    async forgetFood(id: number) {
+      const data = read(); data.foods = (data.foods ?? []).filter(f => f.id !== id); save(data);
     },
     async createMeal(meal: NewMeal) {
       const data = read();
@@ -106,7 +152,14 @@ export function createLocalDiary(storage: Pick<Storage, 'getItem' | 'setItem'>) 
     async updateMeal(id: number, meal: Omit<NewMeal, 'date'>) {
       const data = read(); const index = data.meals.findIndex(m => m.id === id);
       if (index < 0) throw new Error('Meal not found.');
-      data.meals[index] = { ...data.meals[index], ...meal, ...totals(meal.items) }; save(data);
+      const before = clone(data.meals[index]);
+      data.meals[index] = { ...data.meals[index], ...meal, ...totals(meal.items) };
+      const snapshot = JSON.stringify(data.meals[index]); save(data);
+      return { undo: async () => {
+        const current = read(); const position = current.meals.findIndex(m => m.id === id);
+        if (position < 0 || JSON.stringify(current.meals[position]) !== snapshot) throw new Error('This meal has changed. Undo is no longer available.');
+        current.meals[position] = before; save(current);
+      } };
     },
     async updateTarget(target: NewTarget) {
       const data = read();

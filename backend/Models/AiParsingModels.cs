@@ -18,6 +18,8 @@ public class AiParsedMealResult
 
 public class AiParsedItem
 {
+    public string? SourceText { get; set; }
+    public int? ReferenceFoodId { get; set; }
     public string FoodName { get; set; } = string.Empty;
     public double Quantity { get; set; } = 1.0;
     public string Unit { get; set; } = "serving"; // "g", "oz", "scoop", "slice", "cup", etc.
@@ -53,6 +55,10 @@ public class ClarificationOption
     public double? ReplacementProtein { get; set; }
     public double? ReplacementCarbs { get; set; }
     public double? ReplacementFat { get; set; }
+    public double? ReplacementFiber { get; set; }
+    public int? ReplacementFdcId { get; set; }
+    public int? ReplacementReferenceFoodId { get; set; }
+    public string? ReplacementMatchStatus { get; set; }
     public double? ReplacementGrams { get; set; }
     public string? ReplacementFoodName { get; set; }
 
@@ -64,4 +70,8 @@ public class ClarificationOption
     public double AdditiveFat { get; set; }
     public double AdditiveProtein { get; set; }
     public double AdditiveCarbs { get; set; }
+    public double AdditiveFiber { get; set; }
+    public int? AdditiveFdcId { get; set; }
+    public int? AdditiveReferenceFoodId { get; set; }
+    public string? AdditiveMatchStatus { get; set; }
 }
