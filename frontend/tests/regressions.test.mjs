@@ -350,3 +350,53 @@ test('older backups remain readable with an empty library', async () => {
   diary.importBackup('{"version":1,"meals":[],"targets":[]}');
   assert.deepEqual(await diary.getLibrary(), { favorites: [], foods: [] });
 });
+
+test('corrected explicit weights override remembered portions and preserve the literal source', () => {
+  const { applyFoodDefaults, foodAliasFromSource } = load(read('../src/utils/foodDefaults.ts'));
+  const saved = { ...savedWhey, alias: 'My whey', usePortion: true };
+  const source = '200g My whey, actually 64g';
+  const result = parsedWhey(source);
+  result.items[0].grams = 64; result.items[0].quantity = 64; result.items[0].unit = 'g';
+  assert.equal(foodAliasFromSource(source), 'My whey');
+  const item = applyFoodDefaults(result, [saved]).items[0];
+  assert.equal(item.grams, 64); assert.equal(item.quantity, 64); assert.equal(item.protein, 48);
+  assert.equal(item.sourceText, source);
+});
+
+test('drink ounces retain volume assumptions instead of becoming mass ounces through remembered nutrition', () => {
+  const { applyFoodDefaults } = load(read('../src/utils/foodDefaults.ts'));
+  const saved = { ...savedWhey, alias: 'My milk', usePortion: true };
+  const result = parsedWhey('8oz My milk');
+  Object.assign(result.items[0], { grams: 236.6, quantity: 8, unit: 'fl oz', assumptions: ['Volume estimate: assumed 1 g/ml'] });
+  const item = applyFoodDefaults(result, [saved]).items[0];
+  assert.equal(item.grams, 236.6); assert.equal(item.unit, 'fl oz');
+  assert.ok(item.assumptions.includes('Volume estimate: assumed 1 g/ml'));
+});
+
+test('unknown volume or container mass requires a checked serving in the same unit before reuse', () => {
+  const { applyFoodDefaults, foodAliasFromSource } = load(read('../src/utils/foodDefaults.ts'));
+  const saved = { ...savedWhey, alias: 'My fuel', usePortion: true };
+  for (const [source, unit] of [['250 ml My fuel', 'ml'], ['2 bottles My fuel', 'bottle']]) {
+    const result = parsedWhey(source);
+    Object.assign(result.items[0], { grams: 0, quantity: unit === 'ml' ? 250 : 2, unit, assumptions: ['Volume is not weight; enter weighed grams'] });
+    assert.equal(foodAliasFromSource(source), 'My fuel');
+    const unresolved = applyFoodDefaults(result, [saved]).items[0];
+    assert.equal(unresolved.usdaMatchStatus, 'Unparsed'); assert.equal(unresolved.grams, 0);
+    const checked = { ...saved, item: { ...saved.item, quantity: unit === 'ml' ? 125 : 1, unit, grams: 125 } };
+    const resolved = applyFoodDefaults(result, [checked]).items[0];
+    assert.equal(resolved.grams, 250); assert.equal(resolved.usdaMatchStatus, 'Estimated');
+    assert.equal(resolved.fiber, 0);
+  }
+});
+
+
+test('additional named portions scale a checked remembered serving without replacing the earlier portion', () => {
+  const { applyFoodDefaults, foodAliasFromSource } = load(read('../src/utils/foodDefaults.ts'));
+  const source = '2 more slices of My bread';
+  const saved = { ...savedWhey, alias: 'My bread', item: { ...savedWhey.item, grams: 50, quantity: 1, unit: 'slice' } };
+  const result = parsedWhey(source);
+  Object.assign(result.items[0], { grams: 0, quantity: 2, unit: 'slice' });
+  assert.equal(foodAliasFromSource(source), 'My bread');
+  const item = applyFoodDefaults(result, [saved]).items[0];
+  assert.equal(item.grams, 100); assert.equal(item.quantity, 2); assert.equal(item.sourceText, source);
+});

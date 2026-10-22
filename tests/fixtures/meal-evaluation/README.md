@@ -31,6 +31,16 @@ dotnet run --project tools/Omnom.Evaluation --no-build -- \
   --mode heuristic --case MASS-001 --require-perfect
 ```
 
+For a fixed subset with repeated observations, use comma-separated stable IDs and `--repetitions 1..10` (default 1). The request cap still applies across the entire live run, including all repetitions and backups:
+
+```sh
+dotnet run --project tools/Omnom.Evaluation --no-build -- \
+  --mode stubbed-ai --case MASS-001,PREPARATION-001,QUALIFIERS-001,BRANDS-001,CORRECTIONS-001,FULL-DAY-002 \
+  --repetitions 2 --output .evaluation/fixed-subset.json
+```
+
+Unknown IDs and invalid repetition counts fail before provider setup. Reports distinguish distinct fixtures from selected observations, identify each repetition, and count partial/unattempted observations explicitly.
+
 Default exit 0 means **evaluation completed**, not every meal was correct. Exit 1 with `--require-perfect` means a scored case failed a constraint. Exit 2 means invalid arguments/fixtures, blocked offline networking, or runner errors. Exit 3 means incomplete/cancelled/deadline/budget/quota/auth/cost-stopped execution. Unscored and unattempted cases are explicit and never presented as correct. Use the same dataset/reference hashes and mode when comparing reports; changing canned inputs or fixture expectations changes the measurement.
 
 ## Explicitly enabled live mode
@@ -83,3 +93,11 @@ Food identity comparison tokenizes words, normalizes simple plurals, and matches
 Zero-denominator rates are null (Markdown `n/a`), not 100%. Runner/network/deadline failures and incomplete live cases are listed separately and excluded from accuracy ratios; the report includes selected, attempted, scored, and unattempted counts/IDs so a partial run cannot resemble full coverage. All rates are also available by category. Nutrition comparisons use the per-field fixture tolerance (typically 0.2 kcal and 0.15 g macros/fiber) rather than a blanket percentage. Unknown recipes have no nutrition score.
 
 JSON includes dataset/reference SHA-256 hashes, mode, Git revision and dirty paths, timestamps, runtime/platform, every expected-food verdict, actual parsed foods, model/request/cost accounting when relevant, and metric numerators/denominators. Markdown exposes per-case violations for debugging. Unit tests cover scorer matching, missing/duplicate foods, qualifier masking, tolerances, unknowns/negations, uncertainty, report rendering, actual-attempt caps, price filtering, and quota/cost stops.
+
+## Safe diagnostics and latency (OM-004)
+
+The runner collects the same structured diagnostics as the application: correlation ID, extraction and matching durations, extracted item count, final reference/estimate/unresolved counts, each model attempt's requested/actual model and failure category, nullable token counts and cost, and total request duration. It retains no provider body or reasoning. Actual model metadata is limited to server-owned IDs; absent metadata is null and an unrecognized ID is `other`. Application logging also suppresses typed HttpClient URL logs, since USDA requests carry private queries and credentials.
+
+JSON `diagnostics` separates extraction outcomes/fallback categories from matching totals, lists attempt outcomes, and reports nullable usage sums with coverage counts. Failed transports count as attempts with missing cost. End-to-end percentiles use the runner's elapsed time around the application parser, including logging and local fallback. The separate stage timings identify where time went. The method is **nearest rank**, with p50 = sorted[ceil(0.50 × n) − 1] and p95 = sorted[ceil(0.95 × n) − 1]. Scored/completed and failed/unscored observations have separate sample counts and percentiles; no samples means null. These measurements exclude server startup, network between browser/API, and remote USDA, and include the first parser invocation without warmup.
+
+The [October 20 OM-004 evidence](../../../docs/verification/OM-004-safe-diagnostics.md) records unchanged offline correctness and a live-run preflight deferral: the configured primary has paid endpoints and its backup lists none. Reverify the official endpoints before a live run; an existing key or model name is not evidence of free availability. Do not remove the zero-price filters to complete a benchmark.

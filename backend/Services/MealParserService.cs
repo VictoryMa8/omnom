@@ -10,7 +10,7 @@ using Omnom.Api.Models;
 
 namespace Omnom.Api.Services;
 
-public class MealParserService : IMealParserService
+public partial class MealParserService : IMealParserService
 {
     private readonly IOpenRouterService _openRouterService;
     private readonly IUsdaFoodService _usdaFoodService;
@@ -31,168 +31,199 @@ public class MealParserService : IMealParserService
 
     public async Task<AiParsedMealResult> ParseMealAsync(string prompt, string? mealTypeHint = null, CancellationToken cancellationToken = default, string? mode = null)
     {
-        if (string.IsNullOrWhiteSpace(prompt))
+        using var diagnosticScope = ParseDiagnostics.Begin(cancellationToken);
+        var totalTime = System.Diagnostics.Stopwatch.StartNew();
+        var extractionTime = System.Diagnostics.Stopwatch.StartNew();
+        string? fallbackCategory = null;
+        try
         {
-            return new AiParsedMealResult { SuggestedMealName = mealTypeHint ?? "Meal" };
-        }
-
-        var exact = string.Equals(mode, "exact", StringComparison.OrdinalIgnoreCase);
-        LlmExtractionResult? extraction = null;
-        var usedFallback = false;
-        string? fallbackReason = null;
-
-        if (exact)
-        {
-            extraction = DeterministicParse(prompt, mealTypeHint);
-        }
-        else
-        {
-            // 1. Try LLM parsing first, but never wait unbounded if the model hangs.
-            try
+            cancellationToken.ThrowIfCancellationRequested();
+            if (string.IsNullOrWhiteSpace(prompt))
             {
-                var systemPrompt = BuildSystemPrompt(mealTypeHint);
-                using var aiTimeout = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-                aiTimeout.CancelAfter(_aiWait);
-                var jsonResponse = await _openRouterService
-                    .GenerateCompletionAsync(systemPrompt, prompt, cancellationToken: aiTimeout.Token)
-                    .WaitAsync(_aiWait, cancellationToken);
-                extraction = ParseLlmJson(jsonResponse, prompt);
-                if (extraction == null)
-                    throw new InvalidOperationException("AI returned an empty, invalid, or ungrounded meal extraction.");
-            }
-            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested) { throw; }
-            catch (Exception ex)
-            {
-                if (ex is FreeModelsUnavailableException { RateLimited: true })
-                    fallbackReason = "Free AI providers are busy or rate-limited. Try again shortly.";
-                _logger.LogWarning(ex, "LLM parsing failed or no API key set; falling back to heuristic parser.");
+                return new AiParsedMealResult { SuggestedMealName = mealTypeHint ?? "Meal" };
             }
 
-            // 2. Fallback to heuristic parser if LLM failed. Exact mode never reaches this path.
-            usedFallback = extraction == null;
-            extraction ??= FallbackHeuristicParse(prompt, mealTypeHint);
-        }
+            var exact = string.Equals(mode, "exact", StringComparison.OrdinalIgnoreCase);
+            LlmExtractionResult? extraction = null;
+            var usedFallback = false;
+            string? fallbackReason = null;
 
-        // 3. Cross-reference extracted items against USDA / staples database
-        var result = new AiParsedMealResult
-        {
-            SuggestedMealName = SanitizeMealName(extraction.SuggestedMealName, prompt, mealTypeHint)
-        };
-
-        result.AiSummary = usedFallback ? (fallbackReason ?? "AI could not complete a reliable result.") + " Used the local parser; review quantities and estimates." : null;
-        var nutritionTime = System.Diagnostics.Stopwatch.StartNew();
-        for (int i = 0; i < extraction.Items.Count; i++)
-        {
-            var item = extraction.Items[i];
-            if (item.Unparsed)
+            if (exact)
             {
-                result.Items.Add(UnparsedItem(item));
-                continue;
-            }
-
-            var lookupQuery = exact
-                ? item.SearchQuery
-                : CanonicalSearchQuery(!string.IsNullOrWhiteSpace(item.SearchQuery) ? item.SearchQuery : item.FoodName);
-            if (!exact)
-                lookupQuery = PreserveExplicitQualifiers(lookupQuery, string.IsNullOrWhiteSpace(item.SourceText) ? item.FoodName : item.SourceText);
-            var allowRemote = !exact && nutritionTime.Elapsed < ParseLimits.NutritionRemoteWait;
-            var foodRef = await _usdaFoodService.FindBestMatchAsync(lookupQuery, allowRemote, cancellationToken);
-            if (exact && foodRef == null)
-            {
-                result.Items.Add(UnparsedItem(item));
-                continue;
-            }
-            var grams = item.EstimatedGrams > 0
-                ? item.EstimatedGrams
-                : EstimateGrams(item.Quantity, item.Unit, foodRef?.DefaultServingGrams ?? 100, $"{item.FoodName} {lookupQuery}");
-
-            AiParsedItem parsedItem;
-            if (foodRef != null)
-            {
-                var factor = grams / 100.0;
-                parsedItem = new AiParsedItem
-                {
-                    FoodName = ChooseDisplayName(item.FoodName, foodRef),
-                    Quantity = item.Quantity > 0 ? item.Quantity : Math.Round(grams / (foodRef.DefaultServingGrams > 0 ? foodRef.DefaultServingGrams : 100), 2),
-                    Unit = !string.IsNullOrWhiteSpace(item.Unit) ? item.Unit : foodRef.DefaultServingUnit,
-                    Grams = Math.Round(grams, 1),
-                    Calories = Math.Round(foodRef.CaloriesPer100g * factor, 1),
-                    Protein = Math.Round(foodRef.ProteinPer100g * factor, 1),
-                    Carbs = Math.Round(foodRef.CarbsPer100g * factor, 1),
-                    Fat = Math.Round(foodRef.FatPer100g * factor, 1),
-                    Fiber = Math.Round(foodRef.FiberPer100g * factor, 1),
-                    UsdaFdcId = foodRef.FdcId,
-                    ReferenceFoodId = foodRef.Id,
-                    UsdaMatchStatus = foodRef.IsStaple ? "VerifiedStaple" : "UsdaApiMatch"
-                };
+                extraction = DeterministicParse(prompt, mealTypeHint);
             }
             else
             {
-                // A missing match is not evidence for a generic calorie density.
-                var hasNutrition = item.Calories > 0 || item.Protein + item.Carbs + item.Fat > 0;
-                parsedItem = new AiParsedItem
+                // 1. Try LLM parsing first, but never wait unbounded if the model hangs.
+                try
                 {
-                    FoodName = item.FoodName,
-                    Quantity = item.Quantity > 0 ? item.Quantity : 1,
-                    Unit = !string.IsNullOrWhiteSpace(item.Unit) ? item.Unit : "serving",
-                    Grams = Math.Round(grams, 1),
-                    Calories = Math.Round(item.Calories > 0 ? item.Calories : item.Protein * 4 + item.Carbs * 4 + item.Fat * 9, 1),
-                    Protein = Math.Round(item.Protein, 1),
-                    Carbs = Math.Round(item.Carbs, 1),
-                    Fat = Math.Round(item.Fat, 1),
-                    Fiber = Math.Round(item.Fiber, 1),
-                    UsdaMatchStatus = hasNutrition || IsZeroCalorieDrink(lookupQuery) ? "Estimated" : "Unparsed"
-                };
+                    var systemPrompt = BuildSystemPrompt(mealTypeHint);
+                    using var aiTimeout = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                    aiTimeout.CancelAfter(_aiWait);
+                    var jsonResponse = await _openRouterService
+                        .GenerateCompletionAsync(systemPrompt, prompt, cancellationToken: aiTimeout.Token)
+                        .WaitAsync(_aiWait, cancellationToken);
+                    extraction = ParseLlmJson(jsonResponse, prompt);
+                    if (extraction == null)
+                        throw new ParseStageException("invalid-output");
+                }
+                catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested) { throw; }
+                catch (Exception ex)
+                {
+                    if (ex is FreeModelsUnavailableException { RateLimited: true })
+                        fallbackReason = "Free AI providers are busy or rate-limited. Try again shortly.";
+                    fallbackCategory = ParseDiagnostics.Failure(ex);
+                }
+
+                // 2. Fallback to heuristic parser if LLM failed. Exact mode never reaches this path.
+                usedFallback = extraction == null;
+                extraction ??= FallbackHeuristicParse(prompt, mealTypeHint);
             }
 
-            if (!string.IsNullOrWhiteSpace(item.ExactAssumption))
-                parsedItem.Assumptions.Add(item.ExactAssumption);
-            parsedItem.SourceText = string.IsNullOrWhiteSpace(item.SourceText) ? item.FoodName : item.SourceText;
-            if (!Regex.IsMatch(item.Unit ?? "", @"^(g|grams?|kg|kilograms?|oz|ounces?|lb|lbs|pounds?)$", RegexOptions.IgnoreCase))
-                parsedItem.Assumptions.Add("Estimated portion");
-            if (parsedItem.UsdaMatchStatus == "Estimated")
-                parsedItem.Assumptions.Add("Estimated nutrition");
-            if (parsedItem.UsdaMatchStatus == "Unparsed")
-                parsedItem.Assumptions.Add("No nutrition match; enter values from the label");
-            if (lookupQuery.Trim().Equals("cheese", StringComparison.OrdinalIgnoreCase)
-                && parsedItem.FoodName.Contains("Cheddar", StringComparison.OrdinalIgnoreCase))
-                parsedItem.Assumptions.Add("Cheddar assumed");
-            result.Items.Add(parsedItem);
+            extractionTime.Stop();
+            ParseDiagnostics.Write(_logger, new(ParseDiagnostics.CorrelationId, "extraction", exact ? "exact" : usedFallback ? "fallback" : "success",
+                extractionTime.Elapsed.TotalMilliseconds, ExtractedItems: extraction.Items.Count, FallbackCategory: fallbackCategory));
 
-            // A normalized match may say "cooked" even when the user never chose a state.
-            // Exact mode already recorded prep on the item, so leave that flag alone.
-            if (!exact)
-                item.MeatStateAmbiguous = !Regex.IsMatch(string.IsNullOrWhiteSpace(item.SourceText) ? item.FoodName : item.SourceText, @"\b(raw|cooked|grilled|roasted|baked|fried|boiled|steamed)\b", RegexOptions.IgnoreCase);
-            await GenerateClarificationChipsForItem(result, parsedItem, i, item, foodRef, cancellationToken);
+            // 3. Cross-reference extracted items against USDA / staples database
+            var result = new AiParsedMealResult
+            {
+                SuggestedMealName = SanitizeMealName(extraction.SuggestedMealName, prompt, mealTypeHint)
+            };
+
+            result.AiSummary = usedFallback ? (fallbackReason ?? "AI could not complete a reliable result.") + " Used the local parser; review quantities and estimates." : null;
+            var nutritionTime = System.Diagnostics.Stopwatch.StartNew();
+            for (int i = 0; i < extraction.Items.Count; i++)
+            {
+                var item = extraction.Items[i];
+                if (item.Unparsed)
+                {
+                    result.Items.Add(UnparsedItem(item));
+                    continue;
+                }
+
+                var lookupQuery = exact
+                    ? item.SearchQuery
+                    : CanonicalSearchQuery(!string.IsNullOrWhiteSpace(item.SearchQuery) ? item.SearchQuery : item.FoodName);
+                if (!exact)
+                    lookupQuery = PreserveExplicitQualifiers(lookupQuery, PositiveText(string.IsNullOrWhiteSpace(item.SourceText) ? item.FoodName : item.SourceText));
+                var allowRemote = !exact && nutritionTime.Elapsed < ParseLimits.NutritionRemoteWait;
+                var foodRef = await _usdaFoodService.FindBestMatchAsync(lookupQuery, allowRemote, cancellationToken);
+                if (!ResolveStatedPortion(item, foodRef))
+                {
+                    result.Items.Add(UnparsedItem(item));
+                    continue;
+                }
+                if (exact && foodRef == null)
+                {
+                    result.Items.Add(UnparsedItem(item));
+                    continue;
+                }
+                var grams = item.EstimatedGrams > 0
+                    ? item.EstimatedGrams
+                    : EstimateGrams(item.Quantity, item.Unit, foodRef?.DefaultServingGrams ?? 100, $"{item.FoodName} {lookupQuery}");
+
+                AiParsedItem parsedItem;
+                if (foodRef != null)
+                {
+                    var factor = grams / 100.0;
+                    parsedItem = new AiParsedItem
+                    {
+                        FoodName = ChooseDisplayName(item.FoodName, foodRef),
+                        Quantity = item.Quantity > 0 ? item.Quantity : Math.Round(grams / (foodRef.DefaultServingGrams > 0 ? foodRef.DefaultServingGrams : 100), 2),
+                        Unit = !string.IsNullOrWhiteSpace(item.Unit) ? item.Unit : foodRef.DefaultServingUnit,
+                        Grams = Math.Round(grams, 1),
+                        Calories = Math.Round(foodRef.CaloriesPer100g * factor, 1),
+                        Protein = Math.Round(foodRef.ProteinPer100g * factor, 1),
+                        Carbs = Math.Round(foodRef.CarbsPer100g * factor, 1),
+                        Fat = Math.Round(foodRef.FatPer100g * factor, 1),
+                        Fiber = Math.Round(foodRef.FiberPer100g * factor, 1),
+                        UsdaFdcId = foodRef.FdcId,
+                        ReferenceFoodId = foodRef.Id,
+                        UsdaMatchStatus = foodRef.IsStaple ? "VerifiedStaple" : "UsdaApiMatch"
+                    };
+                }
+                else
+                {
+                    // A missing match is not evidence for a generic calorie density.
+                    var hasNutrition = item.Calories > 0 || item.Protein + item.Carbs + item.Fat > 0;
+                    parsedItem = new AiParsedItem
+                    {
+                        FoodName = item.FoodName,
+                        Quantity = item.Quantity > 0 ? item.Quantity : 1,
+                        Unit = !string.IsNullOrWhiteSpace(item.Unit) ? item.Unit : "serving",
+                        Grams = Math.Round(grams, 1),
+                        Calories = Math.Round(item.Calories > 0 ? item.Calories : item.Protein * 4 + item.Carbs * 4 + item.Fat * 9, 1),
+                        Protein = Math.Round(item.Protein, 1),
+                        Carbs = Math.Round(item.Carbs, 1),
+                        Fat = Math.Round(item.Fat, 1),
+                        Fiber = Math.Round(item.Fiber, 1),
+                        UsdaMatchStatus = hasNutrition || IsZeroCalorieDrink(lookupQuery) ? "Estimated" : "Unparsed"
+                    };
+                }
+
+                if (!string.IsNullOrWhiteSpace(item.ExactAssumption))
+                    parsedItem.Assumptions.Add(item.ExactAssumption);
+                parsedItem.SourceText = string.IsNullOrWhiteSpace(item.SourceText) ? item.FoodName : item.SourceText;
+                if (!Regex.IsMatch(item.Unit ?? "", @"^(g|grams?|kg|kilograms?|oz|ounces?|lb|lbs|pounds?)$", RegexOptions.IgnoreCase))
+                    parsedItem.Assumptions.Add("Estimated portion");
+                if (parsedItem.UsdaMatchStatus == "Estimated")
+                    parsedItem.Assumptions.Add("Estimated nutrition");
+                if (parsedItem.UsdaMatchStatus == "Unparsed")
+                    parsedItem.Assumptions.Add("No nutrition match; enter values from the label");
+                if (lookupQuery.Trim().Equals("cheese", StringComparison.OrdinalIgnoreCase)
+                    && parsedItem.FoodName.Contains("Cheddar", StringComparison.OrdinalIgnoreCase))
+                    parsedItem.Assumptions.Add("Cheddar assumed");
+                result.Items.Add(parsedItem);
+
+                // A normalized match may say "cooked" even when the user never chose a state.
+                // Exact mode already recorded prep on the item, so leave that flag alone.
+                if (!exact)
+                    item.MeatStateAmbiguous = !Regex.IsMatch(string.IsNullOrWhiteSpace(item.SourceText) ? item.FoodName : item.SourceText, @"\b(raw|cooked|grilled|roasted|baked|fried|boiled|steamed)\b", RegexOptions.IgnoreCase);
+                await GenerateClarificationChipsForItem(result, parsedItem, i, item, foodRef, cancellationToken);
+            }
+
+            if (exact)
+            {
+                var unread = result.Items
+                    .Where(i => i.UsdaMatchStatus == "Unparsed")
+                    .Select(i => i.FoodName)
+                    .ToList();
+                if (unread.Count > 0)
+                    result.AiSummary = "Could not read: " + string.Join(", ", unread);
+            }
+            else if (result.Items.Any(i => i.UsdaMatchStatus == "Unparsed"))
+            {
+                result.AiSummary = string.Join(" ", new[] { result.AiSummary,
+                    "Some foods have no nutrition match. Enter their nutrition from a label or remove them before saving." }.Where(s => s != null));
+            }
+
+            // Add overall cooking oil / butter chip if any fried or pan-cooked foods without explicit oil
+            await AddGeneralCookingFatChip(result, prompt, cancellationToken);
+
+            ParseDiagnostics.Write(_logger, new(ParseDiagnostics.CorrelationId, "matching", "success", nutritionTime.Elapsed.TotalMilliseconds,
+                References: result.Items.Count(i => i.UsdaMatchStatus is "VerifiedStaple" or "UsdaApiMatch"),
+                Estimates: result.Items.Count(i => i.UsdaMatchStatus == "Estimated"), Unresolved: result.Items.Count(i => i.UsdaMatchStatus == "Unparsed")));
+            ParseDiagnostics.Write(_logger, new(ParseDiagnostics.CorrelationId, "request", "success", totalTime.Elapsed.TotalMilliseconds,
+                FallbackCategory: fallbackCategory));
+            return result;
         }
-
-        if (exact)
+        catch (Exception error)
         {
-            var unread = result.Items
-                .Where(i => i.UsdaMatchStatus == "Unparsed")
-                .Select(i => i.FoodName)
-                .ToList();
-            if (unread.Count > 0)
-                result.AiSummary = "Could not read: " + string.Join(", ", unread);
+            if (extractionTime.IsRunning)
+                ParseDiagnostics.Write(_logger, new(ParseDiagnostics.CorrelationId, "extraction", ParseDiagnostics.Failure(error, cancellationToken),
+                    extractionTime.Elapsed.TotalMilliseconds));
+            ParseDiagnostics.Write(_logger, new(ParseDiagnostics.CorrelationId, "request", ParseDiagnostics.Failure(error, cancellationToken),
+                totalTime.Elapsed.TotalMilliseconds, FallbackCategory: fallbackCategory));
+            throw;
         }
-        else if (result.Items.Any(i => i.UsdaMatchStatus == "Unparsed"))
-        {
-            result.AiSummary = string.Join(" ", new[] { result.AiSummary,
-                "Some foods have no nutrition match. Enter their nutrition from a label or remove them before saving." }.Where(s => s != null));
-        }
-
-        // Add overall cooking oil / butter chip if any fried or pan-cooked foods without explicit oil
-        await AddGeneralCookingFatChip(result, prompt, cancellationToken);
-
-        return result;
     }
 
     private static AiParsedItem UnparsedItem(LlmItem item) => new()
     {
-        FoodName = string.IsNullOrWhiteSpace(item.SourceText) ? item.FoodName : item.SourceText,
+        FoodName = item.NeedsWeightReview ? item.FoodName : string.IsNullOrWhiteSpace(item.SourceText) ? item.FoodName : item.SourceText,
         SourceText = item.SourceText,
-        Quantity = 1,
-        Unit = "serving",
+        Quantity = item.NeedsWeightReview ? item.Quantity : 1,
+        Unit = item.NeedsWeightReview ? item.Unit : "serving",
         Grams = 0,
         Calories = 0,
         Protein = 0,
@@ -200,7 +231,7 @@ public class MealParserService : IMealParserService
         Fat = 0,
         Fiber = 0,
         UsdaMatchStatus = "Unparsed",
-        Assumptions = ["Could not read this line"]
+        Assumptions = [item.ExactAssumption ?? "Could not read this line"]
     };
 
     private static ClarificationOption ReferenceOption(FoodReference food, double grams, string id, string label) => new()
@@ -472,6 +503,7 @@ CRITICAL RULES:
                 var result = JsonSerializer.Deserialize<LlmExtractionResult>(jsonSubstring, options);
                 if (result?.Items == null || result.Items.Count is 0 or > 80) return null;
                 var normalizedPrompt = Regex.Replace(prompt, @"\s+", " ").Trim();
+                var correctedSources = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
                 foreach (var item in result.Items)
                 {
                     if (item == null || string.IsNullOrWhiteSpace(item.FoodName) || string.IsNullOrWhiteSpace(item.SourceText)
@@ -480,29 +512,18 @@ CRITICAL RULES:
                         || new[] { item.Quantity, item.EstimatedGrams, item.Calories, item.Protein, item.Carbs, item.Fat, item.Fiber }
                             .Any(n => !double.IsFinite(n) || n < 0)) return null;
 
-                    // Convert a single stated weight locally rather than trusting model arithmetic.
-                    // Multiple weights may be a correction; the model resolves those in context.
-                    var weights = Regex.Matches(item.SourceText, @"(?<![\d./])(?<qty>\d*\.?\d+(?:/\d+)?)\s*(?<unit>kg|kilograms?|g|grams?|oz|ounces?|lb|lbs|pounds?)\b", RegexOptions.IgnoreCase);
-                    if (weights.Count == 1 && !Regex.IsMatch(item.SourceText, @"\b(fluid|fl)\b", RegexOptions.IgnoreCase))
-                    {
-                        var weight = weights[0];
-                        var unit = weight.Groups["unit"].Value.ToLowerInvariant();
-                        // Bare ounces on a drink are commonly volume; retain the model's conversion.
-                        if (unit is not ("oz" or "ounce" or "ounces") || !Regex.IsMatch(item.FoodName, @"\b(latte|milk|coffee|juice|smoothie|cola|soda|water|tea)\b", RegexOptions.IgnoreCase))
-                        {
-                            var quantity = ParseExactQuantity(weight.Groups["qty"].Value);
-                            if (quantity <= 0) return null;
-                            var previousGrams = item.EstimatedGrams;
-                            item.Quantity = quantity;
-                            item.Unit = unit;
-                            item.EstimatedGrams = EstimateGrams(quantity, unit, 100);
-                            if (previousGrams > 0)
-                            {
-                                var ratio = item.EstimatedGrams / previousGrams;
-                                item.Calories *= ratio; item.Protein *= ratio; item.Carbs *= ratio; item.Fat *= ratio; item.Fiber *= ratio;
-                            }
-                        }
-                    }
+                    var fragments = MealFragments(prompt);
+                    var fragment = fragments.FirstOrDefault(f => f.Source.Contains(item.SourceText, StringComparison.OrdinalIgnoreCase));
+                    if (fragment == null || fragment.Corrected && !correctedSources.Add(fragment.Source)) return null;
+                    if (Regex.IsMatch(item.SourceText, @"^(no|not|without|skipped)\b", RegexOptions.IgnoreCase)
+                        || !fragment.Corrected && !PositiveText(fragment.Source).Contains(PositiveText(item.SourceText), StringComparison.OrdinalIgnoreCase)) return null;
+                    // A model cannot turn a negated ingredient into an eaten item.
+                    var excludedWords = Regex.Matches(fragment.Excluded, @"[a-z]+", RegexOptions.IgnoreCase).Select(m => m.Value)
+                        .Where(w => !new[] { "no", "not", "without", "cooked", "raw", "dry", "and" }.Contains(w.ToLowerInvariant()));
+                    if (excludedWords.Any(w => Regex.IsMatch(item.FoodName + " " + item.SearchQuery, $@"\b{Regex.Escape(w)}\b", RegexOptions.IgnoreCase))) return null;
+                    var amountText = fragment.Corrected ? fragment.Text : PositiveText(item.SourceText);
+                    if (fragment.Corrected) item.SourceText = fragment.Source;
+                    EnforceStatedAmount(item, amountText);
                     if (new[] { item.EstimatedGrams, item.Calories, item.Protein, item.Carbs, item.Fat, item.Fiber }
                         .Any(n => !double.IsFinite(n))) return null;
                 }
@@ -524,21 +545,13 @@ CRITICAL RULES:
             Items = new List<LlmItem>()
         };
 
-        var body = prompt.Trim();
-        var prefix = Regex.Match(body, @"^(breakfast|lunch|dinner|snack|post[\s-]?workout|pre[\s-]?workout)\s*:\s*", RegexOptions.IgnoreCase);
-        if (prefix.Success)
+        foreach (var fragment in MealFragments(prompt))
         {
-            if (string.IsNullOrWhiteSpace(mealTypeHint))
-                result.SuggestedMealName = DetectMealName(prefix.Groups[1].Value, null);
-            body = body[prefix.Length..];
+            var item = ParseExactSegment(fragment.Text);
+            item.SourceText = fragment.Source;
+            EnforceStatedAmount(item, fragment.Text);
+            result.Items.Add(item);
         }
-
-        var segments = Regex.Split(body, @"\s*(?:,|;|\+|[\r\n]+|\band\b)\s*", RegexOptions.IgnoreCase)
-            .Select(s => s.Trim())
-            .Where(s => !string.IsNullOrWhiteSpace(s));
-
-        foreach (var segment in segments)
-            result.Items.Add(ParseExactSegment(segment));
 
         return result;
     }
@@ -555,6 +568,7 @@ CRITICAL RULES:
         };
 
         var seg = Regex.Replace(raw.Trim(), @"^(a|an|the)\s+", "", RegexOptions.IgnoreCase).Trim();
+        seg = Regex.Replace(seg, @"\s+by\s+weight\b|\bweighed\s+", "", RegexOptions.IgnoreCase).Trim();
         string? lean = null;
         var leanMatch = Regex.Match(seg, @"\b(93/7|90/10|85/15|80/20)\b", RegexOptions.IgnoreCase);
         if (leanMatch.Success)
@@ -565,7 +579,7 @@ CRITICAL RULES:
         }
 
         const string qty = @"[0-9]*\.?[0-9]+(?:/[0-9]+)?";
-        const string unit = @"g|grams?|kg|kilograms?|oz|ounces?|lb|lbs|pounds?|cups?|tbsp|tablespoons?|tsp|teaspoons?|slices?|scoops?|pieces?|large|medium|small|eggs?";
+        const string unit = @"fluid\s+ounces?|fl\.?\s*oz|ml|millilit(?:er|re)s?|lit(?:er|re)s?|l|g|grams?|kg|kilograms?|oz|ounces?|lb|lbs|pounds?|cups?|tbsp|tablespoons?|tsp|teaspoons?|slices?|scoops?|cans?|bottles?|cartons?|glass(?:es)?|pieces?|large|medium|small|eggs?";
         var start = Regex.Match(seg, $@"^(?<qty>{qty})\s*(?<unit>{unit})\b\s*(?<food>.*)$", RegexOptions.IgnoreCase);
         var end = Regex.Match(seg, $@"^(?<food>.*?)\s+(?<qty>{qty})\s*(?<unit>{unit})\s*$", RegexOptions.IgnoreCase);
         var match = start.Success && (!string.IsNullOrWhiteSpace(start.Groups["food"].Value)
@@ -574,7 +588,7 @@ CRITICAL RULES:
 
         var quantity = ParseExactQuantity(match.Groups["qty"].Value);
         var unitText = match.Groups["unit"].Value.ToLowerInvariant();
-        var food = match.Groups["food"].Value.Trim();
+        var food = Regex.Replace(match.Groups["food"].Value.Trim(), @"^of\s+", "", RegexOptions.IgnoreCase);
         if (quantity <= 0) return unparsed;
         if (string.IsNullOrWhiteSpace(food) && unitText is "egg" or "eggs")
             food = "eggs";
@@ -740,7 +754,8 @@ CRITICAL RULES:
         new(["brown rice"], "brown rice cooked"),
         new(["oats", "oatmeal", "rolled oats"], "rolled oats dry"),
         new(["cream of rice"], "cream of rice"),
-        new(["sourdough", "sourdough bread", "boule"], "sourdough bread"),
+        new(["sourdough", "sourdough bread"], "sourdough bread"),
+        new(["boule", "boule bread"], "boule bread"),
         new(["whole wheat bread", "wheat bread"], "whole wheat bread"),
         new(["sweet potato"], "sweet potato cooked"),
         new(["potato", "white potato", "russet", "russet potato"], "white potato baked"),
@@ -780,12 +795,8 @@ CRITICAL RULES:
             Items = new List<LlmItem>()
         };
 
-        var body = Regex.Replace(prompt.Trim(), @"^(breakfast|lunch|dinner|snack|post[\s-]?workout|pre[\s-]?workout)\s*:\s*", "", RegexOptions.IgnoreCase);
-        // Sentence boundaries must not split decimal amounts such as 0.5 kg.
-        var segments = Regex.Split(body, @",|\band\b|\n|\+|(?<=[a-z])\.\s+", RegexOptions.IgnoreCase)
-            .Select(s => s.Trim().TrimEnd('.'))
-            .Where(s => !string.IsNullOrWhiteSpace(s) && !Regex.IsMatch(s, @"^(no|without|skipped)\b", RegexOptions.IgnoreCase))
-            .ToList();
+        var fragments = MealFragments(prompt);
+        var segments = fragments.Select(f => f.Text).ToList();
 
         foreach (var rawSeg in segments)
         {
@@ -934,7 +945,11 @@ CRITICAL RULES:
             });
         }
 
-        foreach (var pair in result.Items.Zip(segments)) pair.First.SourceText = pair.Second;
+        foreach (var pair in result.Items.Zip(fragments))
+        {
+            pair.First.SourceText = pair.Second.Source;
+            EnforceStatedAmount(pair.First, pair.Second.Text);
+        }
 
         return result;
     }
@@ -980,6 +995,11 @@ CRITICAL RULES:
             query = Regex.Replace(query, @"\b(cooked|raw)\b", "", RegexOptions.IgnoreCase) + " dry";
         else if (Regex.IsMatch(source, @"\braw\b", RegexOptions.IgnoreCase))
             query = Regex.Replace(query, @"\bcooked\b", "", RegexOptions.IgnoreCase) + " raw";
+        else if (Regex.IsMatch(source, @"\b(cooked|grilled|roasted|baked|fried|boiled|steamed)\b", RegexOptions.IgnoreCase))
+            query = Regex.Replace(query, @"\b(raw|dry)\b", "", RegexOptions.IgnoreCase) + " cooked";
+        var lean = Regex.Match(source, @"\b(93/7|90/10|85/15|80/20)\b");
+        if (lean.Success)
+            query = Regex.Replace(query, @"\b(93/7|90/10|85/15|80/20)\b", "") + " " + lean.Value;
         if (IsZeroCalorieDrink(source))
             query = "diet cola";
         return Regex.Replace(query, @"\s+", " ").Trim();
@@ -1001,6 +1021,10 @@ CRITICAL RULES:
         public bool MeatStateAmbiguous { get; set; }
         public bool BeefFatAmbiguous { get; set; }
         public bool Unparsed { get; set; }
+        [System.Text.Json.Serialization.JsonIgnore]
+        public bool NeedsWeightReview { get; set; }
+        [System.Text.Json.Serialization.JsonIgnore]
+        public double? VolumeMl { get; set; }
         public string SourceText { get; set; } = string.Empty;
         public string? ExactAssumption { get; set; }
         public double Calories { get; set; }

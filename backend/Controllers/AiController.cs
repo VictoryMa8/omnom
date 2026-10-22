@@ -10,10 +10,12 @@ namespace Omnom.Api.Controllers;
 public class AiController : ControllerBase
 {
     private readonly IMealParserService _mealParserService;
+    private readonly ILogger<AiController> _logger;
 
-    public AiController(IMealParserService mealParserService)
+    public AiController(IMealParserService mealParserService, ILogger<AiController> logger)
     {
         _mealParserService = mealParserService;
+        _logger = logger;
     }
 
     [HttpPost("parse")]
@@ -27,6 +29,8 @@ public class AiController : ControllerBase
         if (request.Prompt.Length > 4000)
             return BadRequest(new { message = "Please keep each meal description under 4,000 characters." });
 
+        using var diagnosticScope = ParseDiagnostics.Begin(HttpContext.RequestAborted);
+        var timer = System.Diagnostics.Stopwatch.StartNew();
         using var timeout = CancellationTokenSource.CreateLinkedTokenSource(HttpContext.RequestAborted);
         timeout.CancelAfter(ParseLimits.RequestWait);
         try
@@ -36,6 +40,8 @@ public class AiController : ControllerBase
         }
         catch (OperationCanceledException)
         {
+            ParseDiagnostics.Write(_logger, new(ParseDiagnostics.CorrelationId, "api",
+                HttpContext.RequestAborted.IsCancellationRequested ? "cancelled" : "request-deadline", timer.Elapsed.TotalMilliseconds));
             return StatusCode(504, new { message = "Parsing timed out. Try a shorter meal description or tap Log Fuel again to use the local parser." });
         }
     }

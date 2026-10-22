@@ -40,3 +40,14 @@ Every new deployment gets a unique beta version. The first is **beta 0.0.1**, fo
 - Changes: includes all current project work, OM-001 documentation/setup, OM-002 desktop/mobile release gate, and OM-003's 66-case corpus, scorer, runner, offline baselines, and live opt-in request guards.
 - Source: the release commit subject includes **beta 0.0.2**. Its Git history, Vercel commit check, and release handoff identify the exact SHA/deployment. No live provider evaluation was authorized or run.
 - Compatibility: browser diary remains `omnom_diary_v1`, backup version 1. No sync/account or application-schema migration.
+
+## beta 0.0.3 — October 21, 2026
+
+- Package version: `0.0.3-beta`; footer: **beta 0.0.3**.
+- Target: production, via the authorized push to linked GitHub `VictoryMa8/omnom` branch `main`. Live project inspection confirmed the linked repository and production branch; latest prior deployment is beta 0.0.2 (`dpl_AYZaM1aE23xLTZwLtsXRXQ69Cfeu`, Ready).
+- Status: **Prepared and verified — ready for the authorized Git production push**. The release commit subject includes beta 0.0.3; the commit check and final release handoff will identify its exact SHA/deployment ID, URL and result. [Project/deployment dashboard](https://vercel.com/victorys-projects-c1cb4594/omnom).
+- Changes: OM-004 privacy-safe correlated parsing diagnostics and evaluation reporting; OM-005 shared corrections/exclusions/amount enforcement, disclosed beverage-volume assumptions, unresolved container/density guards and checked remembered portions. Includes regression coverage, updated verification evidence and synchronized production assets.
+- Accuracy evidence: unchanged v1 fixtures, heuristic fully correct meals 41/66 → 48/66, canned AI 52/66 unchanged, zero newly failing meals or previously passing food checks. Live AI baseline remains explicitly deferred; no provider evaluation is part of this release.
+- Verification: fresh release-version checks passed 167 backend tests, 29 frontend regressions, 20 desktop/mobile browser scenarios (zero retries/skips), frontend type checking/production build and backend build. Package, lockfile and generated bundle agree on `0.0.3-beta`; `git diff --check` passed. [Release smoke receipt](docs/verification/beta-0.0.3-release-smoke.json). Implementation evidence is in [OM-004](docs/verification/OM-004-safe-diagnostics.md) and [OM-005](docs/verification/OM-005-corrections-and-units.md).
+- Compatibility: browser diary remains `omnom_diary_v1`, backup version 1. No API/schema/seed/account/sync migration or existing-diary upload.
+- Mechanism: one Git-triggered production deployment; no additional CLI deployment with the same version.

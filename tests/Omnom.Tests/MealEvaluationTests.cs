@@ -147,8 +147,53 @@ public class MealEvaluationTests
         using var handler = new CappedRouterHandler(5, ["approved"], inner); using var client = new HttpClient(handler);
         using (var response = await client.SendAsync(Request())) { }
         Assert.Equal("nonzero-reported-cost", handler.StopReason); Assert.Equal(.01, handler.CostSum);
+        Assert.Equal("other", Assert.Single(handler.ActualModels));
         await Assert.ThrowsAsync<InvalidOperationException>(() => client.SendAsync(Request()));
         var blocked = new NetworkForbidden(); using var offline = new HttpClient(blocked);
         await Assert.ThrowsAsync<InvalidOperationException>(() => offline.SendAsync(Request())); Assert.Equal(1, blocked.Attempts);
     }
+    [Fact]
+    public void DiagnosticSummaryKeepsFailuresSeparateAndUnknownUsageNullable()
+    {
+        var latency = Reports.Percentiles(Enumerable.Range(1, 20).Select(i => (double)i));
+        Assert.Equal(20, latency.Samples); Assert.Equal(10, latency.P50Ms); Assert.Equal(19, latency.P95Ms);
+        Assert.Null(Reports.Percentiles([]).P95Ms);
+        List<CaseRun> runs = [new("A", "mass", "scored", 10, true, null, null) {
+            Diagnostics = [new("id", "model-attempt", "http-failure", 5),
+                new("id", "extraction", "fallback", 6, FallbackCategory: "models-unavailable"),
+                new("id", "matching", "success", 4, References: 1, Estimates: 2, Unresolved: 3)] },
+            new("B", "mass", "deadline", 100, false, null, "deadline")];
+        var report = JsonSerializer.SerializeToElement(Reports.DiagnosticSummary(runs));
+        Assert.Equal(1, report.GetProperty("scoredEndToEnd").GetProperty("Samples").GetInt32());
+        Assert.Equal(10, report.GetProperty("scoredEndToEnd").GetProperty("P95Ms").GetDouble());
+        Assert.Equal(1, report.GetProperty("failedEndToEnd").GetProperty("Samples").GetInt32());
+        Assert.Equal(JsonValueKind.Null, report.GetProperty("usage").GetProperty("reportedCostSum").ValueKind);
+        Assert.Equal(JsonValueKind.Null, report.GetProperty("usage").GetProperty("promptTokenSum").ValueKind);
+        Assert.Equal(1, report.GetProperty("usage").GetProperty("missingCost").GetInt32());
+        Assert.Equal(3, report.GetProperty("matching").GetProperty("unresolved").GetInt32());
+        Assert.Equal(1, report.GetProperty("fallbackCategories").GetProperty("models-unavailable").GetInt32());
+    }
+
+    [Fact]
+    public async Task FailedTransportCountsAsAnAttemptWithUnknownCost()
+    {
+        using var handler = new CappedRouterHandler(2, ["approved"], new NetworkForbidden());
+        using var client = new HttpClient(handler);
+        await Assert.ThrowsAsync<InvalidOperationException>(() => client.SendAsync(Request()));
+        Assert.Equal(1, handler.Sent); Assert.Equal(1, handler.MissingCost); Assert.Equal(0, handler.WithCost);
+    }
+
+    [Theory]
+    [InlineData("null")]
+    [InlineData("[]")]
+    [InlineData("{\"usage\":null}")]
+    public async Task MalformedUsageRemainsUnknownAndPreservesTheResponseForApplicationValidation(string body)
+    {
+        using var handler = new CappedRouterHandler(2, ["approved"], new Reply(body: body));
+        using var client = new HttpClient(handler);
+        using var response = await client.SendAsync(Request());
+        Assert.Equal(body, await response.Content.ReadAsStringAsync());
+        Assert.Equal(1, handler.Sent); Assert.Equal(1, handler.MissingCost); Assert.Equal(0, handler.WithCost);
+    }
+
 }

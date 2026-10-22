@@ -1,0 +1,264 @@
+{
+  "task": "OM-002",
+  "startedAt": "2026-10-22T04:00:44.169Z",
+  "appVersion": "0.0.2-beta",
+  "revision": "ef9fee37af5304f654ccab1faad848afaffefc49",
+  "workingTree": "M DEV_README.md\n M README.md\n M ROADMAP.md\n M backend/Controllers/AiController.cs\n M backend/Program.cs\n M backend/Services/MealParserService.cs\n M backend/Services/OpenRouterService.cs\n M backend/Services/RequestBudget.cs\n M backend/Services/UsdaFoodService.cs\n D backend/wwwroot/assets/index-248EwOQM.js\n M backend/wwwroot/index.html\n M frontend/src/utils/foodDefaults.ts\n M frontend/tests/regressions.test.mjs\n M frontend/tests/smoke/README.md\n M frontend/tests/smoke/release.spec.mjs\n M tests/Omnom.Tests/MealEvaluationTests.cs\n M tests/fixtures/meal-evaluation/README.md\n M tools/Omnom.Evaluation/Contracts.cs\n M tools/Omnom.Evaluation/Program.cs\n M tools/Omnom.Evaluation/Providers.cs\n M tools/Omnom.Evaluation/Reports.cs\n?? backend/Services/MealParserService.Amounts.cs\n?? backend/Services/ParseDiagnostics.cs\n?? backend/wwwroot/assets/index-CQCiXVMd.js\n?? docs/verification/OM-004-provider-preflight.json\n?? docs/verification/OM-004-results.json\n?? docs/verification/OM-004-safe-diagnostics.md\n?? docs/verification/OM-004-smoke-results.json\n?? tests/Omnom.Tests/CorrectionAndUnitTests.cs\n?? tests/Omnom.Tests/ParsingDiagnosticsTests.cs\n?? tools/Omnom.Evaluation/DiagnosticCollector.cs",
+  "dotnetSdk": "10.0.301",
+  "playwright": "1.64.1",
+  "node": "v24.4.0",
+  "platform": "darwin/arm64",
+  "command": "npm --prefix frontend run test:smoke",
+  "providerMode": "Browser API fixtures; real API checks use Exact/local references only. No live AI/USDA.",
+  "actualWorkers": 1,
+  "completedAt": "2026-10-22T04:01:00.939Z",
+  "status": "passed",
+  "durationMs": 16657.051,
+  "tests": [
+    {
+      "test": "desktop / release.spec.mjs / packaged app crosses the real API boundary with Exact references and public restrictions",
+      "status": "passed",
+      "durationMs": 837,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "desktop / release.spec.mjs / stubbed review replacement persists every nutrient, source, date, and remembered default",
+      "status": "passed",
+      "durationMs": 533,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "desktop / release.spec.mjs / favorites, recent/repeat, editing, deletion, and each Undo update daily and weekly totals",
+      "status": "passed",
+      "durationMs": 2652,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "desktop / release.spec.mjs / remembered aliases resolve unknowns but explicit grams override the usual portion",
+      "status": "passed",
+      "durationMs": 391,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "desktop / release.spec.mjs / historical targets, missing days, rapid navigation, and keyboard goal dialog remain correct",
+      "status": "passed",
+      "durationMs": 410,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "desktop / release.spec.mjs / backup export/restore, invalid and oversized files preserve data and keyboard access",
+      "status": "passed",
+      "durationMs": 1012,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "desktop / release.spec.mjs / quota errors never announce success or overwrite the saved diary",
+      "status": "passed",
+      "durationMs": 356,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "desktop / release.spec.mjs / corrupt storage is surfaced without clearing it, and blocked reads remain visible",
+      "status": "passed",
+      "durationMs": 223,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "desktop / release.spec.mjs / API failure/loading feedback, search errors, and responsive controls stay usable",
+      "status": "passed",
+      "durationMs": 433,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "desktop / release.spec.mjs / real API corrections and beverage units preserve review assumptions, unresolved containers, and saved weights",
+      "status": "passed",
+      "durationMs": 649,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "mobile / release.spec.mjs / packaged app crosses the real API boundary with Exact references and public restrictions",
+      "status": "passed",
+      "durationMs": 443,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "mobile / release.spec.mjs / stubbed review replacement persists every nutrient, source, date, and remembered default",
+      "status": "passed",
+      "durationMs": 466,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "mobile / release.spec.mjs / favorites, recent/repeat, editing, deletion, and each Undo update daily and weekly totals",
+      "status": "passed",
+      "durationMs": 1851,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "mobile / release.spec.mjs / remembered aliases resolve unknowns but explicit grams override the usual portion",
+      "status": "passed",
+      "durationMs": 366,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "mobile / release.spec.mjs / historical targets, missing days, rapid navigation, and keyboard goal dialog remain correct",
+      "status": "passed",
+      "durationMs": 413,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "mobile / release.spec.mjs / backup export/restore, invalid and oversized files preserve data and keyboard access",
+      "status": "passed",
+      "durationMs": 880,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "mobile / release.spec.mjs / quota errors never announce success or overwrite the saved diary",
+      "status": "passed",
+      "durationMs": 312,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "mobile / release.spec.mjs / corrupt storage is surfaced without clearing it, and blocked reads remain visible",
+      "status": "passed",
+      "durationMs": 273,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "mobile / release.spec.mjs / API failure/loading feedback, search errors, and responsive controls stay usable",
+      "status": "passed",
+      "durationMs": 452,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "test": "mobile / release.spec.mjs / real API corrections and beverage units preserve review assumptions, unresolved containers, and saved weights",
+      "status": "passed",
+      "durationMs": 575,
+      "annotations": [
+        {
+          "type": "browser",
+          "description": "156.0.8078.4"
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "limitations": [
+    "Not a live model-quality evaluation.",
+    "Chromium only; viewport coverage is not real-device coverage.",
+    "Storage/parse/search failures are injected into disposable test contexts."
+  ]
+}

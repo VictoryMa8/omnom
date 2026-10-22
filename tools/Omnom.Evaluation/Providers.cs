@@ -52,16 +52,21 @@ public sealed class CappedRouterHandler(int cap, HashSet<string> models, HttpMes
             if (prices.GetProperty(field).GetDouble() != 0) throw new InvalidOperationException("Nonzero price limit refused.");
         if (!models.Contains(model)) throw new InvalidOperationException("Unapproved model refused.");
         Sent++; RequestedModels.Add(model);
-        var response = await base.SendAsync(request, cancellationToken);
+        HttpResponseMessage response;
+        try { response = await base.SendAsync(request, cancellationToken); }
+        catch { MissingCost++; throw; }
         if (response.StatusCode == HttpStatusCode.TooManyRequests) StopReason = "provider-quota";
         if (response.StatusCode is HttpStatusCode.Unauthorized or HttpStatusCode.Forbidden) StopReason = "provider-auth";
-        var body = await response.Content.ReadAsStringAsync(cancellationToken);
+        string body;
+        try { body = await response.Content.ReadAsStringAsync(cancellationToken); }
+        catch { MissingCost++; response.Dispose(); throw; }
         try
         {
             using var parsed = JsonDocument.Parse(body);
+            if (parsed.RootElement.ValueKind != JsonValueKind.Object) { MissingCost++; return response; }
             if (parsed.RootElement.TryGetProperty("model", out var actual) && actual.ValueKind == JsonValueKind.String)
-                ActualModels.Add(actual.GetString()!);
-            if (parsed.RootElement.TryGetProperty("usage", out var usage) && usage.TryGetProperty("cost", out var cost)
+                ActualModels.Add(models.Contains(actual.GetString()!) ? actual.GetString()! : "other");
+            if (parsed.RootElement.TryGetProperty("usage", out var usage) && usage.ValueKind == JsonValueKind.Object && usage.TryGetProperty("cost", out var cost)
                 && cost.ValueKind == JsonValueKind.Number && cost.TryGetDouble(out var value) && double.IsFinite(value) && value >= 0)
             { WithCost++; CostSum += value; if (value > 0) StopReason = "nonzero-reported-cost"; }
             else MissingCost++;

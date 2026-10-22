@@ -1,6 +1,6 @@
 # Omnom roadmap
 
-Last reconciled with the working tree: **October 20, 2026**.
+Last reconciled with the working tree: **October 21, 2026**.
 
 This is the canonical plan for future work. It replaces the priority list in [the intelligence review](docs/intelligence-review.md#historical-priorities). The review preserves the investigation and earlier verification evidence; [README.md](README.md) covers setup and features, and [AGENTS.md](AGENTS.md) covers contributor rules.
 
@@ -9,7 +9,7 @@ The goal is to make logging food fast, nutrition traceable, and diary data depen
 ## Start here
 
 1. Read [the current baseline](#current-baseline) and [product constraints](#product-constraints). Check the working tree before editing: this snapshot includes existing uncommitted implementation work.
-2. Pick a **Ready** task from the execution table whose dependencies are satisfied. The recommended next task is **OM-004**. Keep each change focused on one task or a documented slice of it.
+2. Pick a **Ready** task from the execution table whose dependencies are satisfied. The recommended next Ready implementation is **OM-006**; OM-005 is complete. OM-004 diagnostics are delivered, with its live baseline explicitly deferred until configured zero-price routing is available. Keep each change focused on one task or a documented slice of it.
 3. Read that task's entry, inspect its code touchpoints, and record an owner, start date, and implementation/issue link when work starts. Reconcile any drift between this document and the code before proceeding.
 4. Implement the scope, satisfy its acceptance criteria, and follow [verification and completion](#verification-and-completion).
 5. Update the task status and evidence in this file in the same change. Record remaining work explicitly; do not mark a whole milestone complete after delivering only part of it.
@@ -34,7 +34,7 @@ The order below is a proposed implementation sequence, without calendar promises
 | Capability | Status and limits | Main code / evidence |
 |---|---|---|
 | Free-only extraction and local fallback | Implemented; broad live accuracy comparison remains open | [OpenRouterService](backend/Services/OpenRouterService.cs), [MealParserService](backend/Services/MealParserService.cs), [routing tests](tests/Omnom.Tests/FreeModelRoutingTests.cs) |
-| Explicit mass handling, qualifier preservation, unresolved unknown foods | Implemented safeguards; multi-weight corrections and beverage ounces still need broader coverage | [intelligence regressions](tests/Omnom.Tests/IntelligenceRegressionTests.cs), [deterministic parser tests](tests/Omnom.Tests/DeterministicParserTests.cs) |
+| Explicit amounts, corrections, exclusions and drink units | OM-005 adds numeric corrections, scoped exclusions and visible volume assumptions; unsupported ambiguity remains unresolved | [OM-005 evidence](docs/verification/OM-005-corrections-and-units.md), [amount regressions](tests/Omnom.Tests/CorrectionAndUnitTests.cs) |
 | Replace reference foods during review; edit grams and nutrition | Implemented; reference search currently searches local/cached records | [FoodSearch](frontend/src/components/FoodSearch.vue), [MealConfirmCard](frontend/src/components/MealConfirmCard.vue), [UsdaFoodService](backend/Services/UsdaFoodService.cs) |
 | Repeat/favorite meals and remembered food aliases/portions | Implemented in browser storage; exact alias matching, explicit weight wins, favorites are snapshots | [MealLibrary](frontend/src/components/MealLibrary.vue), [food defaults](frontend/src/utils/foodDefaults.ts), [local diary](frontend/src/services/localDiary.ts) |
 | Raw/cooked and lean clarification choices | Implemented where matching reference records exist; unsupported variants remain unresolved | [reference clarification tests](tests/Omnom.Tests/ReferenceClarificationTests.cs) |
@@ -53,8 +53,8 @@ All IDs are stable references for issues, PRs, commits, and agent handoffs. Depe
 | M1 — Establish a reproducible baseline | OM-001 | Reconcile developer docs and local startup | Done | None |
 | M1 | OM-002 | Reproducible release smoke checks | Done | OM-001 |
 | M1 | OM-003 | Representative meal evaluation corpus and runner | Done | None |
-| M2 — Improve measurable accuracy | OM-004 | Safe parsing diagnostics and live baseline report | Ready | OM-003 |
-| M2 | OM-005 | Deterministic corrections, negations, and beverage units | Ready | OM-003 |
+| M2 — Improve measurable accuracy | OM-004 | Safe parsing diagnostics and live baseline report | Deferred | OM-003 |
+| M2 | OM-005 | Deterministic corrections, negations, and beverage units | Done | OM-003 |
 | M2 | OM-006 | Branded reference search and replacement | Ready | OM-003; evaluate against OM-004 before closing |
 | M2 | OM-007 | Source-backed portion coverage | Ready | OM-003; OM-005 for unit rules |
 | M3 — Strengthen daily use | OM-008 | Backup recovery and storage concurrency hardening | Ready | OM-002 |
@@ -62,7 +62,7 @@ All IDs are stable references for issues, PRs, commits, and agent handoffs. Depe
 | M4 — Optional cross-device use | OM-010 | Account/sync architecture decision | Needs decision | OM-008; product decision to pursue sync |
 | M4 | OM-011 | Incremental opt-in sync implementation | Proposed | Accepted OM-010 design; OM-002, OM-008 |
 
-Recommended sequence: complete M1, establish OM-004's baseline, then deliver OM-005 through OM-007 as separate changes. OM-008 can follow M1 independently of accuracy work. OM-009 and M4 can remain deferred without blocking improvements to local logging. Any newly confirmed data-loss, access-control, or nutrition-identity bug takes priority over feature work; record the reproducer and affected task.
+Recommended sequence: complete M1, establish OM-004's baseline when free routing is available, then deliver OM-005 through OM-007 as separate changes. OM-005 is complete against the offline baseline; continue with OM-006 while OM-004's live portion is deferred, preserving OM-006's evaluation gate. OM-008 can follow M1 independently of accuracy work. OM-009 and M4 can remain deferred without blocking improvements to local logging. Any newly confirmed data-loss, access-control, or nutrition-identity bug takes priority over feature work; record the reproducer and affected task.
 
 ## M1 — Establish a reproducible baseline
 
@@ -129,21 +129,29 @@ Recommended sequence: complete M1, establish OM-004's baseline, then deliver OM-
 
 ### OM-004 — Safe diagnostics and a live baseline
 
+**Work record (October 20, 2026):** Owner: Codex; started/updated October 20. Status: In progress — diagnostics delivered; live baseline explicitly deferred after official endpoint preflight found no configured zero-price route. The user authorized up to 12 live HTTP attempts, but none were sent. This working-tree change adds correlated safe stage/attempt logs, nullable usage/cost, redaction coverage and repeated-subset/latency reporting. [Verification and remaining work](docs/verification/OM-004-safe-diagnostics.md), [offline results](docs/verification/OM-004-results.json), [provider preflight](docs/verification/OM-004-provider-preflight.json).
+
+**Status update (October 21, 2026):** Deferred applies to the remaining live benchmark only. Instrumentation is delivered and verified; the explicit free-availability limitation is recorded above. The user requested moving forward, and OM-005 proceeded without claiming a live baseline.
+
 **Outcome:** maintainers can tell whether failures come from extraction, matching, provider quotas, or request deadlines.
 
 **Scope:** extend existing structured logs with a request correlation ID, stage timings, requested/actual model, fallback category, reference/estimate/unresolved counts, and token/cost metadata when supplied. Include rate limits, invalid output, truncated output, timeouts, missing configuration, and USDA failures. Redact raw descriptions, search strings, credentials, reasoning, and provider bodies; inspect the existing USDA warning, which currently includes the query. Do not require an external analytics service.
 
 **Acceptance criteria:**
 
-- [ ] Deterministic tests exercise success, primary failure/backup success, rate limiting, total fallback, invalid output, and cancellation without raw meal or secret data appearing in logs.
+- [x] Deterministic tests exercise success, primary failure/backup success, rate limiting, total fallback, invalid output, and cancellation without raw meal or secret data appearing in logs.
 - [ ] A fixed OM-003 subset runs through the complete application pipeline, not just a generic model prompt. Record dataset/revision, model IDs, sample counts, successful/failed/limited requests, and repetitions.
 - [ ] The report separates extraction from reference matching and shows fallback rate, p50/p95 end-to-end latency with sample counts, and observed usage/cost. Missing usage is unknown, not zero.
 - [ ] Establish measured latency/accuracy baselines and explicit targets for subsequent changes. Keep current deadlines unless measurements justify a separately explained change.
-- [ ] Verify current official provider documentation and free availability before the live run. Stop if zero-price routing is unavailable; record that limitation rather than enabling paid fallback.
+- [x] Verify current official provider documentation and free availability before the live run. Stop if zero-price routing is unavailable; record that limitation rather than enabling paid fallback.
 
 **Touchpoints:** [OpenRouterService](backend/Services/OpenRouterService.cs), [MealParserService](backend/Services/MealParserService.cs), [UsdaFoodService](backend/Services/UsdaFoodService.cs), [ParseLimits](backend/Services/ParseLimits.cs), [RequestBudget](backend/Services/RequestBudget.cs). **Evidence:** log-redaction tests and a dated evaluation report. Instrumentation can land separately, but this task stays partial until the live report or an explicit deferral is recorded.
 
+**Verification record:** 132 backend tests, 25 frontend regressions and 18 browser scenarios passed; frontend/backend builds passed. The v1 heuristic and canned runs completed 66/66 each, with unchanged 41/66 and 52/66 fully correct results and zero per-case score deltas. Twelve repeated canned observations verified subset reporting. No schema/API/backup change or deployment. Live sample size is zero; accuracy, fallback, latency and cost remain unknown. Keep existing deadlines. Resume the fixed live subset only after verifying zero-price availability; measured live targets remain open. Next independent Ready implementation: OM-005.
+
 ### OM-005 — Corrections, negations, and beverage units
+
+**Completion record (October 21, 2026):** Owner: Codex; started/completed October 21. Status: Done. This working-tree change preserves the preceding uncommitted OM-004 diagnostics. Added shared literal correction/negation/amount enforcement, explicit beverage-volume assumptions, unresolved density/container review, checked serving scaling and remembered-default guards. [Verification](docs/verification/OM-005-corrections-and-units.md), [case comparison](docs/verification/OM-005-results.json), [browser results](docs/verification/OM-005-smoke-results.json).
 
 **Outcome:** explicit corrections and exclusions survive both AI and local parsing without unsafe arithmetic.
 
@@ -151,13 +159,15 @@ Recommended sequence: complete M1, establish OM-004's baseline, then deliver OM-
 
 **Acceptance criteria:**
 
-- [ ] Tests specify whether each correction replaces an earlier amount, adds another item, or remains unresolved; excluded foods do not reappear as default ingredients.
-- [ ] Explicit grams/ounces of mass still override model arithmetic and remembered portions.
-- [ ] Fluid ounces are not automatically multiplied by the mass-ounce conversion. Ambiguous drink units and unsupported densities remain reviewable with visible assumptions.
-- [ ] Raw/cooked/diet/lean identity and fallback behavior remain intact in both AI and heuristic paths.
-- [ ] Before/after corpus results identify improvements and regressions by case ID; no hard-rule regression is accepted silently.
+- [x] Tests specify whether each correction replaces an earlier amount, adds another item, or remains unresolved; excluded foods do not reappear as default ingredients.
+- [x] Explicit grams/ounces of mass still override model arithmetic and remembered portions.
+- [x] Fluid ounces are not automatically multiplied by the mass-ounce conversion. Ambiguous drink units and unsupported densities remain reviewable with visible assumptions.
+- [x] Raw/cooked/diet/lean identity and fallback behavior remain intact in both AI and heuristic paths.
+- [x] Before/after corpus results identify improvements and regressions by case ID; no hard-rule regression is accepted silently.
 
 **Touchpoints:** [MealParserService](backend/Services/MealParserService.cs), [AI models](backend/Models/AiParsingModels.cs), [food defaults](frontend/src/utils/foodDefaults.ts), parser/matching regressions. **Evidence:** focused tests plus the OM-003 comparison; live validation of changed AI instructions uses OM-004's method.
+
+**Verification record:** 167 backend tests, 29 frontend regressions and 20 desktop/mobile browser scenarios passed; frontend/backend builds passed with synchronized production assets. Unchanged v1 corpus: heuristic fully correct meals improved 41/66 → 48/66, explicit mass 52/61 → 55/61 and exclusion violations 1 → 0; canned AI stayed 52/66. The correction category now passes 8/8 in both modes. Zero newly failing meals or previously passing food checks; existing branded/matching failures remain recorded. No API/backup/schema/seed change, AI instruction change, live provider run or deployment. Next Ready implementation: OM-006.
 
 ### OM-006 — Branded reference search and replacement
 
@@ -312,3 +322,5 @@ Evidence links:
 | 2026-10-20 | Completed OM-001: reconciled contributor/setup docs, aligned Vite with backend HTTP port 5027, and recorded fresh local test/build/browser evidence. OM-002 is the next task. |
 | 2026-10-20 | Completed OM-002: 18 deterministic desktop/mobile browser checks, isolated .NET host, reports/artifacts, and a repeatable release gate; existing backend/Node suites passed. No deployment. OM-003 is next. |
 | 2026-10-20 | Completed OM-003: 66-case v1 corpus, offline baselines, scorer/request-guard tests, and explicit capped live mode. Prepared beta 0.0.2 for the authorized main-branch push. OM-004 is next. |
+| 2026-10-20 | Delivered OM-004 diagnostics, safe structured logs, repeated-subset reports and unchanged offline baselines. Explicitly deferred live measurement after official pricing/endpoints showed no configured zero-price route; zero completions sent. OM-004 stays partial; OM-005 is the next Ready implementation. |
+| 2026-10-21 | Completed OM-005: shared corrections/exclusions/units and checked-default safeguards, 167 backend/29 frontend/20 browser checks, and unchanged-fixture evaluation improving heuristic correctness to 48/66 with no new food-check regressions. OM-004 live work is explicitly Deferred; OM-006 is next. |

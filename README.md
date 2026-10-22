@@ -13,6 +13,7 @@ Built with .NET 8 Web API, Vue 3, TypeScript, Vite, Tailwind CSS, Pinia, EF Core
 ## Features
 
 - Text or browser voice input, with AI-assisted and deterministic Exact logging modes.
+- Deterministic numeric corrections and exclusions; extra portions remain separate. Drink volumes show conversion assumptions, while unsupported density/container sizes stay unresolved for review.
 - Editable review: change amounts, replace a food from local/cached references, enter checked label values, and inspect assumptions before saving.
 - Reference-backed preparation and cooking-fat clarification chips where suitable records exist.
 - Repeat/favorite meals and optional remembered food aliases and portions. Explicit weights override remembered portions; favorites remain snapshots.
@@ -65,7 +66,7 @@ If you already have a root `.env` or exported provider/database settings, see th
 
 Copy `.env.example` to `.env`, set your own `OPENROUTER_API_KEY`, and restart the backend. Never commit the key. The example also enables `PUBLIC_DIARY=true`. The loader reads `.env` in the process working directory, or the repository root when launched from `backend/`; existing environment variables take precedence, including explicitly empty values.
 
-The key and model list are server-managed. The active UI has no model selector or API-key editor. The code inspected October 20, 2026 configures `inclusionai/ling-3.1-flash`, then `apodex/apodex-1.1-mini:free`. Every attempt applies zero maximum provider prices. Reasoning is requested with a shared 6,000-token output/reasoning budget; the backup requests JSON-object mode, and both outputs are validated locally. These are code settings, not a fresh guarantee of provider availability or capabilities. Verify current provider documentation before changing them.
+The key and model list are server-managed. The active UI has no model selector or API-key editor. The code inspected October 20, 2026 configures `inclusionai/ling-3.1-flash`, then `apodex/apodex-1.1-mini:free`. Every attempt applies zero maximum provider prices. Reasoning is requested with a shared 6,000-token output/reasoning budget; the backup requests JSON-object mode, and both outputs are validated locally. The October 20 [OM-004 preflight](docs/verification/OM-004-safe-diagnostics.md) found paid endpoints for Ling and no listed endpoints for the backup, so the live baseline was deferred without sending completions. The zero-price limits remain in place; reverify current availability before a live run.
 
 The primary has a 15-second cap inside a shared 40-second AI budget. The API deadline is 50 seconds; the browser timeout is 55 seconds. Invalid output, provider failures, and exhausted free quotas can trigger visible local fallback. See the dated [intelligence review](docs/intelligence-review.md) for earlier provider checks and limitations; broader live evaluation is tracked in OM-004.
 

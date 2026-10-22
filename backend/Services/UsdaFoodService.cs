@@ -86,6 +86,7 @@ public class UsdaFoodService : IUsdaFoodService
 
     public async Task<FoodReference?> FindBestMatchAsync(string query, bool allowRemote = true, CancellationToken cancellationToken = default)
     {
+        using var diagnosticScope = ParseDiagnostics.Begin(cancellationToken);
         if (string.IsNullOrWhiteSpace(query)) return null;
 
         var cleanTokens = ExtractCleanTokens(query);
@@ -127,6 +128,7 @@ public class UsdaFoodService : IUsdaFoodService
         var usdaCleanQuery = string.Join(" ", cleanTokens);
         if (string.IsNullOrWhiteSpace(usdaCleanQuery)) usdaCleanQuery = query;
 
+        var timer = System.Diagnostics.Stopwatch.StartNew();
         try
         {
             var apiKey = GetUsdaApiKey();
@@ -136,6 +138,9 @@ public class UsdaFoodService : IUsdaFoodService
             using var timeout = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             timeout.CancelAfter(ParseLimits.UsdaLookup);
             using var response = await _httpClient.GetAsync(url, timeout.Token);
+            if (!response.IsSuccessStatusCode)
+                ParseDiagnostics.Write(_logger, new(ParseDiagnostics.CorrelationId, "usda", "http-failure", timer.Elapsed.TotalMilliseconds,
+                    HttpStatus: (int)response.StatusCode));
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync(timeout.Token);
@@ -146,19 +151,31 @@ public class UsdaFoodService : IUsdaFoodService
                     {
                         var existing = await _dbContext.FoodReferences
                             .FirstOrDefaultAsync(f => f.FdcId == fdcId, cancellationToken);
-                        if (existing != null) return existing;
+                        if (existing != null)
+                        {
+                            Record("success");
+                            return existing;
+                        }
                     }
 
                     _dbContext.FoodReferences.Add(usdaFood);
                     await _dbContext.SaveChangesAsync(cancellationToken);
+                    Record("success");
                     return usdaFood;
                 }
+                Record("no-match");
             }
+            void Record(string outcome) => ParseDiagnostics.Write(_logger, new(ParseDiagnostics.CorrelationId, "usda", outcome,
+                timer.Elapsed.TotalMilliseconds, HttpStatus: (int)response.StatusCode));
         }
-        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested) { throw; }
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+        {
+            ParseDiagnostics.Write(_logger, new(ParseDiagnostics.CorrelationId, "usda", "cancelled", timer.Elapsed.TotalMilliseconds));
+            throw;
+        }
         catch (Exception ex)
         {
-            _logger.LogWarning(ex, "Failed to query USDA FoodData Central for {Query}", usdaCleanQuery);
+            ParseDiagnostics.Write(_logger, new(ParseDiagnostics.CorrelationId, "usda", ParseDiagnostics.Failure(ex), timer.Elapsed.TotalMilliseconds));
         }
 
         // NEVER return arbitrary first candidate! Return null so caller can handle gracefully.

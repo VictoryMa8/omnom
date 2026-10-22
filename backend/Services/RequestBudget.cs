@@ -24,15 +24,21 @@ public sealed class RequestBudget(AppDbContext db)
     }
 }
 
-public sealed class RequestBudgetFilter(RequestBudget budget) : IAsyncActionFilter
+public sealed class RequestBudgetFilter(RequestBudget budget, ILogger<RequestBudgetFilter> logger) : IAsyncActionFilter
 {
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
         var action = (ControllerActionDescriptor)context.ActionDescriptor;
         var login = action.ControllerTypeInfo.AsType() == typeof(AuthController) && action.ActionName == "Verify";
         var ai = action.ControllerTypeInfo.AsType() == typeof(AiController);
+        var timer = System.Diagnostics.Stopwatch.StartNew();
         if ((login || ai) && !await budget.Take(login ? "login" : "ai", login ? 10 : 30, login ? 60 : 3600))
         {
+            if (ai)
+            {
+                using var diagnosticScope = ParseDiagnostics.Begin();
+                ParseDiagnostics.Write(logger, new(ParseDiagnostics.CorrelationId, "api", "application-rate-limited", timer.Elapsed.TotalMilliseconds, HttpStatus: 429));
+            }
             context.HttpContext.Response.Headers.RetryAfter = login ? "60" : "3600";
             context.Result = new ObjectResult(new { message = login
                 ? "Too many unlock attempts. Please wait a minute."

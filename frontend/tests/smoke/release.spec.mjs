@@ -228,3 +228,34 @@ test('API failure/loading feedback, search errors, and responsive controls stay 
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'No horizontal overflow').toBe(true);
   await page.screenshot({ path: `.smoke/controls-${info.project.name}.png`, fullPage: true });
 });
+
+test('real API corrections and beverage units preserve review assumptions, unresolved containers, and saved weights', async ({ page }, info) => {
+  await open(page);
+  await page.getByRole('button', { name: 'Exact', exact: true }).click();
+  let response = page.waitForResponse(r => r.url().endsWith('/api/ai/parse'));
+  const correctedSource = '200g cooked chicken breast, actually 150g, no butter';
+  await review(page, correctedSource);
+  const corrected = await (await response).json();
+  expect(corrected.items).toHaveLength(1); expect(corrected.items[0].grams).toBe(150);
+  await save(page, 'Corrected amount');
+  await clearToasts(page);
+  response = page.waitForResponse(r => r.url().endsWith('/api/ai/parse'));
+  await review(page, '8 fl oz whole milk');
+  const milk = await (await response).json();
+  expect(milk.items[0]).toMatchObject({ quantity: 8, unit: 'fl oz', grams: 236.6 });
+  await expect(page.getByRole('button', { name: /Volume estimate: assumed 1 g\/ml/ })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await page.screenshot({ path: `.smoke/om-005-units-${info.project.name}.png`, fullPage: true });
+  await save(page, 'Volume estimate');
+  await clearToasts(page);
+  await review(page, '1 bottle whole milk');
+  await expect(page.getByRole('button', { name: /Container size is unknown/ })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Save meal', exact: true })).toBeDisabled();
+  await page.getByRole('button', { name: 'Discard', exact: true }).click();
+  await page.reload();
+  const data = await stored(page);
+  expect(data.meals).toHaveLength(2);
+  expect(data.meals[0].items[0]).toMatchObject({ grams: 150, calories: 247.5 });
+  expect(data.meals[1].items[0]).toMatchObject({ grams: 236.6, quantity: 8, unit: 'fl oz' });
+  expect(data.meals[1].items[0].assumptions.some(a => a.includes('assumed 1 g/ml'))).toBe(true);
+});

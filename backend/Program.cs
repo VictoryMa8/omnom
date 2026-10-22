@@ -34,9 +34,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // HTTP Clients and Services
 builder.Services.AddHttpClient<IOpenRouterService, OpenRouterService>(client =>
-    client.Timeout = ParseLimits.AiWait + TimeSpan.FromSeconds(2));
+    client.Timeout = ParseLimits.AiWait + TimeSpan.FromSeconds(2)).RemoveAllLoggers();
 builder.Services.AddHttpClient<IUsdaFoodService, UsdaFoodService>(client =>
-    client.Timeout = ParseLimits.UsdaLookup + TimeSpan.FromSeconds(2));
+    client.Timeout = ParseLimits.UsdaLookup + TimeSpan.FromSeconds(2)).RemoveAllLoggers();
 builder.Services.AddScoped<IMealParserService, MealParserService>();
 
 // CORS for frontend development

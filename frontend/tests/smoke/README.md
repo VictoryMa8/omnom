@@ -1,6 +1,6 @@
 # OM-002 release smoke checks
 
-This suite loads the **built production SPA served by the actual .NET API**. It does not use the in-memory preview page. It runs nine scenarios twice: Chromium desktop (1280×900) and a narrow mobile viewport (390×844, touch enabled), with America/Chicago dates and a fixed synthetic application date of October 20, 2026.
+This suite loads the **built production SPA served by the actual .NET API**. It does not use the in-memory preview page. It runs ten scenarios twice: Chromium desktop (1280×900) and a narrow mobile viewport (390×844, touch enabled), with America/Chicago dates and a fixed synthetic application date of October 20, 2026.
 
 ## Install and run
 
@@ -27,6 +27,7 @@ The port is validated and the runner refuses to reuse an existing server. There 
 | Scenario | Boundary/evidence |
 |---|---|
 | Real API Exact parse → review → save → reload | Actual controllers, parser, seeded SQLite references, source IDs, grams, every returned nutrient, selected date, optional time, and browser persistence; private diary/target/settings/auth endpoints return 404 in public mode |
+| Corrections and drink units | Real Exact API corrections replace earlier weights; US fluid-ounce/density assumptions remain visible and survive save/reload; unknown bottle size prevents saving |
 | Review replacement | Stubbed parse/search contracts; changing food updates calories, all macros, fiber and provenance; remembered defaults survive reload |
 | Meal library and Undo | Favorite snapshots survive original edits/reload; repeat, recent meals, edit/delete/save Undo recalculate daily/weekly data and preserve original date/position |
 | Remembered portions | Unresolved alias uses checked nutrition; explicit mass overrides usual portion; totals persist |
@@ -47,7 +48,7 @@ Git, Docker, and Vercel exclude the transient report directory. Each run overwri
 - `html/`: interactive report.
 - `server.log`: the isolated server's output.
 - `artifacts/`: failure screenshots, DOM context, and retained traces.
-- `real-api-desktop.png`, `real-api-mobile.png`, and `controls-*.png`: successful smoke screenshots.
+- `real-api-desktop.png`, `real-api-mobile.png`, `om-005-units-*.png`, and `controls-*.png`: successful smoke screenshots.
 
 Open the HTML report from the frontend directory with `npm exec -- playwright show-report .smoke/html`. A failing result's output provides the trace command. Report a failure and inspect the screenshot/context/trace before changing assertions; do not hide a real regression with retries or skipped tests. Retries are disabled and the release gate requires **zero failed, timed-out, interrupted, or skipped cases**. Record environment/install failures separately from application failures.
 

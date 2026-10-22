@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Omnom.Api.Models;
+using Omnom.Api.Services;
 
 namespace Omnom.Evaluation;
 
@@ -20,5 +21,9 @@ public sealed record CaseScore(string Id, string Category, int ExpectedItems, in
     int ExclusionViolations, int ForbiddenSubstitutions, int ExplicitMassChecks, int ExplicitMassCorrect,
     bool FullyCorrect, List<FoodScore> Foods, List<AiParsedItem> Actual);
 public sealed record CaseRun(string Id, string Category, string Outcome, double ElapsedMs,
-    bool Fallback, CaseScore? Score, string? Failure);
+    bool Fallback, CaseScore? Score, string? Failure)
+{
+    public List<ParseDiagnostic> Diagnostics { get; init; } = [];
+    public int Repetition { get; init; } = 1;
+}
 public sealed record Counts(int Numerator, int Denominator, double? Rate);

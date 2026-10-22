@@ -4,7 +4,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging.Abstractions;
 using Omnom.Api.Data;
 using Omnom.Api.Services;
 using Omnom.Evaluation;
@@ -12,7 +11,7 @@ using Omnom.Evaluation;
 var json = new JsonSerializerOptions { PropertyNameCaseInsensitive = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     WriteIndented = true, NumberHandling = JsonNumberHandling.Strict };
 var options = new Dictionary<string, string>(); var flags = new HashSet<string>();
-var allowed = new HashSet<string> { "--mode", "--dataset", "--output", "--case", "--max-requests", "--export-references" };
+var allowed = new HashSet<string> { "--mode", "--dataset", "--output", "--case", "--max-requests", "--repetitions", "--export-references" };
 try
 {
     for (var i = 0; i < args.Length; i++)
@@ -44,29 +43,35 @@ try
     var current = JsonSerializer.SerializeToElement(references, json);
     if (JsonSerializer.Serialize(snapshot.RootElement.GetProperty("foods")) != JsonSerializer.Serialize(current))
         throw new InvalidDataException("Seed reference snapshot changed. Version/review corpus before regenerating expectations.");
-    var cases = options.TryGetValue("--case", out var id) ? corpus.Cases.Where(c => c.Id == id).ToList() : corpus.Cases;
-    if (cases.Count == 0) throw new ArgumentException("Unknown case ID.");
+    var cases = options.TryGetValue("--case", out var id) ? corpus.Cases.Where(c => id.Split(',').Contains(c.Id)).ToList() : corpus.Cases;
+    if (cases.Count == 0 || options.TryGetValue("--case", out var ids) && ids.Split(',').Any(caseId => cases.All(c => c.Id != caseId)))
+        throw new ArgumentException("Unknown case ID.");
+    var repetitions = options.TryGetValue("--repetitions", out var repeats) ? int.TryParse(repeats, out var count) ? count : 0 : 1;
+    if (repetitions is < 1 or > 10) throw new ArgumentException("Repetitions must be 1..10.");
+    var selected = cases.SelectMany(fixture => Enumerable.Range(1, repetitions).Select(repetition => (fixture, repetition))).ToList();
+    var diagnostics = new DiagnosticCollector();
     var offlineHandler = new NetworkForbidden();
     using var offline = new HttpClient(offlineHandler);
-    var foods = new LocalReferences(new UsdaFoodService(offline, db, new ConfigurationBuilder().Build(), NullLogger<UsdaFoodService>.Instance));
+    var foods = new LocalReferences(new UsdaFoodService(offline, db, new ConfigurationBuilder().Build(), diagnostics.For<UsdaFoodService>()));
     var liveConfig = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?> {
         ["OPENROUTER_API_KEY"] = live ? Environment.GetEnvironmentVariable("OPENROUTER_API_KEY") : null }).Build();
-    var approved = new OpenRouterService(offline, liveConfig, db, NullLogger<OpenRouterService>.Instance).GetAvailableFreeModels().ToHashSet();
+    var approved = new OpenRouterService(offline, liveConfig, db, diagnostics.For<OpenRouterService>()).GetAvailableFreeModels().ToHashSet();
     using var handler = new CappedRouterHandler(cap, approved, live ? new HttpClientHandler { AllowAutoRedirect = false } : new NetworkForbidden());
     using var client = new HttpClient(handler) { Timeout = ParseLimits.AiWait + TimeSpan.FromSeconds(2) };
-    var router = new OpenRouterService(client, liveConfig, db, NullLogger<OpenRouterService>.Instance);
+    var router = new OpenRouterService(client, liveConfig, db, diagnostics.For<OpenRouterService>());
     using var cancel = new CancellationTokenSource();
     Console.CancelKeyPress += (_, e) => { e.Cancel = true; cancel.Cancel(); };
     var started = DateTimeOffset.UtcNow; var runs = new List<CaseRun>(); string? stopped = null;
-    foreach (var fixture in cases)
+    foreach (var (fixture, repetition) in selected)
     {
         if (cancel.IsCancellationRequested) { stopped = "cancelled"; break; }
         if (live && (handler.StopReason != null || handler.Sent >= cap)) { stopped = handler.StopReason ?? "request-cap"; break; }
         using var deadline = CancellationTokenSource.CreateLinkedTokenSource(cancel.Token); deadline.CancelAfter(ParseLimits.RequestWait);
+        diagnostics.Events.Clear();
         var timer = Stopwatch.StartNew();
         try
         {
-            var parser = new MealParserService(live ? router : new CannedRouter(fixture, mode == "heuristic"), foods, NullLogger<MealParserService>.Instance);
+            var parser = new MealParserService(live ? router : new CannedRouter(fixture, mode == "heuristic"), foods, diagnostics.For<MealParserService>());
             var result = await parser.ParseMealAsync(fixture.Prompt, cancellationToken: deadline.Token);
             if (live && handler.StopReason != null)
             { stopped = handler.StopReason; runs.Add(new(fixture.Id, fixture.Category, "not-scored:" + stopped, timer.Elapsed.TotalMilliseconds, false, null, stopped)); break; }
@@ -78,6 +83,10 @@ try
         { var reason = cancel.IsCancellationRequested ? "cancelled" : "deadline"; runs.Add(new(fixture.Id, fixture.Category, reason, timer.Elapsed.TotalMilliseconds, false, null, reason)); if (cancel.IsCancellationRequested) { stopped = reason; break; } }
         catch (Exception ex)
         { runs.Add(new(fixture.Id, fixture.Category, "runner-error", timer.Elapsed.TotalMilliseconds, false, null, ex.GetType().Name)); }
+        finally
+        {
+            if (runs.Count > 0) runs[^1] = runs[^1] with { Diagnostics = diagnostics.Events.ToList(), Repetition = repetition };
+        }
     }
     string Git(params string[] arguments)
     {
@@ -92,17 +101,18 @@ try
         revision = Git("rev-parse", "HEAD"), workingTree = Git("status", "--short"), startedAt = started, completedAt = DateTimeOffset.UtcNow,
         environment = new { dotnet = Environment.Version.ToString(), platform = System.Runtime.InteropServices.RuntimeInformation.OSDescription },
         massToleranceGrams = Scoring.MassTolerance, offlineNetworkAttempts = offlineHandler.Attempts,
-        selectedCases = cases.Count, unattemptedCaseIds = cases.Skip(runs.Count).Select(c => c.Id), stopReason = stopped,
+        selectedCases = selected.Count, distinctCases = cases.Count, repetitions, unattemptedCaseIds = selected.Skip(runs.Count).Select(c => c.fixture.Id), stopReason = stopped,
         live = new { enabled = live, requestCap = live ? (int?)cap : null, requestsSent = handler.Sent,
             approvedModels = approved, requestedModels = handler.RequestedModels, actualModels = handler.ActualModels,
             requestsWithReportedCost = handler.WithCost, reportedCostSum = handler.WithCost > 0 ? (double?)handler.CostSum : null,
             requestsWithoutReportedCost = handler.MissingCost },
+        diagnostics = Reports.DiagnosticSummary(runs),
         metrics = Scoring.Aggregate(runs), byCategory = runs.GroupBy(r => r.Category).ToDictionary(g => g.Key, g => Scoring.Aggregate(g)), cases = runs,
         limitations = new[] { "Offline canned AI does not measure model quality.", "All modes resolve against pinned local references; no remote USDA.",
             "Nutrition expectations are code-reference contracts, not independent dietary measurements.", "Live usage/cost is unknown when a provider omits metadata." } };
     await File.WriteAllTextAsync(output, JsonSerializer.Serialize(report, json) + "\n");
     await File.WriteAllTextAsync(Path.ChangeExtension(output, ".md"), Reports.Markdown(corpus, mode, runs, stopped));
-    Console.WriteLine($"{mode}: {runs.Count}/{cases.Count} cases attempted; {runs.Count(r => r.Score?.FullyCorrect == true)} fully correct; report {output}");
+    Console.WriteLine($"{mode}: {runs.Count}/{selected.Count} cases attempted; {runs.Count(r => r.Score?.FullyCorrect == true)} fully correct; report {output}");
     if (stopped != null) Console.WriteLine("Stopped: " + stopped);
     if (offlineHandler.Attempts > 0 || runs.Any(r => r.Outcome == "runner-error")) return 2;
     if (stopped != null || runs.Any(r => r.Outcome != "scored")) return 3;
